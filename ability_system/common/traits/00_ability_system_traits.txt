@@ -1,0 +1,75 @@
+﻿##################################################
+
+### Ability system - Traits
+
+# Magic level
+
+##################################################
+
+##################################################
+# Magic level
+##################################################
+magic_level_1 = {
+    index = 1001
+	
+	desc = {
+        first_valid = {
+            triggered_desc = {
+                trigger = { NOT = { exists = this } }
+                desc = trait_magic_level_1_desc
+            }
+            desc = trait_magic_level_1_character_desc
+        }
+    }
+
+	group = magic_level
+	level = 1
+}
+magic_level_2 = {
+    index = 1002
+	
+	desc = {
+        first_valid = {
+            triggered_desc = {
+                trigger = { NOT = { exists = this } }
+                desc = trait_magic_level_2_desc
+            }
+            desc = trait_magic_level_2_character_desc
+        }
+    }
+
+	group = magic_level
+	level = 2
+}
+magic_level_3 = {
+    index = 1003
+	
+	desc = {
+        first_valid = {
+            triggered_desc = {
+                trigger = { NOT = { exists = this } }
+                desc = trait_magic_level_3_desc
+            }
+            desc = trait_magic_level_3_character_desc
+        }
+    }
+
+	group = magic_level
+	level = 3
+}
+magic_level_4 = {
+    index = 1004
+	
+	desc = {
+        first_valid = {
+            triggered_desc = {
+                trigger = { NOT = { exists = this } }
+                desc = trait_magic_level_4_desc
+            }
+            desc = trait_magic_level_4_character_desc
+        }
+    }
+
+	group = magic_level
+	level = 4
+}

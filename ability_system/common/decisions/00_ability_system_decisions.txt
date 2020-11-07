@@ -1,0 +1,34 @@
+﻿##################################################
+
+### Ability system - Decisions
+
+# abs_open_learned_spells - Opens the window that displays the players' spells
+
+##################################################
+
+##################################################
+# abs_open_learned_spells - Opens the window that displays the players' spells
+##################################################
+abs_open_learned_spells = {
+	picture = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds"
+
+	desc = abs_open_learned_spells.desc
+	selection_tooltip = abs_open_learned_spells.tt
+	major = no
+	
+	ai_check_interval = 0
+	
+	is_shown = {
+		is_ai = no
+		debug_only = yes
+	}
+	
+	is_valid = {
+		
+	}
+	
+	effect = {
+		custom_tooltip = abs_open_learned_spells.effect.tt
+		trigger_event = { id = ability_system.5001 }
+	}
+}

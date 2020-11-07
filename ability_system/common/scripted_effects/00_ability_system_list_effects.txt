@@ -1,0 +1,320 @@
+﻿##################################################
+
+### Ability system - Scripted Effects | List Effects
+
+# abs_add_ability_to_list					-	Adds an ability to the global list of abilities
+# 													* Parameter => $ABILITY_NAME$ - Flag, Name of the ability
+# 													* Parameter => $ABILITY_TYPE$ - Script_value, Ability type
+# 													* Parameter => $ABILITY_COST$ - Script_value, Cost of the ability
+# 													* Parameter => $ABILITY_ELEMENT$ - Script_value, Element of the ability
+# 													* Parameter => $ABILITY_CONTEXT$ - Script_value, Context for the ability
+# 													* Parameter => $ABILITY_POWER_RATING$ - Script_value, Power rating of the ability
+# 													* Parameter => $ABILITY_SCHOOL$ - Script_value, Ability's School
+# 													* Parameter => $ABILITY_EFFECT$ - Script_value, Effect Type of the ability
+# 													* Parameter => $ABILITY_ACCURACY$ - Script_value, Ability's Accuracy
+# 													* Parameter => $ABILITY_COOLDOWN$ - Script_value, Cooldown time for the ability
+# 													* Parameter => $ABILITY_RARITY$ - Script_value, Rarity level of the Ability
+# abs_copy_abilities_to_local				-	Copies the global ability list to the scoped character
+# 													* Parameter => $CONTEXT$ - Script_value, Ability Context to check for
+# abs_get_spells_per_school					-	Copies all spells from the global ability list per school
+# abs_cleanup_all_ability_schools_effect	-	Cleans up all the lists used by the spell list GUI
+
+##################################################
+
+##################################################
+# abs_add_ability_to_list - Adds an ability to the global list of abilities
+# 								* Parameter => $ABILITY_NAME$ - Flag, Name of the ability
+# 								* Parameter => $ABILITY_TYPE$ - Script_value, Ability type
+# 								* Parameter => $ABILITY_COST$ - Script_value, Cost of the ability
+# 								* Parameter => $ABILITY_ELEMENT$ - Script_value, Element of the ability
+# 								* Parameter => $ABILITY_CONTEXT$ - Script_value, Context for the ability
+# 								* Parameter => $ABILITY_POWER_RATING$ - Script_value, Power rating of the ability
+# 								* Parameter => $ABILITY_SCHOOL$ - Script_value, Ability's School
+# 								* Parameter => $ABILITY_EFFECT$ - Script_value, Effect Type of the ability
+# 								* Parameter => $ABILITY_ACCURACY$ - Script_value, Ability's Accuracy
+# 								* Parameter => $ABILITY_COOLDOWN$ - Script_value, Cooldown time for the ability
+# 								* Parameter => $ABILITY_RARITY$ - Script_value, Rarity level of the Ability
+##################################################
+abs_add_ability_to_list = {	
+	if = {
+		limit = {
+			NOT = { is_target_in_global_variable_list = { name = ability_list target = $ABILITY_NAME$ } }
+		}
+		
+		add_to_global_variable_list = {
+			name = ability_list
+			target = $ABILITY_NAME$
+		}
+		
+		random_living_character = {
+			limit = { age >= 16 age <= 18 is_ai = yes NOT = { abs_is_ability_tracker = yes } }
+			
+			# Add the new character
+			add_to_global_variable_list = { name = ability_trackers target = THIS }
+			
+			set_variable = {
+				name = ability_name
+				value = $ABILITY_NAME$
+			}
+			set_variable = {
+				name = ability_cost
+				value = $ABILITY_COST$
+			}
+			set_variable = {
+				name = ability_type
+				value = $ABILITY_TYPE$
+			}
+			set_variable = {
+				name = ability_element
+				value = $ABILITY_ELEMENT$
+			}
+			set_variable = {
+				name = ability_context
+				value = $ABILITY_CONTEXT$
+			}
+			set_variable = {
+				name = ability_power_rating
+				value = $ABILITY_POWER_RATING$
+			}
+			set_variable = {
+				name = ability_school
+				value = $ABILITY_SCHOOL$
+			}
+			set_variable = {
+				name = ability_effect
+				value = $ABILITY_EFFECT$
+			}
+			set_variable = {
+				name = ability_accuracy
+				value = $ABILITY_ACCURACY$
+			}
+			set_variable = {
+				name = ability_cooldown
+				value = $ABILITY_COOLDOWN$
+			}
+			set_variable = {
+				name = ability_rarity
+				value = $ABILITY_RARITY$
+			}
+		}
+	}
+}
+
+##################################################
+# TODO: Order the list?
+# abs_copy_abilities_to_local - Copies the global ability list to the scoped character
+# 								* Parameter => $CONTEXT$ - Script_value, Ability Context to check for
+##################################################
+abs_copy_abilities_to_local = {
+	clear_variable_list = ability_list # Remove existing list	
+
+	save_temporary_scope_as = ability_caster
+	
+	if = {
+		limit = { $CONTEXT$ = ability_context_all }
+		every_in_global_list = {
+			variable = ability_trackers
+			
+			save_temporary_scope_as = sel_ability	
+			
+			if = {
+				limit = {
+					abs_has_access_to_ability_by_name = { ABILITY_NAME = scope:sel_ability.var:ability_name ABILITY_CASTER = scope:ability_caster }
+				}
+				PREV = {
+					if = {
+						limit = { NOT = { is_target_in_variable_list = { name = ability_list target = PREV } } }
+						add_to_variable_list = {
+							name = ability_list
+							target = PREV
+						}					
+					}
+				}
+			}
+		}
+	}
+	else = {
+		every_in_global_list = {
+			variable = ability_trackers
+			limit = {
+				this.var:ability_context = $CONTEXT$
+			}
+			
+			save_temporary_scope_as = sel_ability	
+			
+			if = {
+				limit = {
+					abs_has_access_to_ability_by_name = { ABILITY_NAME = scope:sel_ability.var:ability_name ABILITY_CASTER = scope:ability_caster }
+				}
+				PREV = {
+					if = {
+						limit = { NOT = { is_target_in_variable_list = { name = ability_list target = PREV } } }
+						add_to_variable_list = {
+							name = ability_list
+							target = PREV
+						}					
+					}
+				}
+			}
+		}
+	}
+}
+
+
+##################################################
+# TODO: Add an ordered list?
+# abs_get_spells_per_school - Copies all spells from the global ability list per school
+##################################################
+abs_get_spells_per_school = {
+	save_temporary_scope_as = ability_caster
+
+	every_in_global_list = {
+		variable = ability_trackers
+		
+		limit = {
+			save_temporary_scope_as = sel_ability	
+			var:ability_type = ability_category_spell
+		}
+
+		PREV = {
+			if = {
+				limit = { NOT = { is_target_in_variable_list = { name = spell_list_all target = PREV } } }
+				add_to_variable_list = {
+					name = spell_list_all
+					target = PREV
+				}					
+			}
+		}
+		
+		if = {
+			limit = {
+				abs_has_access_to_ability_by_name = { ABILITY_NAME = scope:sel_ability.var:ability_name ABILITY_CASTER = scope:ability_caster }
+			}
+			if = {
+				limit = {
+					var:ability_school = ability_magic_school_destruction
+				}
+				PREV = {
+					if = {
+						limit = { NOT = { is_target_in_variable_list = { name = spell_list_destruction target = PREV } } }
+						add_to_variable_list = {
+							name = spell_list_destruction
+							target = PREV
+						}					
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					var:ability_school = ability_magic_school_alteration
+				}
+				PREV = {
+					if = {
+						limit = { NOT = { is_target_in_variable_list = { name = spell_list_alteration target = PREV } } }
+						add_to_variable_list = {
+							name = spell_list_alteration
+							target = PREV
+						}					
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					var:ability_school = ability_magic_school_restoration
+				}
+				PREV = {
+					if = {
+						limit = { NOT = { is_target_in_variable_list = { name = spell_list_restoration target = PREV } } }
+						add_to_variable_list = {
+							name = spell_list_restoration
+							target = PREV
+						}					
+					}
+				}
+			}
+			else_if = {
+				limit = { var:ability_school = ability_magic_school_conjuration }
+				PREV = {
+					if = {
+						limit = { NOT = { is_target_in_variable_list = { name = spell_list_conjuration target = PREV } } }
+						add_to_variable_list = {
+							name = spell_list_conjuration
+							target = PREV
+						}					
+					}
+				}
+			}
+			else_if = {
+				limit = { 
+					var:ability_school = ability_magic_school_illusion
+				}
+				PREV = {
+					if = {
+						limit = { NOT = { is_target_in_variable_list = { name = spell_list_illusion target = PREV } } }
+						add_to_variable_list = {
+							name = spell_list_illusion
+							target = PREV
+						}					
+					}
+				}
+			}
+			else_if = {
+				limit = { 
+					var:ability_school = ability_magic_school_mysticism 
+				}
+				PREV = {
+					if = {
+						limit = { NOT = { is_target_in_variable_list = { name = spell_list_mysticism target = PREV } } }
+						add_to_variable_list = {
+							name = spell_list_mysticism
+							target = PREV
+						}					
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					var:ability_school = ability_magic_school_necromancy 
+				}
+				PREV = {
+					if = {
+						limit = { NOT = { is_target_in_variable_list = { name = spell_list_necromancy target = PREV } } }
+						add_to_variable_list = {
+							name = spell_list_necromancy
+							target = PREV
+						}					
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					var:ability_school = ability_school_none 
+				}
+				PREV = {
+					if = {
+						limit = { NOT = { is_target_in_variable_list = { name = spell_list_none target = PREV } } }
+						add_to_variable_list = {
+							name = spell_list_none
+							target = PREV
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+##################################################
+# abs_cleanup_all_ability_schools_effect - Cleans up all the lists used by the spell list GUI
+##################################################
+abs_cleanup_all_ability_schools_effect = {
+	clear_variable_list = spell_list_all
+	clear_variable_list = spell_list_none
+	clear_variable_list = spell_list_necromancy
+	clear_variable_list = spell_list_mysticism
+	clear_variable_list = spell_list_illusion
+	clear_variable_list = spell_list_conjuration
+	clear_variable_list = spell_list_restoration
+	clear_variable_list = spell_list_alteration
+	clear_variable_list = spell_list_destruction
+}

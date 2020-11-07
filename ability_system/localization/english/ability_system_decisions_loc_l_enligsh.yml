@@ -1,0 +1,7 @@
+﻿l_english:
+ # Menus
+ abs_open_learned_spells: "abs - Learned spells"
+ abs_open_learned_spells.desc: "Opens list of learned spells"
+ abs_open_learned_spells.tt: "Opens list of learned spells"
+ abs_open_learned_spells.effect.tt: "Opens your learned spell list"
+ abs_open_learned_spells_confirm: "Open Spell list"

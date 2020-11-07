@@ -1,0 +1,771 @@
+﻿namespace = ability_system
+
+##################################################
+
+### Ability system events
+
+## 1 ~ 99 				Core components
+
+# ability_system.0001		- Initialize - Create the list of default abilities
+
+## 100 ~ 199 			Dueling - Magician vs. magician only right now.
+#								  Magician vs. Melee will be added in a future version
+#								  Melee vs. Melee will be added later too
+
+# ability_system.112		- Dueling - First move for attacker
+# ability_system.113		- Dueling - First move for defender
+# ability_system.114		- Dueling - Nth move for attacker
+# ability_system.115		- Dueling - Nth move for defender
+# ability_system.120		- Dueling - Round result screen
+# ability_system.121		- Dueling - End of duel - Winner screen
+# ability_system.122		- Dueling - End of duel - Loser screen
+# ability_system.123		- Dueling - End of duel - Draw screen
+
+## 5000 ~ 5999 					GUI components
+
+# ability_system.5001		-	GUI - Open spell list
+
+## 9000 ~ 9999					Debug components
+
+# ability_system.9001		- Debug - Open the debug menu
+
+##################################################
+
+##################################################
+# Initialize - Create the list of default abilities
+##################################################
+ability_system.0001 = {
+	type = empty
+	hidden = yes
+	
+	immediate = {
+		abs_create_ability_list = yes
+	}
+}
+
+##################################################
+# TODO: Add an entry point that allows for quitting
+# Dueling
+##################################################
+
+##################################################
+# Dueling - First move for attacker
+##################################################
+ability_system.112 = {
+	type = character_event
+	title = ability_system.event.112.title
+	desc = ability_system.event.112.desc	
+	theme = realm
+	
+	override_icon = {
+		reference = "gfx/interface/icons/event_types/type_war.dds"
+	}
+	
+	override_background = {
+		event_background = army_camp
+	}
+	
+	left_portrait = {
+		character = scope:attacker
+		animation = war_over_win
+	}
+	right_portrait = {
+		character = scope:defender
+		animation = war_over_loss
+	}
+	
+	widgets = {
+		widget = {
+			gui = "ability_system_c_duel_status_widget"			
+			container = "characters"
+			controller = default
+			setup_scope = {
+				scope:initial_attacker = { save_scope_as = initial_attacker }
+			}
+		}
+		widget = {
+			gui = "ability_system_c_ability_selection_widget"			
+			container = "custom_widgets_container"
+			controller = default
+			setup_scope = { }
+		}
+	}
+
+	
+	immediate = {
+		# Update spell list every round - In case one of the spell trackers died
+		scope:initial_attacker = { abs_copy_abilities_to_local = { CONTEXT = ability_context_combat } }
+		scope:initial_defender = { abs_copy_abilities_to_local = { CONTEXT = ability_context_combat } }
+		
+		#Add AI selection
+		if = {
+			limit = { is_ai = yes }
+			abs_duel_ai_select_ability = yes
+		}
+	}
+
+	option = { 
+		name = ability_system.event.112.opt.a
+		scope:initial_defender = {
+			trigger_event = { id = ability_system.113 }
+		}
+	}
+}
+
+##################################################
+# Dueling - First move for defender
+##################################################
+ability_system.113 = {
+	type = character_event
+	title = ability_system.event.113.title
+	desc = {
+		desc = ability_system.event.113.desc
+		triggered_desc = {
+			trigger = {
+				has_variable = ability_revealed_info
+				var:ability_revealed_info = flag:all
+			}
+			desc = ability_system.duel.show_attacker_ability
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = ability_revealed_info
+				var:ability_revealed_info = flag:ability_effect
+			}
+			desc = ability_system.duel.show_attacker_ability_effect
+		}		
+		triggered_desc = {
+			trigger = {
+				has_variable = ability_revealed_info
+				var:ability_revealed_info = flag:ability_element
+			}
+			desc = ability_system.duel.show_attacker_ability_element
+		}		
+	}
+	theme = realm
+	
+	override_icon = {
+		reference = "gfx/interface/icons/event_types/type_war.dds"
+	}
+	
+	override_background = {
+		event_background = army_camp
+	}
+	
+	left_portrait = {
+		character = scope:defender
+		animation = war_over_win
+	}
+	right_portrait = {
+		character = scope:attacker
+		animation = war_over_loss
+	}
+	
+	widgets = {
+		widget = {
+			gui = "ability_system_c_duel_status_widget"			
+			container = "characters"
+			controller = default
+			setup_scope = {
+				scope:initial_attacker = { save_scope_as = initial_attacker }
+			}
+		}
+		widget = {
+			gui = "ability_system_c_ability_selection_widget"			
+			container = "custom_widgets_container"
+			controller = default
+			setup_scope = { }
+		}
+	}
+	
+	immediate = {
+		# Update spell list every round - In case one of the spell trackers died
+		scope:initial_attacker = { abs_copy_abilities_to_local = { CONTEXT = ability_context_combat } }
+		scope:initial_defender = { abs_copy_abilities_to_local = { CONTEXT = ability_context_combat } }
+		
+		abs_duel_calculate_ability_visibility = yes
+		
+		#Add AI selection
+		if = {
+			limit = { is_ai = yes }
+			abs_duel_ai_select_ability = yes
+		}
+	}
+
+	option = { 
+		name = ability_system.event.113.opt.a
+		
+		# Actually fight
+		abs_duel_execute_round = yes
+		
+		# Share the results
+		scope:initial_attacker = { trigger_event = { id = ability_system.120 } }
+		scope:initial_defender = { trigger_event = { id = ability_system.120 } }
+	}
+}
+
+##################################################
+# Dueling - Nth move for attacker
+##################################################
+ability_system.114 = {
+	type = character_event
+	title = ability_system.event.114.title
+	desc = ability_system.event.114.desc	
+	theme = realm
+	
+	override_icon = {
+		reference = "gfx/interface/icons/event_types/type_war.dds"
+	}
+	
+	override_background = {
+		event_background = army_camp
+	}
+	
+	left_portrait = {
+		character = scope:attacker
+		animation = war_over_win
+	}
+	right_portrait = {
+		character = scope:defender
+		animation = war_over_loss
+	}
+	
+	widgets = {
+		widget = {
+			gui = "ability_system_c_duel_status_widget"			
+			container = "characters"
+			controller = default
+			setup_scope = {
+				scope:initial_attacker = { save_scope_as = initial_attacker }
+			}
+		}
+		widget = {
+			gui = "ability_system_c_ability_selection_widget"			
+			container = "custom_widgets_container"
+			controller = default
+			setup_scope = { }
+		}
+	}
+
+	
+	immediate = {
+		# Update spell list every round - In case one of the spell trackers died
+		scope:initial_attacker = { abs_copy_abilities_to_local = { CONTEXT = ability_context_combat } }
+		scope:initial_defender = { abs_copy_abilities_to_local = { CONTEXT = ability_context_combat } }
+			
+		#Add AI selection
+		if = {
+			limit = { is_ai = yes }
+			abs_duel_ai_select_ability = yes
+		}
+	}
+
+	option = {
+		name = ability_system.event.114.opt.a
+		scope:defender = {
+			trigger_event = { id = ability_system.115 }
+		}
+	}
+}
+
+##################################################
+# Dueling - Nth move for defender
+##################################################
+ability_system.115 = {
+	type = character_event
+	title = ability_system.event.115.title
+	desc = {
+		desc = ability_system.event.115.desc
+		triggered_desc = {
+			trigger = {
+				has_variable = ability_revealed_info
+				var:ability_revealed_info = flag:all
+			}
+			desc = ability_system.duel.show_attacker_ability
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = ability_revealed_info
+				var:ability_revealed_info = flag:ability_effect
+			}
+			desc = ability_system.duel.show_attacker_ability_effect
+		}		
+		triggered_desc = {
+			trigger = {
+				has_variable = ability_revealed_info
+				var:ability_revealed_info = flag:ability_element
+			}
+			desc = ability_system.duel.show_attacker_ability_element
+		}		
+	}
+	theme = realm
+	
+	override_icon = {
+		reference = "gfx/interface/icons/event_types/type_war.dds"
+	}
+	
+	override_background = {
+		event_background = army_camp
+	}
+	
+	left_portrait = {
+		character = scope:defender
+		animation = war_over_win
+	}
+	right_portrait = {
+		character = scope:attacker
+		animation = war_over_loss
+	}
+	
+	widgets = {
+		widget = {
+			gui = "ability_system_c_duel_status_widget"			
+			container = "characters"
+			controller = default
+			setup_scope = {
+				scope:initial_attacker = { save_scope_as = initial_attacker }
+			}
+		}
+		widget = {
+			gui = "ability_system_c_ability_selection_widget"			
+			container = "custom_widgets_container"
+			controller = default
+			setup_scope = { }
+		}
+	}
+	
+	immediate = {
+		# Update spell list every round - In case one of the spell trackers died
+		scope:initial_attacker = { abs_copy_abilities_to_local = { CONTEXT = ability_context_combat } }
+		scope:initial_defender = { abs_copy_abilities_to_local = { CONTEXT = ability_context_combat } }
+		
+		abs_duel_calculate_ability_visibility = yes
+		
+		#Add AI selection
+		if = {
+			limit = { is_ai = yes }
+			abs_duel_ai_select_ability = yes
+		}
+	}
+
+	option = { 
+		name = ability_system.event.115.opt.a
+		
+		# Actually fight
+		abs_duel_execute_round = yes
+		
+		# Share the results
+		scope:initial_attacker = { trigger_event = { id = ability_system.120 } }
+		scope:initial_defender = { trigger_event = { id = ability_system.120 } }
+	}
+}
+
+##################################################
+# Dueling - Round result screen
+##################################################
+ability_system.120 = {
+	type = character_event
+	title = ability_system.event.120.title
+	desc = {
+		desc = ability_system.event.120.desc
+		triggered_desc = {
+			trigger = {				
+				debug_only = yes
+			}
+			desc = ability_system.event.120.desc_abilities
+		}
+		desc = ability_system.event.120.desc_shield
+	}
+	theme = realm
+	
+	override_icon = {
+		reference = "gfx/interface/icons/event_types/type_war.dds"
+	}
+	
+	override_background = {
+		event_background = army_camp
+	}
+	
+	left_portrait = {
+		character = scope:round_winner
+		animation = war_over_win
+	}
+	right_portrait = {
+		character = scope:round_loser
+		animation = war_over_loss
+	}
+	
+	widgets = {
+		widget = {
+			gui = "ability_system_c_duel_status_widget"			
+			container = "characters"
+			controller = default
+			setup_scope = {
+				scope:initial_attacker = { save_scope_as = initial_attacker }
+			}
+		}
+	}
+	
+	immediate = {
+		# Update spell list every round - In case one of the spell trackers died
+		scope:initial_attacker = { abs_copy_abilities_to_local = { CONTEXT = ability_context_combat } }
+		scope:initial_defender = { abs_copy_abilities_to_local = { CONTEXT = ability_context_combat } }
+		
+		# Make sure we wait with opening the event until both parties have pressed ok
+		scope:initial_attacker = { add_character_flag = duel_waiting_for_ok }
+		scope:initial_defender = { add_character_flag = duel_waiting_for_ok }
+		
+		if = {
+			limit = {
+				OR = {
+					scope:initial_attacker.var:hitpoints <= 0
+					scope:initial_defender.var:hitpoints <= 0
+				}
+			}
+			# Make sure we wait with opening the event until both parties have pressed ok
+			scope:initial_attacker = { add_character_flag = duel_end_waiting_for_ok }
+			scope:initial_defender = { add_character_flag = duel_end_waiting_for_ok }			
+		}
+	}
+
+	# Next round!
+	option = {
+		trigger = {
+			scope:initial_attacker.var:hitpoints > 0
+			scope:initial_defender.var:hitpoints > 0
+		}
+		
+		name = ability_system.event.120.opt.a
+		
+		# Switch roles
+		scope:attacker = { save_temporary_scope_as = prev_attacker }
+		scope:defender = { save_temporary_scope_as = prev_defender }
+		scope:prev_attacker = { save_scope_as = defender }
+		scope:prev_defender = { save_scope_as = attacker }
+		
+		# Ok!
+		remove_character_flag = duel_waiting_for_ok
+		
+		if = {
+			limit = { 
+				NOR = {
+					scope:initial_attacker = { has_character_flag = duel_waiting_for_ok }
+					scope:initial_defender = { has_character_flag = duel_waiting_for_ok }
+				}
+			}
+			
+			abs_duel_round_cleanup = yes
+			
+			scope:attacker = {
+				trigger_event = { id = ability_system.114 }
+			}
+		}
+	}
+	
+	# We've got a winner!
+	option = {
+		trigger = {
+			OR = {
+				scope:initial_attacker.var:hitpoints <= 0
+				scope:initial_defender.var:hitpoints <= 0
+			}
+			NAND = {
+				scope:initial_attacker.var:hitpoints <= 0
+				scope:initial_defender.var:hitpoints <= 0				
+			}
+			var:hitpoints > 0
+		}
+		
+		name = ability_system.event.120.opt.b
+
+		# Ok!
+		remove_character_flag = duel_waiting_for_ok
+	
+		if = {
+			limit = { 
+				NOR = {
+					scope:initial_attacker = { has_character_flag = duel_waiting_for_ok }
+					scope:initial_defender = { has_character_flag = duel_waiting_for_ok }
+				}
+			}
+			
+			abs_duel_round_cleanup = yes
+			
+			if = {
+				limit = { scope:initial_attacker.var:hitpoints <= 0 }
+				scope:initial_defender = { save_scope_as = duel_winner }
+				scope:initial_attacker = { save_scope_as = duel_loser }
+				scope:initial_defender = { trigger_event = { id = ability_system.121 } }
+				scope:initial_attacker = { trigger_event = { id = ability_system.122 } }
+			}
+			else = {
+				scope:initial_attacker = { save_scope_as = duel_winner }
+				scope:initial_defender = { save_scope_as = duel_loser }			
+				scope:initial_attacker = { trigger_event = { id = ability_system.121 } }
+				scope:initial_defender = { trigger_event = { id = ability_system.122 } }			
+			}			
+		}	
+	}
+	
+	# LOSER!
+	option = {
+		trigger = {
+			OR = {
+				scope:initial_attacker.var:hitpoints <= 0
+				scope:initial_defender.var:hitpoints <= 0
+			}
+			NAND = {
+				scope:initial_attacker.var:hitpoints <= 0
+				scope:initial_defender.var:hitpoints <= 0				
+			}
+			var:hitpoints <= 0
+		}
+		
+		name = ability_system.event.120.opt.c
+
+		# Ok!
+		remove_character_flag = duel_waiting_for_ok
+	
+		if = {
+			limit = { 
+				NOR = {
+					scope:initial_attacker = { has_character_flag = duel_waiting_for_ok }
+					scope:initial_defender = { has_character_flag = duel_waiting_for_ok }
+				}
+			}
+			
+			abs_duel_round_cleanup = yes
+			
+			if = {
+				limit = { scope:initial_attacker.var:hitpoints <= 0 }
+				scope:initial_defender = { save_scope_as = duel_winner }
+				scope:initial_attacker = { save_scope_as = duel_loser }
+				scope:initial_defender = { trigger_event = { id = ability_system.121 } }
+				scope:initial_attacker = { trigger_event = { id = ability_system.122 } }
+			}
+			else = {
+				scope:initial_attacker = { save_scope_as = duel_winner }
+				scope:initial_defender = { save_scope_as = duel_loser }			
+				scope:initial_attacker = { trigger_event = { id = ability_system.121 } }
+				scope:initial_defender = { trigger_event = { id = ability_system.122 } }			
+			}			
+		}	
+	}
+	
+	# It's a draw!	
+	option = {
+		trigger = {
+			AND = {
+				scope:initial_attacker.var:hitpoints <= 0
+				scope:initial_defender.var:hitpoints <= 0
+			}
+		}
+		
+		name = ability_system.event.120.opt.d
+
+		# Ok!
+		remove_character_flag = duel_waiting_for_ok
+	
+		if = {
+			limit = { 
+				NOR = {
+					scope:initial_attacker = { has_character_flag = duel_waiting_for_ok }
+					scope:initial_defender = { has_character_flag = duel_waiting_for_ok }
+				}
+			}
+			
+			abs_duel_round_cleanup = yes
+			
+			scope:initial_defender = { save_scope_as = duel_winner }
+			scope:initial_attacker = { save_scope_as = duel_loser }
+			scope:initial_defender = { trigger_event = { id = ability_system.123 } }
+			scope:initial_attacker = { trigger_event = { id = ability_system.123 } }	
+		}	
+	}
+}
+
+##################################################
+# Dueling - End of duel - Winner screen
+##################################################
+ability_system.121 = {
+	type = character_event
+	title = ability_system.event.121.title
+	desc = ability_system.event.121.desc	
+	theme = realm
+	
+	override_icon = {
+		reference = "gfx/interface/icons/event_types/type_war.dds"
+	}
+	
+	override_background = {
+		event_background = army_camp
+	}
+	
+	left_portrait = {
+		character = scope:duel_winner
+		animation = schadenfreude
+	}
+	right_portrait = {
+		character = scope:duel_loser
+		animation = shock
+	}
+	
+	immediate = {
+	}
+	
+	option = {
+		name = ability_system.event.121.opt.a
+		
+		# Ok!
+		remove_character_flag = duel_end_waiting_for_ok
+		
+		if = {
+			limit = { 
+				NOR = {
+					scope:initial_attacker = { has_character_flag = duel_end_waiting_for_ok }
+					scope:initial_defender = { has_character_flag = duel_end_waiting_for_ok }
+				}
+			}
+			abs_duel_cleanup = yes
+		}		
+		
+	}
+}
+
+##################################################
+# Dueling - End of duel - Loser screen
+##################################################
+ability_system.122 = {
+	type = character_event
+	title = ability_system.event.122.title
+	desc = ability_system.event.122.desc	
+	theme = realm
+	
+	override_icon = {
+		reference = "gfx/interface/icons/event_types/type_war.dds"
+	}
+	
+	override_background = {
+		event_background = army_camp
+	}
+	
+	left_portrait = {
+		character = scope:duel_winner
+		animation = schadenfreude
+	}
+	right_portrait = {
+		character = scope:duel_loser
+		animation = shock
+	}
+	
+	immediate = {
+	}
+	
+	option = {
+		name = ability_system.event.122.opt.a
+		
+		# Ok!
+		remove_character_flag = duel_end_waiting_for_ok
+		
+		if = {
+			limit = { 
+				NOR = {
+					scope:initial_attacker = { has_character_flag = duel_end_waiting_for_ok }
+					scope:initial_defender = { has_character_flag = duel_end_waiting_for_ok }
+				}
+			}
+			abs_duel_cleanup = yes
+		}		
+		
+	}
+}
+
+##################################################
+# Dueling - End of duel - Draw screen
+##################################################
+ability_system.123 = {
+	type = character_event
+	title = ability_system.event.123.title
+	desc = ability_system.event.123.desc	
+	theme = realm
+	
+	override_icon = {
+		reference = "gfx/interface/icons/event_types/type_war.dds"
+	}
+	
+	override_background = {
+		event_background = army_camp
+	}	
+	
+	left_portrait = {
+		character = scope:duel_winner
+		animation = shock
+	}
+	right_portrait = {
+		character = scope:duel_loser
+		animation = shock
+	}
+	
+	immediate = {
+	}
+	
+	option = {
+		name = ability_system.event.123.opt.a
+		
+		# Ok!
+		remove_character_flag = duel_end_waiting_for_ok
+		
+		if = {
+			limit = { 
+				NOR = {
+					scope:initial_attacker = { has_character_flag = duel_end_waiting_for_ok }
+					scope:initial_defender = { has_character_flag = duel_end_waiting_for_ok }
+				}
+			}
+			abs_duel_cleanup = yes
+		}		
+		
+	}
+}
+
+##################################################
+# GUI - Open spell list
+##################################################
+ability_system.5001 = {
+	type = character_event
+	title = abs_empty_line
+	desc = abs_empty_line	
+	theme = family	
+	widgets = {
+		widget = {
+			gui = "ability_system_open_player_spell_list"			
+			container = "custom_widgets_container"
+			controller = default
+			setup_scope = { }
+		}
+	}
+		
+	# This won't actually ever be shown.
+	option = { name = abs_empty_line }
+}
+
+##################################################
+# Debug - Open the debug menu
+##################################################
+ability_system.9001 = {
+	type = character_event
+	title = abs_empty_line
+	desc = abs_empty_line	
+	theme = family	
+	widgets = {
+		widget = {
+			gui = "ability_system_open_debug"			
+			container = "custom_widgets_container"
+			controller = default
+			setup_scope = { }
+		}
+	}
+		
+	# This won't actually ever be shown.
+	option = { name = abs_empty_line }
+}

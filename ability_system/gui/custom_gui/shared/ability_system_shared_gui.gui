@@ -1,0 +1,467 @@
+﻿Types ability_system {
+	
+	type spaced_divider = vbox { margin_bottom = 10 }
+	
+	# SORRY :C
+	#type ability_icon_selector = hbox {
+	#	name = "ability_icon"
+	#	size = { 32 32 }
+	#	maximumsize = { 64 32 }
+	#
+	#	icon = {
+	#		visible = "[And( EqualTo_string('fire_blast', Scope.Var('ability_name').GetFlagName), ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('selected_ability', Scope.GetCharacter.MakeScope ).End ) )]"
+	#
+	#		size = { 32 32 }
+	#		texture = "gfx/interface/icons/abilities/fire_blast.dds"
+	#		
+	#	}
+	#	icon = {
+	#		visible = "[And( EqualTo_string('water_blast', Scope.Var('ability_name').GetFlagName), ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('selected_ability', Scope.GetCharacter.MakeScope ).End ) )]"
+	#
+	#		size = { 32 32 }
+	#		texture = "gfx/interface/icons/abilities/water_blast.dds"
+	#	}
+	#	icon = {
+	#		visible = "[And( EqualTo_string('lightning_blast', Scope.Var('ability_name').GetFlagName), ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('selected_ability', Scope.GetCharacter.MakeScope ).End ) )]"
+	#
+	#		size = { 32 32 }
+	#		texture = "gfx/interface/icons/abilities/lightning_blast.dds"
+	#	}
+	#	
+	#}
+	
+	type custom_button_eventoption = button_event_standard
+	{
+		name = "event_option_button"
+		size = { 500 36 }
+
+		onclick = "[EventOption.Select]"
+		onmousehierarchyenter = "[EventOption.OnEnter]"
+		onmousehierarchyleave = "[EventOption.OnLeave]"
+		enabled = "[EventOption.IsValid]"
+
+		icon = {
+			texture = "gfx/interface/buttons/button_event.dds"
+			alpha = 1
+			spriteType = Corneredtiled
+			spriteborder = { 3 3 }
+			framesize  = { 249 78 }
+			size = { 100% 100% }
+
+			modify_texture = {
+				name = "mask"
+				texture = "gfx/interface/component_masks/mask_fade_horizontal_middle_thick.dds"
+				spriteType = Corneredtiled
+				spriteborder_left = 40
+				spriteborder_right = 40
+				blend_mode = alphamultiply
+			}
+		}
+
+		# Trick to not have the option text steal tooltips from the trait/skill grid
+		hbox = {
+			layoutpolicy_horizontal = expanding
+			layoutpolicy_vertical = expanding
+			tooltip = "[EventOption.GetTooltip]"
+			# Disable tooltip if it's a ability-cast insert
+			tooltip_enabled = "[And(Not( StringIsEmpty( EventOption.GetTooltip ) ), Not(EqualTo_string(EventOption.GetText, 'use_ability_name_override')))]"
+			using = tooltip_ws
+
+			# Wider tooltips for the effects
+			tooltipwidget = {
+				using = DefaultTooltipWidget
+			}
+		}
+
+		modify_texture = {
+			name = "mask"
+			texture = "gfx/interface/component_masks/mask_fade_horizontal_middle_thick.dds"
+			spriteType = Corneredtiled
+			spriteborder_left = 40
+			spriteborder_right = 40
+			blend_mode = alphamultiply
+		}
+
+		animation_glow_event = {
+			name = "special_option"
+			visible = "[And(EventOption.HasFlag('special'), Not(EventOption.HasFlag('dangerous')))]"
+		}
+
+		animation_glow_event = {
+			name = "dangerous_option"
+			visible = "[EventOption.HasFlag('dangerous')]"
+			using = Color_Red
+		}
+
+		### BUTTON CONTENT ####
+		hbox = {
+			hbox = {
+				margin = { 5 0 }
+
+				hbox = {
+					name = "traits_grid"
+					datamodel = "[EventOption.Reasons]"
+
+					item = {
+						icon = {
+							name = "trait_icon"
+							datacontext = "[ReasonItem.GetTrait]"
+							visible = "[ReasonItem.IsTrait]"
+							size = { 34 34 }
+							alwaystransparent = yes
+							texture = "[Trait.GetIcon(GetPlayer)]"
+							tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_TRAIT"
+							using = tooltip_ws
+						}
+					}
+				}
+
+				icon = {
+					visible = "[And( EventOption.IsTimeoutOption, And( GameHasMultiplePlayers, LessThanOrEqualTo_int32( EventWindow.GetDaysRemaining, '(int32)30' ) ) )]"
+					name = "timeout_icon"
+					size = { 34 34 }
+					texture = "gfx/interface/icons/symbols/icon_warning.dds"
+					tooltip = EVENT_WINDOW_DAYS_REMAINING
+				}
+
+				hbox = {
+					name = "skill_grid"
+					datamodel = "[EventOption.Reasons]"
+
+					item = {
+						icon = {
+							name = "skill_icon"
+							datacontext = "[ReasonItem.GetSkillItem]"
+							visible = "[ReasonItem.IsSkill]"
+							texture = "gfx/interface/icons/icon_skills.dds"
+							size = { 34 34 }
+							framesize = { 60 60 }
+							alwaystransparent = yes
+							frame = "[SkillItem.GetFrame]"
+							tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_SKILL"
+							using = tooltip_ws
+						}
+					}
+				}
+			}
+
+			# Hardcoded override
+			text_single = {
+				visible = "[EqualTo_string(EventOption.GetText, 'use_ability_name_override')]"
+				layoutpolicy_horizontal = expanding
+				text = "ABS_USE_SELECTED_ABILITY"
+				autoresize = no
+				default_format = "#high"
+				align = center|nobaseline
+				fontsize_min = 12
+			}
+			text_single = {
+				visible = "[Not(EqualTo_string(EventOption.GetText, 'use_ability_name_override'))]"
+				layoutpolicy_horizontal = expanding
+				text = "[EventOption.GetText]"
+				autoresize = no
+				default_format = "#high"
+				align = center|nobaseline
+				fontsize_min = 12
+			}
+
+			hbox = {
+				name = "effects_grid"
+				datamodel = "[EventOption.Effects]"
+				margin = { 5 0 }
+
+				item = {
+					container = {
+						container = {
+							visible = "[OptionEffectItem.IsTrait]"
+							alwaystransparent = yes
+
+							highlight_icon = {
+								datacontext = "[OptionEffectItem.GetTrait]"
+								name = "trait_icon"
+								size = { 34 34 }
+								texture = "[Trait.GetIcon(GetPlayer)]"
+							}
+
+							highlight_icon = {
+								visible = "[OptionEffectItem.IsGain]"
+								texture = "gfx/interface/icons/symbols/icon_plus_small.dds"
+								name = "gain"
+								size = { 20 20 }
+							}
+
+							highlight_icon = {
+								visible = "[OptionEffectItem.IsLoss]"
+								texture = "gfx/interface/icons/symbols/icon_minus_small.dds"
+								name = "loss"
+								size = { 20 20 }
+							}
+						}
+
+						container = {
+							visible = "[OptionEffectItem.IsStress]"
+							alwaystransparent = yes
+
+							highlight_icon = {
+								visible = "[And(OptionEffectItem.IsGain,Not(OptionEffectItem.IsCritical))]"
+								texture = "gfx/interface/icons/stress/icon_stress_gain.dds"
+								name = "stress_gain"
+								size = { 34 34 }
+							}
+
+							highlight_icon = {
+								visible = "[OptionEffectItem.IsLoss]"
+								texture = "gfx/interface/icons/stress/icon_stress_loss.dds"
+								name = "stress_loss"
+								size = { 34 34 }
+							}
+
+							highlight_icon = {
+								visible = "[OptionEffectItem.IsCritical]"
+								texture = "gfx/interface/icons/stress/icon_stress_gain_critical.dds"
+								name = "stress_critical"
+								size = { 34 34 }
+							}
+						}
+
+						highlight_icon = {
+							name = "death"
+							visible = "[OptionEffectItem.IsDeath]"
+							size = { 34 34 }
+							texture = "gfx/interface/icons/icon_dead.dds"
+						}
+
+						highlight_icon = {
+							name = "scheme"
+							visible = "[OptionEffectItem.IsScheme]"
+							size = { 34 34 }
+							texture = "gfx/interface/icons/icon_scheme.dds"
+						}
+					}
+				}
+			}
+		}
+	}
+
+	##################################################
+	
+	### Available localization keys within item blocks
+	
+	# ABS_SCOPED_ABILITY_NAME
+	# ABS_SCOPED_ABILITY_COST
+	# ABS_SCOPED_ABILITY_POWER_RATING
+	# ABS_SCOPED_ABILITY_ELEMENT => (Ice/Fire/Lightning/None)
+	# ABS_SCOPED_ABILITY_SCHOOL
+	# ABS_SCOPED_ABILITY_ACCURACY # Evasion for Movement spells
+	# ABS_SCOPED_ABILITY_EFFECT_TYPE
+	# ABS_SCOPED_ABILITY_COOLDOWN
+	# ABS_SCOPED_ABILITY_AP_NAME
+	# ABS_SCOPED_ABILITY_RARITY
+
+	##################################################
+
+	type old_ability_box = button_standard {
+		name = "ability_box"
+		#minimumsize = { 240 0 }
+		minimumsize = { 440 0 }
+		
+		datacontext = "[GetScriptedGui('ability_system_ability_selector')]"
+		
+		#spell_icon_selector = {}
+
+		visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('selected_ability', Scope.GetCharacter.MakeScope ).End )]"
+		enabled = "[ScriptedGui.IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('selected_ability', Scope.GetCharacter.MakeScope ).End )]"
+		tooltip = "[ScriptedGui.BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('selected_ability', Scope.GetCharacter.MakeScope ).End )]"
+		onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('selected_ability', Scope.GetCharacter.MakeScope ).End )]"
+		onclick = "[GetVariableSystem.Clear('needs_to_select_an_ability')]"
+		
+		text = "ABS_SCOPED_ABILITY_NAME"
+		down = "[EqualTo_string(Scope.Var('ability_name').GetFlagName, GetPlayer.MakeScope.Var('selected_ability').GetCharacter.MakeScope.Var('ability_name').GetFlagName)]"
+	}
+	
+	type selector_ability_box = button_standard_clean {
+		layoutpolicy_horizontal = expanding
+		size = { 230 90 }
+		
+		block "data_context" {
+			datacontext = "[GetScriptedGui('ability_system_ability_selector')]"
+		}
+		
+		# Add conditions for visible/enabled here
+		block "btn_extra" {
+			visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('selected_ability', Scope.GetCharacter.MakeScope ).End )]"
+		}
+		
+		blockoverride "disabled" {
+			highlight_icon = {
+				size = { 100% 100% }
+				gfxtype = togglepushbuttongfx
+				effectname = "NoHighlight"
+				texture = "gfx/interface/buttons/button_disabled_stripes.dds"
+				spriteType = Corneredtiled
+				spriteborder = { 2 2 }
+				framesize  = { 238 63 }
+
+				upframe = 1
+				uphoverframe = 1
+				uppressedframe = 1
+				downframe = 1
+				downhoverframe = 1
+				downpressedframe = 1
+				disableframe = 2
+
+				alpha = 1
+
+				modify_texture = {
+					name = "overlay"
+					texture = "gfx/interface/buttons/button_standard_overlay.dds"
+					spriteType = Corneredstretched
+					spriteborder = { 3 3 }
+					blend_mode = overlay
+				}
+
+				block "button_standard_mouseover" {}
+			}
+		}
+		
+		alwaystransparent = "[EqualTo_string(Scope.Var('ability_name').GetFlagName, GetPlayer.MakeScope.Var('selected_ability').GetCharacter.MakeScope.Var('ability_name').GetFlagName)]"
+
+		using = tooltip_se		
+
+		background = {
+			using = Background_Area_Dark
+			alpha = 0.9
+		}
+		
+		background = {
+			texture = "gfx/interface/progressbars/progress_gray.dds"
+			alpha = 0.4
+		}
+
+		vbox = {
+			layoutpolicy_horizontal = expanding		
+			layoutpolicy_vertical = expanding
+			
+			# Header
+			hbox = {
+				layoutpolicy_horizontal = expanding
+				
+				size = { 230 25 }
+		
+				background = {
+					texture = "gfx/interface/progressbars/progress_black.dds"
+					alpha = 0.4
+				}
+				
+				text_single = {
+					text = "ABS_SCOPED_ABILITY_NAME"
+				}
+			}
+			
+			# Body
+			hbox = {
+				layoutpolicy_horizontal = expanding			
+				layoutpolicy_vertical = expanding
+			
+				size = { 230 65 }
+		
+				background = {
+					texture = "gfx/interface/progressbars/progress_gray.dds"
+					alpha = 0.4
+				}
+				
+				# 3 rows x 2 columns
+				
+				flowcontainer = {
+					direction = vertical
+					
+					container = {
+						hbox = {
+							size = { 230 21 }
+							layoutpolicy_horizontal = expanding
+							margin = { 10 0 }
+
+							hbox = {								
+								text_single = {
+									text = "ABS_GUI_TEXT_POWER_RATING"
+									margin_right = 5
+								}								
+								text_single = {
+									text = "ABS_SCOPED_ABILITY_POWER_RATING"
+								}
+							}
+
+							expand = {}
+
+							hbox = {
+								text_single = {
+									text = "ABS_SCOPED_ABILITY_ELEMENT"
+								}
+							}
+						}
+					}
+					container = {
+						hbox = {
+							size = { 230 21 }
+							layoutpolicy_horizontal = expanding
+							margin = { 10 0 }
+
+							hbox = {									
+								text_single = {
+									visible = "[Not(EqualTo_CFixedPoint(Scope.Var('ability_effect').GetValue, EmptyScope.ScriptValue('ability_effect_movement')))]"
+									text = "ABS_GUI_TEXT_ACCURACY"
+									margin_right = 5
+								}									
+								text_single = {
+									visible = "[EqualTo_CFixedPoint(Scope.Var('ability_effect').GetValue, EmptyScope.ScriptValue('ability_effect_movement'))]"
+									text = "ABS_GUI_TEXT_EVASION"
+									margin_right = 5
+								}						
+								text_single = {
+									text = "ABS_SCOPED_ABILITY_ACCURACY"
+								}
+							}
+
+							expand = {}
+
+							hbox = {								
+								text_single = {
+									text = "ABS_GUI_TEXT_COOLDOWN"
+									margin_right = 5
+								}
+								text_single = {
+									text = "ABS_SCOPED_ABILITY_COOLDOWN"
+								}
+							}
+						}
+					}
+					container = {
+						hbox = {				
+							size = { 230 21 }
+							layoutpolicy_horizontal = expanding
+							margin = { 10 0 }
+
+							hbox = {								
+								text_single = {
+									text = "ABS_SCOPED_ABILITY_EFFECT_TYPE"
+								}
+							}
+
+							expand = {}
+
+							hbox = {								
+								text_single = {
+									text = "ABS_SCOPED_ABILITY_COST"
+									margin_right = 5
+								}
+								text_single = {
+									text = "ABS_SCOPED_ABILITY_AP_NAME"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,307 @@
+﻿##################################################
+
+### Ability system - Script Values | Accessibile values
+
+# Selected Ability Values	-	Usable in script
+#									-> selected_ability_cost
+#									-> selected_ability_element
+#									-> selected_ability_type
+#									-> selected_ability_context
+#									-> selected_ability_power_rating
+#									-> selected_ability_school
+#									-> selected_ability_accuracy
+#									-> selected_ability_effect_type
+#									-> selected_ability_cooldown
+#									-> selected_ability_rarity
+# Local Ability Values		-	Uses 'scope:ability_caster' to apply bonusses to base ability values
+# Character Values			-	Values used by characters
+#									-> current_magicka
+#									-> maximum_magicka
+#									-> maximum_hitpoints
+# GUI Values				-	Values transformed for use in GUI elements
+#									-> ability_cooldown_left
+
+##################################################
+
+##################################################
+# Selected Ability Values - Usable in script
+##################################################
+selected_ability_cost = {
+	value = 0
+	
+	if = {
+		# This silly trick is required for bonusses to apply
+		limit = { has_variable = selected_ability save_temporary_scope_as = ability_caster }
+		add = var:selected_ability.ability_cost
+	}
+}
+selected_ability_element = {
+	value = 0
+	
+	if = {
+		# This silly trick is required for bonusses to apply
+		limit = { has_variable = selected_ability save_temporary_scope_as = ability_caster }
+		add = var:selected_ability.ability_element
+	}
+}
+selected_ability_type = {
+	value = 0
+	
+	if = {
+		# This silly trick is required for bonusses to apply
+		limit = { has_variable = selected_ability save_temporary_scope_as = ability_caster }
+		add = var:selected_ability.ability_type
+	}
+}
+selected_ability_context = {
+	value = 0
+	
+	if = {
+		# This silly trick is required for bonusses to apply
+		limit = { has_variable = selected_ability save_temporary_scope_as = ability_caster }
+		add = var:selected_ability.ability_context
+	}
+}
+selected_ability_power_rating = {
+	value = 0
+	
+	if = {
+		# This silly trick is required for bonusses to apply
+		limit = { has_variable = selected_ability save_temporary_scope_as = ability_caster }
+		add = var:selected_ability.ability_power_rating
+	}
+}
+selected_ability_school = {
+	value = 0
+	
+	if = {
+		# This silly trick is required for bonusses to apply
+		limit = { has_variable = selected_ability save_temporary_scope_as = ability_caster }
+		add = var:selected_ability.ability_school
+	}
+}
+selected_ability_accuracy = {
+	value = 0
+	
+	if = {
+		# This silly trick is required for bonusses to apply
+		limit = { has_variable = selected_ability save_temporary_scope_as = ability_caster }
+		add = var:selected_ability.ability_accuracy
+	}
+}
+selected_ability_effect_type = {
+	value = 0
+	
+	if = {
+		# This silly trick is required for bonusses to apply
+		limit = { has_variable = selected_ability save_temporary_scope_as = ability_caster }
+		add = var:selected_ability.ability_effect_type
+	}
+}
+selected_ability_cooldown = {
+	value = 0
+	
+	if = {
+		# This silly trick is required for bonusses to apply
+		limit = { has_variable = selected_ability save_temporary_scope_as = ability_caster }
+		add = var:selected_ability.ability_cooldown
+	}
+}
+selected_ability_rarity = {
+	value = 0
+	
+	if = {
+		# This silly trick is required for bonusses to apply
+		limit = { has_variable = selected_ability save_temporary_scope_as = ability_caster }
+		add = var:selected_ability.ability_rarity
+	}
+}
+
+##################################################
+# Local Ability Values - Uses 'scope:ability_caster' to apply bonusses to base ability values
+##################################################
+ability_cost = {
+	value = 0
+	if = {
+		limit = { has_variable = ability_cost }
+		add = var:ability_cost
+	}	
+	if = {
+		limit = { exists = scope:ability_caster }
+		# Do changes
+		if = {
+			limit = {
+				scope:ability_caster = { has_trait = magic_level_4 }
+			}
+			divide = 2 # Halves the cost
+		}
+	}
+	# Free stuff!
+	if = {
+		limit = {
+			has_setting = { CFG = abs_debug_enable_infinite_ap }
+		}
+		multiply = 0
+	}
+}
+ability_element = {
+	value = 0
+	if = {
+		limit = { has_variable = ability_element }
+		add = var:ability_element
+	}
+}
+ability_type = {
+	value = 0
+	if = {
+		limit = { has_variable = ability_type }
+		add = var:ability_type
+	}
+}
+ability_context = {
+	value = 0
+	if = {
+		limit = { has_variable = ability_context }
+		add = var:ability_context
+	}
+}
+ability_power_rating = {
+	value = 0
+	if = {
+		limit = { has_variable = ability_power_rating }
+		add = var:ability_power_rating
+	}	
+	if = {
+		limit = { exists = scope:ability_caster }
+		# Do changes
+		if = {
+			limit = {
+				scope:ability_caster = { has_trait = magic_level_4 }
+			}
+			multiply = 1#7.5
+		}
+	}
+	if = {
+		limit = { ability_effect_type = ability_effect_create_shield }
+		multiply = 2.25
+		
+		ceiling = yes
+	}
+}
+ability_school = {
+	value = 0
+	if = {
+		limit = { has_variable = ability_school }
+		add = var:ability_school
+	}
+}
+ability_accuracy = {
+	value = 0
+	if = {
+		limit = { has_variable = ability_accuracy }
+		add = var:ability_accuracy
+	}
+	if = {
+		limit = { ability_effect_type = ability_effect_movement }
+		multiply = 1.15
+	}	
+}
+ability_effect_type = {
+	value = 0
+	if = {
+		limit = { has_variable = ability_effect }
+		add = var:ability_effect
+	}
+}
+ability_cooldown = {
+	value = 0
+	if = {
+		limit = { has_variable = ability_cooldown }
+		add = var:ability_cooldown
+	}
+	
+	min = 0
+	max = ABILITY_COOLDOWN_MAX
+}
+ability_rarity = {
+	value = 0
+	if = {
+		limit = { has_variable = ability_rarity }
+		add = var:ability_rarity
+	}
+	
+	min = ability_rarity_normal
+	max = ability_rarity_legendary
+}
+
+##################################################
+# Character Values - Values used by characters
+##################################################
+current_magicka = {
+	value = 0
+	if = {
+		limit = { has_variable = current_magicka }
+		add = var:current_magicka
+	}
+}
+maximum_magicka = {
+	value = 0
+	if = {
+		limit = { has_variable = maximum_magicka }
+		add = var:maximum_magicka
+	}
+}
+maximum_hitpoints = {
+	value = 20 #TODO: Add an actual formula
+	
+}
+
+##################################################
+# GUI Values - Values transformed for use in GUI elements
+##################################################
+ability_cooldown_left = {
+	value = 0
+	if = {
+		limit = {
+			exists = scope:selected_ability
+		}
+		ROOT = {
+			if = {			
+				limit = { is_target_in_variable_list = { name = abilities_cooldown_turns_1 target = scope:selected_ability.var:ability_name } }
+				add = 1
+			}
+			else_if = {			
+				limit = { is_target_in_variable_list = { name = abilities_cooldown_turns_2 target = scope:selected_ability.var:ability_name } }
+				add = 2
+			}
+			else_if = {			
+				limit = { is_target_in_variable_list = { name = abilities_cooldown_turns_3 target = scope:selected_ability.var:ability_name } }
+				add = 3
+			}
+			else_if = {			
+				limit = { is_target_in_variable_list = { name = abilities_cooldown_turns_4 target = scope:selected_ability.var:ability_name } }
+				add = 4
+			}
+			else_if = {			
+				limit = { is_target_in_variable_list = { name = abilities_cooldown_turns_5 target = scope:selected_ability.var:ability_name } }
+				add = 5
+			}
+			else_if = {			
+				limit = { is_target_in_variable_list = { name = abilities_cooldown_turns_6 target = scope:selected_ability.var:ability_name } }
+				add = 6
+			}
+			else_if = {			
+				limit = { is_target_in_variable_list = { name = abilities_cooldown_turns_7 target = scope:selected_ability.var:ability_name } }
+				add = 7
+			}
+			else_if = {			
+				limit = { is_target_in_variable_list = { name = abilities_cooldown_turns_8 target = scope:selected_ability.var:ability_name } }
+				add = 8
+			}
+			else_if = {			
+				limit = { is_target_in_variable_list = { name = abilities_cooldown_turns_9 target = scope:selected_ability.var:ability_name } }
+				add = 9
+			}
+		}
+	}
+}

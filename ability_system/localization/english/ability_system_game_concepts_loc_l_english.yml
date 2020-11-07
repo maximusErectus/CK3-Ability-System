@@ -1,0 +1,57 @@
+l_english:
+ # Game Concepts
+ game_concept_spells: "Spells"
+ game_concept_spells_desc: "Spells are magic. All spells require [magicka|E] to be cast."
+ game_concept_abilities: "Ability"
+ game_concept_abilities_desc: "Abilities"
+ game_concept_magicka: "Magicka"
+ game_concept_magicka_desc: "Magicka is used to cast [spells|e]"
+ game_concept_magicians: "Magicians"
+ game_concept_magicians_desc: "Magicians are people that use [magicka|E] to cast [spells|E]."
+ 
+ # Ability stat concepts
+ game_concept_ability_power_rating: "Power rating"
+ game_concept_ability_power_rating_desc: "TODO"
+ game_concept_ability_accuracy: "Accuracy"
+ game_concept_ability_accuracy_desc: "TODO"
+ game_concept_ability_evasion: "Evasion"
+ game_concept_ability_evasion_desc: "TODO"
+ game_concept_ability_cooldown: "Cooldown"
+ game_concept_ability_cooldown_desc: "Amount of turns before the [ability|E] can be used again." 
+ 
+ # Ability effect type concepts
+ game_concept_ability_effect_movement: "Movement"
+ game_concept_ability_effect_movement_desc: "TODO"
+ game_concept_ability_effect_damage: "Damage"
+ game_concept_ability_effect_damage_desc: "TODO"
+ game_concept_ability_effect_block_damage: "Damage-Blocking"
+ game_concept_ability_effect_block_damage_desc: "TODO"
+ game_concept_ability_effect_create_shield: "Shield-Creation"
+ game_concept_ability_effect_create_shield_desc: "TODO"
+ 
+ # Element concepts 
+ game_concept_element_neutral: "Neutral"
+ game_concept_element_neutral_desc: "TODO"
+ game_concept_element_fire: "Fire"
+ game_concept_element_fire_desc: "TODO"
+ game_concept_element_ice: "Ice"
+ game_concept_element_ice_desc: "TODO"
+ game_concept_element_lightning: "Lightning"
+ game_concept_element_lightning_desc: "TODO"
+ 
+ # Ability rarity concepts
+ game_concept_ability_rarity_normal: "Normal"
+ game_concept_ability_rarity_normal_desc: "TODO"
+ game_concept_ability_rarity_fine: "Fine"
+ game_concept_ability_rarity_fine_desc: "TODO"
+ game_concept_ability_rarity_superior: "Superior"
+ game_concept_ability_rarity_superior_desc: "TODO"
+ game_concept_ability_rarity_epic: "Epic"
+ game_concept_ability_rarity_epic_desc: "TODO"
+ game_concept_ability_rarity_legendary: "Legendary"
+ game_concept_ability_rarity_legendary_desc: "TODO"
+ 
+ # Game Concept Aliases 
+ game_concept_spell: "Spell"
+ game_concept_magician: "Magician"
+ game_concept_ability: "Ability"

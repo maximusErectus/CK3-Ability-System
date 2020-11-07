@@ -1,0 +1,112 @@
+﻿##################################################
+
+### Ability system - Scripted Effects | Default Abilities
+
+# abs_create_ability_list - Generates the list of default abilities
+
+##################################################
+
+##################################################
+# abs_create_ability_list - Generates the list of default abilities
+##################################################
+abs_create_ability_list = {
+	### Check version
+	if = {
+		limit = {
+			NOT = { has_global_variable = ABILITY_SYSTEM_CURRENT_VERSION }
+		}
+		set_global_variable = {
+			name = ABILITY_SYSTEM_CURRENT_VERSION
+			value = ABILITY_SYSTEM_VERSION
+		}
+	}
+	if = {
+		limit = {
+			global_var:ABILITY_SYSTEM_CURRENT_VERSION < ABILITY_SYSTEM_VERSION
+		}
+		clear_global_variable_list = ability_list
+		clear_global_variable_list = ability_trackers
+	}
+	
+	abs_add_ability_to_list = { 
+		ABILITY_NAME = flag:fire_blast
+		ABILITY_TYPE = ability_fire_blast_type
+		ABILITY_COST = ability_fire_blast_cost
+		ABILITY_ELEMENT = ability_fire_blast_element
+		ABILITY_CONTEXT = ability_fire_blast_context
+		ABILITY_POWER_RATING = ability_fire_blast_power_rating
+		ABILITY_SCHOOL = ability_fire_blast_school
+		ABILITY_EFFECT = ability_fire_blast_effect
+		ABILITY_ACCURACY = ability_fire_blast_accuracy
+		ABILITY_COOLDOWN = ability_fire_blast_cooldown
+		ABILITY_RARITY = ability_fire_blast_rarity
+	}
+	abs_add_ability_to_list = { 
+		ABILITY_NAME = flag:water_blast
+		ABILITY_TYPE = ability_water_blast_type
+		ABILITY_COST = ability_water_blast_cost
+		ABILITY_ELEMENT = ability_water_blast_element
+		ABILITY_CONTEXT = ability_water_blast_context
+		ABILITY_POWER_RATING = ability_water_blast_power_rating
+		ABILITY_SCHOOL = ability_water_blast_school
+		ABILITY_EFFECT = ability_water_blast_effect
+		ABILITY_ACCURACY = ability_water_blast_accuracy
+		ABILITY_COOLDOWN = ability_water_blast_cooldown
+		ABILITY_RARITY = ability_water_blast_rarity
+	}
+	abs_add_ability_to_list = { 
+		ABILITY_NAME = flag:lightning_blast 
+		ABILITY_TYPE = ability_lightning_blast_type 
+		ABILITY_COST = ability_lightning_blast_cost 
+		ABILITY_ELEMENT = ability_lightning_blast_element
+		ABILITY_CONTEXT = ability_lightning_blast_context
+		ABILITY_POWER_RATING = ability_lightning_blast_power_rating
+		ABILITY_SCHOOL = ability_lightning_blast_school
+		ABILITY_EFFECT = ability_lightning_blast_effect
+		ABILITY_ACCURACY = ability_lightning_blast_accuracy
+		ABILITY_COOLDOWN = ability_lightning_blast_cooldown
+		ABILITY_RARITY = ability_lightning_blast_rarity
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:dodge 
+		ABILITY_TYPE = ability_dodge_type 
+		ABILITY_COST = ability_dodge_cost 
+		ABILITY_ELEMENT = ability_dodge_element		
+		ABILITY_CONTEXT = ability_dodge_context
+		ABILITY_POWER_RATING = ability_dodge_power_rating
+		ABILITY_SCHOOL = ability_dodge_school
+		ABILITY_EFFECT = ability_dodge_effect
+		ABILITY_ACCURACY = ability_dodge_accuracy
+		ABILITY_COOLDOWN = ability_dodge_cooldown
+		ABILITY_RARITY = ability_dodge_rarity
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:fire_wall 
+		ABILITY_TYPE = ability_fire_wall_type 
+		ABILITY_COST = ability_fire_wall_cost 
+		ABILITY_ELEMENT = ability_fire_wall_element		
+		ABILITY_CONTEXT = ability_fire_wall_context
+		ABILITY_POWER_RATING = ability_fire_wall_power_rating
+		ABILITY_SCHOOL = ability_fire_wall_school
+		ABILITY_EFFECT = ability_fire_wall_effect
+		ABILITY_ACCURACY = ability_fire_wall_accuracy
+		ABILITY_COOLDOWN = ability_fire_wall_cooldown
+		ABILITY_RARITY = ability_fire_wall_rarity
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:ice_wall 
+		ABILITY_TYPE = ability_ice_wall_type 
+		ABILITY_COST = ability_ice_wall_cost 
+		ABILITY_ELEMENT = ability_ice_wall_element		
+		ABILITY_CONTEXT = ability_ice_wall_context
+		ABILITY_POWER_RATING = ability_ice_wall_power_rating
+		ABILITY_SCHOOL = ability_ice_wall_school
+		ABILITY_EFFECT = ability_ice_wall_effect
+		ABILITY_ACCURACY = ability_ice_wall_accuracy
+		ABILITY_COOLDOWN = ability_ice_wall_cooldown
+		ABILITY_RARITY = ability_ice_wall_rarity
+	}
+	
+	### Spells added for GUI testing
+	#abs_debug_add_testing_abilitys = yes	
+}

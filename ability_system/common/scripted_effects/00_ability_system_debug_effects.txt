@@ -1,0 +1,522 @@
+﻿##################################################
+
+### Ability system - Scripted Effects | Debug Effects
+
+# abs_debug_unlock_random_ability	-	Unlocks a random locked ability
+# abs_debug_unlock_all_abilities	-	Unlocks all abilities
+# abs_prepare_duel_debug			-	Starts a new duel
+# 											* Parameter => $ATTACKER$ - Character, Character that the challenger
+# 											* Parameter => $DEFENDER$ - Character, Character that being challenged
+# abs_debug_add_testing_abilities	-	Adds placeholder abilities for testing
+
+##################################################
+
+##################################################
+# abs_debug_unlock_random_ability - Unlocks a random locked ability
+##################################################
+abs_debug_unlock_random_ability = {
+	every_in_global_list = {
+		variable = ability_trackers
+		add_to_temporary_list = abilities_to_check
+	}
+	random_in_list = {
+		list = abilities_to_check
+		limit = { 
+			PREV = { NOT = { is_target_in_variable_list = { name = unlocked_abilities target = PREV.var:ability_name } } }
+		}
+		save_scope_as = unlocked_ability # We want to be able to access it later.
+		PREV = {
+			add_to_variable_list = {
+				name = unlocked_abilities
+				target = PREV.var:ability_name
+			}
+		}
+	}
+}
+
+##################################################
+# abs_debug_unlock_all_abilities - Unlocks all abilities
+##################################################
+abs_debug_unlock_all_abilities = {
+	every_in_global_list = {
+		variable = ability_trackers
+		
+		PREV = {
+			add_to_variable_list = {
+				name = unlocked_abilities
+				target = PREV.var:ability_name
+			}
+		}
+	}
+}
+
+##################################################
+# abs_prepare_duel_debug - Starts a new duel
+# 							* Parameter => $ATTACKER$ - Character, Character that the challenger
+# 							* Parameter => $DEFENDER$ - Character, Character that being challenged
+##################################################
+abs_prepare_duel_debug = {	
+	$ATTACKER$ = {
+		set_variable = { 
+			name = current_magicka 
+			value = 1000 
+		}
+		
+		remove_trait = magic_level_4
+		remove_trait = magic_level_3
+		remove_trait = magic_level_2
+		remove_trait = magic_level_1
+		
+		random_list = {
+			1 = { add_trait = magic_level_4 }
+			3 = { add_trait = magic_level_3 }
+			6 = { add_trait = magic_level_2 }
+			10= { add_trait = magic_level_1 }
+		}
+		
+		# For future testing
+		clear_variable_list = unlocked_abilities
+		abs_unlock_ability = { ABILITY_NAME = flag:dodge }
+		abs_debug_unlock_random_ability = yes
+		abs_debug_unlock_random_ability = yes
+		#abs_debug_unlock_random_ability = yes
+		#abs_debug_unlock_random_ability = yes
+		#abs_debug_unlock_random_ability = yes
+		#abs_debug_unlock_random_ability = yes
+		#abs_debug_unlock_random_ability = yes
+		#abs_debug_unlock_random_ability = yes
+	}
+	
+	$DEFENDER$ = {
+		set_variable = {
+			name = current_magicka
+			value = 1000
+		}
+		
+		remove_trait = magic_level_4
+		remove_trait = magic_level_3
+		remove_trait = magic_level_2
+		remove_trait = magic_level_1
+		
+		random_list = {
+			1 = { add_trait = magic_level_4 }
+			3 = { add_trait = magic_level_3 }
+			6 = { add_trait = magic_level_2 }
+			10= { add_trait = magic_level_1 }
+		}
+		
+		# For future testing
+		clear_variable_list = unlocked_abilities
+		abs_unlock_ability = { ABILITY_NAME = flag:dodge }
+		abs_debug_unlock_random_ability = yes
+		abs_debug_unlock_random_ability = yes
+		#abs_debug_unlock_random_ability = yes
+		#abs_debug_unlock_random_ability = yes
+		#abs_debug_unlock_random_ability = yes
+		#abs_debug_unlock_random_ability = yes
+		#abs_debug_unlock_random_ability = yes
+		#abs_debug_unlock_random_ability = yes
+	}
+	
+	abs_prepare_duel = {
+		ATTACKER = $ATTACKER$
+		DEFENDER = $DEFENDER$
+	}
+}
+
+##################################################
+# abs_debug_add_testing_abilities - Adds placeholder abilities for testing
+##################################################
+abs_debug_add_testing_abilities = {
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_1 		
+		ABILITY_SCHOOL = 1		
+		ABILITY_ELEMENT = 1		
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_2
+		ABILITY_SCHOOL = 1		
+		ABILITY_ELEMENT = 2		
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_3 		
+		ABILITY_SCHOOL = 1		
+		ABILITY_ELEMENT = 3	
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_4 		
+		ABILITY_SCHOOL = 1		
+		ABILITY_ELEMENT = 4	
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_5 		
+		ABILITY_SCHOOL = 2	
+		ABILITY_ELEMENT = 1		
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_6	
+		ABILITY_SCHOOL = 2	
+		ABILITY_ELEMENT = 2		
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_7 		
+		ABILITY_SCHOOL = 2	
+		ABILITY_ELEMENT = 3	
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_8 		
+		ABILITY_SCHOOL = 2	
+		ABILITY_ELEMENT = 4	
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_9 		
+		ABILITY_SCHOOL = 3
+		ABILITY_ELEMENT = 1		
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_10	
+		ABILITY_SCHOOL = 3
+		ABILITY_ELEMENT = 2		
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_11 		
+		ABILITY_SCHOOL = 3
+		ABILITY_ELEMENT = 3	
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_12 		
+		ABILITY_SCHOOL = 3
+		ABILITY_ELEMENT = 4	
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_13 		
+		ABILITY_SCHOOL = 4
+		ABILITY_ELEMENT = 1		
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_14		
+		ABILITY_SCHOOL = 4
+		ABILITY_ELEMENT = 2		
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_15 		
+		ABILITY_SCHOOL = 4
+		ABILITY_ELEMENT = 3	
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_16 		
+		ABILITY_SCHOOL = 4
+		ABILITY_ELEMENT = 4	
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_17 		
+		ABILITY_SCHOOL = 5
+		ABILITY_ELEMENT = 1		
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_18 		
+		ABILITY_SCHOOL = 5
+		ABILITY_ELEMENT = 2		
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_19 		
+		ABILITY_SCHOOL = 5
+		ABILITY_ELEMENT = 3	
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_20 		
+		ABILITY_SCHOOL = 5
+		ABILITY_ELEMENT = 4	
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_21 		
+		ABILITY_SCHOOL = 6
+		ABILITY_ELEMENT = 1		
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_22 		
+		ABILITY_SCHOOL = 6
+		ABILITY_ELEMENT = 2		
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_23 		
+		ABILITY_SCHOOL = 6
+		ABILITY_ELEMENT = 3	
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_24 		
+		ABILITY_SCHOOL = 6
+		ABILITY_ELEMENT = 4	
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_25 		
+		ABILITY_SCHOOL = 7
+		ABILITY_ELEMENT = 1		
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_26 		
+		ABILITY_SCHOOL = 7
+		ABILITY_ELEMENT = 2		
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_27 		
+		ABILITY_SCHOOL = 7
+		ABILITY_ELEMENT = 3	
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_28 		
+		ABILITY_SCHOOL = 7
+		ABILITY_ELEMENT = 4	
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_29 		
+		ABILITY_SCHOOL = 8
+		ABILITY_ELEMENT = 1		
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_30 		
+		ABILITY_SCHOOL = 8
+		ABILITY_ELEMENT = 2		
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_31 		
+		ABILITY_SCHOOL = 8
+		ABILITY_ELEMENT = 3	
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+	abs_add_ability_to_list = {
+		ABILITY_NAME = flag:test_ability_32 		
+		ABILITY_SCHOOL = 8
+		ABILITY_ELEMENT = 4	
+		ABILITY_TYPE = 1 
+		ABILITY_COST = 5 
+		ABILITY_CONTEXT = 1
+		ABILITY_POWER_RATING = 5
+		ABILITY_EFFECT = 2
+		ABILITY_COOLDOWN = 1
+		ABILITY_RARITY = 1
+	}
+}

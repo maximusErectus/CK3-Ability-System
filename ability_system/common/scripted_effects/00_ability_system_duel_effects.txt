@@ -1,0 +1,950 @@
+﻿##################################################
+
+### Ability system - Scripted Effects | Duel Effects
+
+# abs_prepare_duel						-	Set flags/variables used during duels
+# 												* Parameter => $ATTACKER$ - Character, Character that the challenger
+# 												* Parameter => $DEFENDER$ - Character, Character that being challenged
+# abs_duel_calculate_ability_visibility	-	Calculates whether the defender can see the attacker's ability
+# abs_duel_execute_round				-	Generates the result for a duel round
+# abs_duel_set_ability_cooldown			-	Sets the cooldown for an ability
+# 												* Parameter => $ABILITY$ - Character, Ability to cooldown
+# 												* Parameter => $ABILITY_CASTER$ - Character, Character that is casting the ability
+# abs_duel_set_ability_cooldown			-	Sets the cooldown for an ability
+# 												* Parameter => $CHAR$ - Character, Character to tick all cooldowns for
+# abs_duel_round_cleanup				-	Cleans up any variables used during a round
+# abs_duel_cleanup						-	Cleans up any variables used during a duel
+
+##################################################
+
+##################################################
+# abs_prepare_duel - Set flags/variables used during duels
+# 						* Parameter => $ATTACKER$ - Character, Character that the challenger
+# 						* Parameter => $DEFENDER$ - Character, Character that being challenged
+##################################################
+abs_prepare_duel = {	
+	$ATTACKER$ = {		
+		# Scopes used in the event
+		save_scope_as = attacker
+		save_scope_as = initial_attacker
+		
+		# Maybe... Make HP persistent?
+		set_variable = {
+			name = hitpoints
+			value = maximum_hitpoints
+		}
+		set_variable = {
+			name = maximum_hitpoints
+			value = maximum_hitpoints
+		}
+
+		add_character_flag = dueling
+	}
+	
+	$DEFENDER$ = {
+		# Scopes used in the event
+		save_scope_as = defender
+		save_scope_as = initial_defender
+			
+		# Maybe... Make HP persistent?
+		set_variable = {
+			name = hitpoints
+			value = maximum_hitpoints
+		}
+		set_variable = {
+			name = maximum_hitpoints
+			value = maximum_hitpoints
+		}
+
+		add_character_flag = dueling
+	}
+	
+	$ATTACKER$ = {
+		trigger_event = { id = ability_system.112 }
+	}
+}
+
+##################################################
+# TODO: Rewrite this to be better
+# abs_duel_calculate_ability_visibility - Calculates whether the defender can see the attacker's ability
+##################################################
+abs_duel_calculate_ability_visibility = {
+	# By default, hide everything
+	set_variable = { name = ability_revealed_info value = flag:none }
+	random = {
+		chance = 40
+		
+		# Let's decide which bits to reveal
+		random_list = {
+			# You're getting it all! Only available for level 3+ Magicians
+			# Basically reveals the ability that was cast
+			1 = { 			
+				set_variable = { name = ability_revealed_info value = flag:all }
+			}
+			
+			# You learn something about the ability's effect
+			# Think damage / block_damage / movement etc.
+			7 = {
+				set_variable = { name = ability_revealed_info value = flag:ability_effect }
+			}
+			
+			# You learn something about the ability's element
+			# Ice / Fire / Lightning / Neutral
+			3 = {
+				set_variable = { name = ability_revealed_info value = flag:ability_element }				
+			}
+		}
+	}
+}
+
+##################################################
+# abs_duel_execute_round - Generates the result for a duel round
+# 							Available Scope => scope:attacker - Character, Character that is the attacking side
+# 							Available Scope => scope:defender - Character, Character that is the defending side
+##################################################
+abs_duel_execute_round = {	
+	# scope:<attacker|defender>.selected_ability_type
+	# scope:<attacker|defender>.selected_ability_context
+	# scope:<attacker|defender>.selected_ability_school
+	# scope:<attacker|defender>.selected_ability_effect_type
+	# scope:<attacker|defender>.selected_ability_accuracy
+	# scope:<attacker|defender>.selected_ability_element
+	# scope:<attacker|defender>.selected_ability_cost
+	# scope:<attacker|defender>.selected_ability_power_rating
+	# scope:<attacker|defender>.selected_ability_cooldown
+
+	# Declare variables to use during this method
+	save_temporary_scope_value_as = { name = attacker_ability_power value = 0 }
+	save_temporary_scope_value_as = { name = defender_ability_power value = 0 }
+	
+	save_temporary_scope_value_as = { name = attacker_damage_taken value = 0 }
+	save_temporary_scope_value_as = { name = defender_damage_taken value = 0 }
+	
+	# none/strong/weak
+	save_temporary_scope_value_as = { name = attacker_ability_affinity value = flag:none }
+	save_temporary_scope_value_as = { name = defender_ability_affinity value = flag:none }
+
+	# Remove the magicka
+	abs_subtract_ability_ap = { ABILITY_CASTER = scope:attacker }
+	abs_subtract_ability_ap = { ABILITY_CASTER = scope:defender }
+	
+	scope:attacker = { set_variable = { name = last_ability_dealt_damage value = no } }
+	scope:defender = { set_variable = { name = last_ability_dealt_damage value = no } }
+	
+	## Tick cooldown ##
+	# Shields
+	scope:attacker = {
+		if = {
+			limit = { has_variable = abs_duel_shield_cooldown }
+			change_variable = { name = abs_duel_shield_cooldown subtract = 1 }
+			
+			if = {
+				limit = { var:abs_duel_shield_cooldown <= 0 }
+				remove_variable = abs_duel_shield_cooldown
+			}
+		}
+	}
+	scope:defender = {
+		if = {
+			limit = { has_variable = abs_duel_shield_cooldown }
+			change_variable = { name = abs_duel_shield_cooldown subtract = 1 }
+			
+			if = {
+				limit = { var:abs_duel_shield_cooldown <= 0 }
+				remove_variable = abs_duel_shield_cooldown
+			}
+		}
+	}
+	# Abilities
+	abs_duel_cooldown_tick = { CHAR = scope:attacker }
+	abs_duel_cooldown_tick = { CHAR = scope:defender }
+	
+	# Set correct spell power
+	save_temporary_scope_value_as = { 
+		name = attacker_ability_power 
+		value = {
+			value = scope:attacker_ability_power
+			add = scope:attacker.selected_ability_power_rating
+		}
+	}
+	save_temporary_scope_value_as = { 
+		name = defender_ability_power 
+		value = {
+			value = scope:defender_ability_power
+			add = scope:defender.selected_ability_power_rating
+		}
+	}
+	
+	# If attacker -> create_shield, create the shield
+	if = {
+		limit = { scope:attacker.selected_ability_effect_type = ability_effect_create_shield }
+		scope:attacker = {
+			set_variable = {
+				name = shield_strength
+				value = scope:attacker.selected_ability_power_rating
+			}
+			set_variable = {
+				name = shield_max_strength
+				value = scope:attacker.selected_ability_power_rating
+			}		
+			set_variable = {
+				name = shield_element
+				value = scope:attacker.selected_ability_element
+			}
+			if = {
+				limit = { DUEL_SHIELD_COOLDOWN_ON_CREATED > 0 }
+				set_variable = {
+					name = abs_duel_shield_cooldown
+					value = DUEL_SHIELD_COOLDOWN_ON_CREATED
+				}
+			}
+		}
+	}
+	
+	# If defender -> create_shield, create the shield
+	if = {
+		limit = { scope:defender.selected_ability_effect_type = ability_effect_create_shield }
+		scope:defender = {
+			set_variable = {
+				name = shield_strength
+				value = scope:defender.selected_ability_power_rating
+			}
+			set_variable = {
+				name = shield_max_strength
+				value = scope:defender.selected_ability_power_rating
+			}
+			set_variable = {
+				name = shield_element
+				value = scope:defender.selected_ability_element
+			}
+			if = {
+				limit = { DUEL_SHIELD_COOLDOWN_ON_CREATED > 0 }
+				set_variable = {
+					name = abs_duel_shield_cooldown
+					value = DUEL_SHIELD_COOLDOWN_ON_CREATED
+				}
+			}
+		}
+	}
+	
+	# If attacker -> damage and defender -> has_shield, change attacker ability_power, Damage shield, restore ability power
+	if = {
+		limit = {
+			scope:attacker.selected_ability_effect_type = ability_effect_damage
+			scope:defender = { has_variable = shield_strength }
+		}
+		
+		# Change ability power
+		if = {
+			limit = {
+				abs_is_ability_element_strong_against = { 
+					ABILITY_ELEMENT_A = scope:attacker.selected_ability_element 
+					ABILITY_ELEMENT_B = scope:defender.var:shield_element
+				}
+			}
+			save_temporary_scope_value_as = { name = attacker_ability_affinity value = flag:strong }
+			save_temporary_scope_value_as = {
+				name = attacker_ability_power
+				value = {
+					value = scope:attacker_ability_power
+					multiply = ABILITY_AFFINITY_STRONG_MULTIPLIER
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				abs_is_ability_element_weak_against = { 
+					ABILITY_ELEMENT_A = scope:attacker.selected_ability_element 
+					ABILITY_ELEMENT_B = scope:defender.var:shield_element
+				}
+			}
+			save_temporary_scope_value_as = { name = attacker_ability_affinity value = flag:weak }
+			save_temporary_scope_value_as = {
+				name = attacker_ability_power
+				value = {
+					value = scope:attacker_ability_power
+					multiply = ABILITY_AFFINITY_WEAK_MULTIPLIER
+				}
+			}		
+		}
+		
+		# Damage shield
+		save_temporary_scope_value_as = {
+			name = ability_accuracy_vs_shield
+			value = {
+				value = scope:attacker.selected_ability_accuracy
+				add = ABILITY_ACCURACY_VS_SHIELD_OFFSET
+			}
+		}	
+		random = {
+			chance = scope:ability_accuracy_vs_shield		
+		
+			save_temporary_scope_value_as = {
+				name = attacker_remaining_power
+				value = {
+					value = scope:attacker_ability_power
+					subtract = scope:defender.var:shield_strength
+				}
+			}
+			if = { # We can destroy their shield c:
+				limit = {
+					scope:attacker_remaining_power >= 0
+				}
+				save_temporary_scope_value_as = {
+					name = attacker_ability_power
+					value = {
+						value = scope:attacker_ability_power
+						subtract = scope:defender.var:shield_strength
+					}
+				}
+				scope:defender = {
+					remove_variable = shield_strength
+					remove_variable = shield_element
+					remove_variable = shield_max_strength
+					
+					if = {
+						limit = {
+							OR = {
+								NOT = { exists = var:abs_duel_shield_cooldown }
+								var:abs_duel_shield_cooldown < DUEL_SHIELD_COOLDOWN_ON_DESTROYED
+							}
+						}
+						if = {
+							limit = { DUEL_SHIELD_COOLDOWN_ON_CREATED > 0 }
+							set_variable = {
+								name = abs_duel_shield_cooldown
+								value = DUEL_SHIELD_COOLDOWN_ON_DESTROYED
+							}
+						}
+					}
+				}
+			}
+			else = { # We can't destroy their shield :c
+				scope:defender = {
+					change_variable = {
+						name = shield_strength
+						subtract = scope:attacker_ability_power
+					}
+				}
+				save_temporary_scope_value_as = { name = attacker_ability_power value = 0 }
+			}
+		}
+		
+		# Restore ability power
+		if = {
+			limit = { scope:attacker_ability_affinity = flag:strong }
+			save_temporary_scope_value_as = {
+				name = attacker_ability_power
+				value = {
+					value = scope:attacker_ability_power
+					divide = ABILITY_AFFINITY_STRONG_MULTIPLIER
+				}
+			}
+		}
+		else_if = {
+			limit = { scope:attacker_ability_affinity = flag:weak }
+			save_temporary_scope_value_as = {
+				name = attacker_ability_power
+				value = {
+					value = scope:attacker_ability_power
+					divide = ABILITY_AFFINITY_WEAK_MULTIPLIER
+				}
+			}
+		}
+	}	
+	
+	# If defender -> damage and attacker -> has_shield, change defender ability_power, Damage shield, restore ability power
+	if = {
+		limit = {
+			scope:defender.selected_ability_effect_type = ability_effect_damage
+			scope:attacker = { has_variable = shield_strength }
+		}
+		
+		# Change ability power
+		if = {
+			limit = {
+				abs_is_ability_element_strong_against = { 
+					ABILITY_ELEMENT_A = scope:defender.selected_ability_element 
+					ABILITY_ELEMENT_B = scope:attacker.var:shield_element
+				}
+			}
+			save_temporary_scope_value_as = { name = defender_ability_affinity value = flag:strong }
+			save_temporary_scope_value_as = {
+				name = defender_ability_power
+				value = {
+					value = scope:defender_ability_power
+					multiply = ABILITY_AFFINITY_STRONG_MULTIPLIER
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				abs_is_ability_element_weak_against = { 
+					ABILITY_ELEMENT_A = scope:defender.selected_ability_element 
+					ABILITY_ELEMENT_B = scope:attacker.var:shield_element
+				}
+			}
+			save_temporary_scope_value_as = { name = defender_ability_affinity value = flag:weak }
+			save_temporary_scope_value_as = {
+				name = defender_ability_power
+				value = {
+					value = scope:defender_ability_power
+					multiply = ABILITY_AFFINITY_WEAK_MULTIPLIER
+				}
+			}		
+		}
+		
+		# Damage shield
+		save_temporary_scope_value_as = {
+			name = ability_accuracy_vs_shield
+			value = {
+				value = scope:defender.selected_ability_accuracy
+				add = ABILITY_ACCURACY_VS_SHIELD_OFFSET
+			}
+		}	
+		random = {
+			chance = scope:ability_accuracy_vs_shield
+		
+			save_temporary_scope_value_as = {
+				name = defender_remaining_power
+				value = {
+					value = scope:defender_ability_power
+					subtract = scope:attacker.var:shield_strength
+				}
+			}
+			if = { # We can destroy their shield c:
+				limit = {
+					scope:defender_remaining_power >= 0
+				}
+				save_temporary_scope_value_as = {
+					name = defender_ability_power
+					value = {
+						value = scope:defender_ability_power
+						subtract = scope:attacker.var:shield_strength
+					}
+				}
+				scope:attacker = {
+					remove_variable = shield_strength
+					remove_variable = shield_element
+					remove_variable = shield_max_strength
+					
+					if = {
+						limit = {
+							OR = {
+								NOT = { exists = var:abs_duel_shield_cooldown }
+								var:abs_duel_shield_cooldown < DUEL_SHIELD_COOLDOWN_ON_DESTROYED
+							}
+						}
+						if = {
+							limit = { DUEL_SHIELD_COOLDOWN_ON_CREATED > 0 }
+							set_variable = {
+								name = abs_duel_shield_cooldown
+								value = DUEL_SHIELD_COOLDOWN_ON_DESTROYED
+							}
+						}
+					}
+				}
+			}
+			else = { # We can't destroy their shield :c
+				scope:attacker = {
+					change_variable = {
+						name = shield_strength
+						subtract = scope:defender_ability_power
+					}
+				}
+				save_temporary_scope_value_as = { name = defender_ability_power value = 0 }
+			}
+		}
+		
+		# Restore ability power
+		if = {
+			limit = { scope:defender_ability_affinity = flag:strong }
+			save_temporary_scope_value_as = {
+				name = defender_ability_power
+				value = {
+					value = scope:defender_ability_power
+					divide = ABILITY_AFFINITY_STRONG_MULTIPLIER
+				}
+			}
+		}
+		else_if = {
+			limit = { scope:defender_ability_affinity = flag:weak }
+			save_temporary_scope_value_as = {
+				name = defender_ability_power
+				value = {
+					value = scope:defender_ability_power
+					divide = ABILITY_AFFINITY_WEAK_MULTIPLIER
+				}
+			}
+		}
+	}	
+	
+	# If attacker -> damage, attack - If defender -> has_shield, always miss
+	if = {
+		limit = {
+			scope:attacker.selected_ability_effect_type = ability_effect_damage	
+			scope:attacker_ability_power > 0
+		}
+		
+		save_temporary_scope_value_as = {
+			name = ability_accuracy_vs_character
+			value = {
+				value = scope:attacker.selected_ability_accuracy
+				add = DUEL_BASE_ACCURACY # Default
+				if = {
+					limit = { scope:defender.selected_ability_effect_type = ability_effect_movement }
+					subtract = scope:defender.selected_ability_accuracy
+				}
+				if = {
+					limit = { scope:defender = { has_variable = shield_strength } }
+					multiply = 0
+				}				
+			}
+		}
+		
+		random = {
+			chance = scope:ability_accuracy_vs_character
+			
+			# We've managed to connect!
+			if = { # They're blocking! Drats!
+				limit = {
+					scope:defender.selected_ability_effect_type = ability_effect_block_damage					
+				}
+				
+				# Change ability power
+				if = {
+					limit = {
+						abs_is_ability_element_strong_against = { 
+							ABILITY_ELEMENT_A = scope:attacker.selected_ability_element 
+							ABILITY_ELEMENT_B = scope:defender.selected_ability_element
+						}
+					}
+					save_temporary_scope_value_as = { name = attacker_ability_affinity value = flag:strong }
+					save_temporary_scope_value_as = {
+						name = attacker_ability_power
+						value = {
+							value = scope:attacker_ability_power
+							multiply = ABILITY_AFFINITY_STRONG_MULTIPLIER
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						abs_is_ability_element_weak_against = { 
+							ABILITY_ELEMENT_A = scope:attacker.selected_ability_element 
+							ABILITY_ELEMENT_B = scope:defender.selected_ability_element
+						}
+					}
+					save_temporary_scope_value_as = { name = attacker_ability_affinity value = flag:weak }
+					save_temporary_scope_value_as = {
+						name = attacker_ability_power
+						value = {
+							value = scope:attacker_ability_power
+							multiply = ABILITY_AFFINITY_WEAK_MULTIPLIER
+						}
+					}
+				}
+				else = { # To make sure we won't accidentally use the shield checked version
+					save_temporary_scope_value_as = { name = attacker_ability_affinity value = flag:none }	
+				}
+				
+				# Calculate if we've pierced the block
+				save_temporary_scope_value_as = {
+					name = attacker_ability_power
+					value = {
+						value = scope:attacker_ability_power
+						subtract = scope:defender.selected_ability_power_rating
+					}
+				}
+				
+				# Restore ability power
+				if = {
+					limit = { scope:attacker_ability_affinity = flag:strong }
+					save_temporary_scope_value_as = {
+						name = attacker_ability_power
+						value = {
+							value = scope:attacker_ability_power
+							divide = ABILITY_AFFINITY_STRONG_MULTIPLIER
+						}
+					}
+				}
+				else_if = {
+					limit = { scope:attacker_ability_affinity = flag:weak }
+					save_temporary_scope_value_as = {
+						name = attacker_ability_power
+						value = {
+							value = scope:attacker_ability_power
+							divide = ABILITY_AFFINITY_WEAK_MULTIPLIER
+						}
+					}
+				}
+			}
+			
+			# Attack their hitpoints
+			if = {
+				limit = {
+					scope:attacker_ability_power > 0
+					NOT = { exists = scope:defender.var:shield_strength }
+				}
+				scope:attacker = { 
+					set_variable = { name = last_ability_dealt_damage value = yes }
+				}
+				save_temporary_scope_value_as = { name = defender_damage_taken value = scope:attacker_ability_power }
+				scope:defender = {
+					change_variable = { name = hitpoints subtract = scope:attacker_ability_power }
+				}
+			}
+		}
+	}
+	
+	# If defender -> damage, attack - If attacker -> has_shield, always miss
+	if = {
+		limit = {
+			scope:defender.selected_ability_effect_type = ability_effect_damage	
+			scope:defender_ability_power > 0
+		}
+		
+		save_temporary_scope_value_as = {
+			name = ability_accuracy_vs_character
+			value = {
+				value = scope:defender.selected_ability_accuracy
+				add = DUEL_BASE_ACCURACY # Default
+				if = {
+					limit = { scope:attacker.selected_ability_effect_type = ability_effect_movement }
+					subtract = scope:attacker.selected_ability_accuracy
+				}
+				if = {
+					limit = { scope:attacker = { has_variable = shield_strength } }
+					multiply = 0
+				}				
+			}
+		}
+		
+		random = {
+			chance = scope:ability_accuracy_vs_character
+			
+			# We've managed to connect!
+			if = { # They're blocking! Drats!
+				limit = {
+					scope:attacker.selected_ability_effect_type = ability_effect_block_damage					
+				}
+				
+				# Change ability power
+				if = {
+					limit = {
+						abs_is_ability_element_strong_against = { 
+							ABILITY_ELEMENT_A = scope:defender.selected_ability_element 
+							ABILITY_ELEMENT_B = scope:attacker.selected_ability_element
+						}
+					}
+					save_temporary_scope_value_as = { name = defender_ability_affinity value = flag:strong }
+					save_temporary_scope_value_as = {
+						name = defender_ability_power
+						value = {
+							value = scope:defender_ability_power
+							multiply = ABILITY_AFFINITY_STRONG_MULTIPLIER
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						abs_is_ability_element_weak_against = { 
+							ABILITY_ELEMENT_A = scope:defender.selected_ability_element 
+							ABILITY_ELEMENT_B = scope:attacker.selected_ability_element
+						}
+					}
+					save_temporary_scope_value_as = { name = defender_ability_affinity value = flag:weak }
+					save_temporary_scope_value_as = {
+						name = defender_ability_power
+						value = {
+							value = scope:defender_ability_power
+							multiply = ABILITY_AFFINITY_WEAK_MULTIPLIER
+						}
+					}
+				}
+				else = { # To make sure we won't accidentally use the shield checked version
+					save_temporary_scope_value_as = { name = defender_ability_affinity value = flag:none }	
+				}
+				
+				# Calculate if we've pierced the block
+				save_temporary_scope_value_as = {
+					name = defender_ability_power
+					value = {
+						value = scope:defender_ability_power
+						subtract = scope:attacker.selected_ability_power_rating
+					}
+				}
+				
+				# Restore ability power
+				if = {
+					limit = { scope:defender_ability_affinity = flag:strong }
+					save_temporary_scope_value_as = {
+						name = defender_ability_power
+						value = {
+							value = scope:defender_ability_power
+							divide = ABILITY_AFFINITY_STRONG_MULTIPLIER
+						}
+					}
+				}
+				else_if = {
+					limit = { scope:defender_ability_affinity = flag:weak }
+					save_temporary_scope_value_as = {
+						name = defender_ability_power
+						value = {
+							value = scope:defender_ability_power
+							divide = ABILITY_AFFINITY_WEAK_MULTIPLIER
+						}
+					}
+				}
+			}
+			
+			# Attack their hitpoints
+			if = {
+				limit = {
+					scope:defender_ability_power > 0
+					NOT = { exists = scope:attacker.var:shield_strength }
+				}
+				scope:defender = { 
+					set_variable = { name = last_ability_dealt_damage value = yes }
+				}
+				save_temporary_scope_value_as = { name = attacker_damage_taken value = scope:defender_ability_power }
+				scope:attacker = {
+					change_variable = { name = hitpoints subtract = scope:defender_ability_power }
+				}
+			}
+		}
+	}
+	
+	# If HP drops below 0, set to zero
+	if = {
+		limit = { scope:attacker.var:hitpoints < 0 }
+		scope:attacker = { set_variable = { name = hitpoints value = 0 } }
+	}
+	if = {
+		limit = { scope:defender.var:hitpoints < 0 }
+		scope:defender = { set_variable = { name = hitpoints value = 0 } }
+	}
+	
+	# Set ability to cooldown
+	if = {
+		limit = {
+			exists = scope:attacker.var:selected_ability
+		}
+		abs_duel_set_ability_cooldown = { ABILITY = scope:attacker.var:selected_ability ABILITY_CASTER = scope:attacker }
+	}
+	if = {
+		limit = {
+			exists = scope:defender.var:selected_ability
+		}
+		abs_duel_set_ability_cooldown = { ABILITY = scope:defender.var:selected_ability ABILITY_CASTER = scope:defender }
+	}
+	
+	# scope:round_winner / scope:round_loser
+	save_temporary_scope_value_as = {
+		name = damage_balance
+		value = {
+			value = scope:attacker_damage_taken
+			subtract = scope:defender_damage_taken	
+		}
+	}
+	if = {
+		limit = {
+			scope:attacker_damage_taken = 0
+			scope:defender_damage_taken = 0
+		}
+		scope:defender = { save_scope_as = round_winner }
+		scope:attacker = { save_scope_as = round_loser }
+	}
+	else_if = {
+		limit = {
+			scope:damage_balance > 0			
+		}
+		scope:attacker = { save_scope_as = round_winner }
+		scope:defender = { save_scope_as = round_loser }
+	}
+	else_if = {
+		limit = {
+			scope:damage_balance <= 0		
+		}
+		scope:defender = { save_scope_as = round_winner }
+		scope:attacker = { save_scope_as = round_loser }
+	}
+}
+
+##################################################
+# abs_duel_set_ability_cooldown - Sets the cooldown for an ability
+# 									* Parameter => $ABILITY$ - Character, Ability to cooldown
+# 									* Parameter => $ABILITY_CASTER$ - Character, Character that is casting the ability
+##################################################
+abs_duel_set_ability_cooldown = {	
+	if = {
+		limit = { NOT = { has_setting = { CFG = abs_debug_enable_no_ability_cooldown } } }
+		
+		$ABILITY_CASTER$ = {
+			save_temporary_scope_as = ability_caster
+			
+			if = {
+				limit = { $ABILITY$.ability_cooldown = 9 }
+				add_to_variable_list = { name = abilities_cooldown_turns_9 target = $ABILITY$.var:ability_name }
+			}
+			else_if = {
+				limit = { $ABILITY$.ability_cooldown = 8 }
+				add_to_variable_list = { name = abilities_cooldown_turns_8 target = $ABILITY$.var:ability_name }
+			}
+			else_if = {
+				limit = { $ABILITY$.ability_cooldown = 7 }
+				add_to_variable_list = { name = abilities_cooldown_turns_7 target = $ABILITY$.var:ability_name }
+			}
+			else_if = {
+				limit = { $ABILITY$.ability_cooldown = 6 }
+				add_to_variable_list = { name = abilities_cooldown_turns_6 target = $ABILITY$.var:ability_name }
+			}
+			else_if = {
+				limit = { $ABILITY$.ability_cooldown = 5 }
+				add_to_variable_list = { name = abilities_cooldown_turns_5 target = $ABILITY$.var:ability_name }
+			}
+			else_if = {
+				limit = { $ABILITY$.ability_cooldown = 4 }
+				add_to_variable_list = { name = abilities_cooldown_turns_4 target = $ABILITY$.var:ability_name }
+			}
+			else_if = {
+				limit = { $ABILITY$.ability_cooldown = 3 }
+				add_to_variable_list = { name = abilities_cooldown_turns_3 target = $ABILITY$.var:ability_name }
+			}
+			else_if = {
+				limit = { $ABILITY$.ability_cooldown = 2 }
+				add_to_variable_list = { name = abilities_cooldown_turns_2 target = $ABILITY$.var:ability_name }
+			}
+			else_if = {
+				limit = { $ABILITY$.ability_cooldown = 1 }
+				add_to_variable_list = { name = abilities_cooldown_turns_1 target = $ABILITY$.var:ability_name }
+			}
+		}
+	}
+}
+
+##################################################
+# abs_duel_set_ability_cooldown - Sets the cooldown for an ability
+# 									* Parameter => $CHAR$ - Character, Character to tick all cooldowns for
+##################################################
+abs_duel_cooldown_tick = {
+	$CHAR$ = {
+		clear_variable_list = abilities_cooldown_turns_1
+		
+		every_in_list = {
+			variable = abilities_cooldown_turns_2
+			PREV = { add_to_variable_list = { name = abilities_cooldown_turns_1 target = PREV } }
+		}
+		clear_variable_list = abilities_cooldown_turns_2
+		
+		every_in_list = {
+			variable = abilities_cooldown_turns_3
+			PREV = { add_to_variable_list = { name = abilities_cooldown_turns_2 target = PREV } }
+		}
+		clear_variable_list = abilities_cooldown_turns_3
+		
+		every_in_list = {
+			variable = abilities_cooldown_turns_4
+			PREV = { add_to_variable_list = { name = abilities_cooldown_turns_3 target = PREV } }
+		}
+		clear_variable_list = abilities_cooldown_turns_4
+		
+		every_in_list = {
+			variable = abilities_cooldown_turns_5
+			PREV = { add_to_variable_list = { name = abilities_cooldown_turns_4 target = PREV } }
+		}
+		clear_variable_list = abilities_cooldown_turns_5
+		
+		every_in_list = {
+			variable = abilities_cooldown_turns_6
+			PREV = { add_to_variable_list = { name = abilities_cooldown_turns_5 target = PREV } }
+		}
+		clear_variable_list = abilities_cooldown_turns_6
+		
+		every_in_list = {
+			variable = abilities_cooldown_turns_7
+			PREV = { add_to_variable_list = { name = abilities_cooldown_turns_6 target = PREV } }
+		}
+		clear_variable_list = abilities_cooldown_turns_7
+		
+		every_in_list = {
+			variable = abilities_cooldown_turns_8
+			PREV = { add_to_variable_list = { name = abilities_cooldown_turns_7 target = PREV } }
+		}
+		clear_variable_list = abilities_cooldown_turns_8
+		
+		every_in_list = {
+			variable = abilities_cooldown_turns_9
+			PREV = { add_to_variable_list = { name = abilities_cooldown_turns_8 target = PREV } }
+		}
+		clear_variable_list = abilities_cooldown_turns_9
+	}
+}
+
+##################################################
+# abs_duel_round_cleanup - Cleans up any variables used during a round
+##################################################
+abs_duel_round_cleanup = {
+	scope:initial_attacker = {
+		remove_variable = selected_ability
+		clear_variable_list = available_abilities
+		remove_variable = ability_revealed_info
+		remove_variable = last_ability_dealt_damage
+	}
+	scope:initial_defender = {
+		remove_variable = selected_ability
+		clear_variable_list = available_abilities
+		remove_variable = ability_revealed_info
+		remove_variable = last_ability_dealt_damage
+	}	
+}
+
+##################################################
+# abs_duel_cleanup - Cleans up any variables used during a duel
+##################################################
+abs_duel_cleanup = {
+	scope:initial_attacker = {
+		clear_variable_list = abilities_cooldown_turns_1
+		clear_variable_list = abilities_cooldown_turns_2
+		clear_variable_list = abilities_cooldown_turns_3
+		clear_variable_list = abilities_cooldown_turns_4
+		clear_variable_list = abilities_cooldown_turns_5
+		clear_variable_list = abilities_cooldown_turns_6
+		clear_variable_list = abilities_cooldown_turns_7
+		clear_variable_list = abilities_cooldown_turns_8
+		clear_variable_list = abilities_cooldown_turns_9
+		remove_variable = hitpoints
+		remove_variable = shield_strength
+		remove_variable = shield_element
+		remove_variable = shield_max_strength
+		remove_variable = abs_duel_shield_cooldown
+		remove_variable = maximum_hitpoints
+		remove_character_flag = dueling
+		add_character_flag = {
+			flag = recently_dueled
+			days = DUEL_COOLDOWN_TIME
+		}
+	}
+	scope:initial_defender = {
+		clear_variable_list = abilities_cooldown_turns_1
+		clear_variable_list = abilities_cooldown_turns_2
+		clear_variable_list = abilities_cooldown_turns_3
+		clear_variable_list = abilities_cooldown_turns_4
+		clear_variable_list = abilities_cooldown_turns_5
+		clear_variable_list = abilities_cooldown_turns_6
+		clear_variable_list = abilities_cooldown_turns_7
+		clear_variable_list = abilities_cooldown_turns_8
+		clear_variable_list = abilities_cooldown_turns_9
+		remove_variable = hitpoints
+		remove_variable = shield_strength
+		remove_variable = shield_element
+		remove_variable = shield_max_strength
+		remove_variable = abs_duel_shield_cooldown
+		remove_variable = maximum_hitpoints
+		remove_character_flag = dueling
+		add_character_flag = {
+			flag = recently_dueled
+			days = DUEL_COOLDOWN_TIME
+		}
+	}
+}

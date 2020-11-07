@@ -1,0 +1,38 @@
+﻿##################################################
+
+### Ability system - Trigger Localization | Trigger Localizations
+
+# abs_has_access_to_ability_by_name				-	Tooltip to check if a character has access to an ability
+# abs_ability_on_cooldown_visual_trigger		-	Tooltip to check if an ability is on cooldown
+# abs_has_ap_for_ability_by_name_visual_trigger	-	Tooltip to display the AP type for a specific ability
+# abs_duel_shield_on_cooldown					-	Tooltip to show if a new shield can be created
+
+##################################################
+
+##################################################
+# abs_has_access_to_ability_by_name - Tooltip to check if a character has access to an ability
+##################################################
+abs_has_access_to_ability_by_name = {
+	global = ABS_ABILITY_ACCESS_BY_NAME
+}
+
+##################################################
+# abs_ability_on_cooldown_visual_trigger - Tooltip to check if an ability is on cooldown
+##################################################
+abs_ability_on_cooldown_visual_trigger = {
+	global = ABS_ABILITY_ON_COOLDOWN
+}
+
+##################################################
+# abs_has_ap_for_ability_by_name_visual_trigger - Tooltip to display the AP type for a specific ability
+##################################################
+abs_has_ap_for_ability_by_name_visual_trigger = {
+	global = ABS_ABILITY_HAS_AP_BY_NAME
+}
+
+##################################################
+# abs_duel_shield_on_cooldown - Tooltip to show if a new shield can be created
+##################################################
+abs_duel_shield_on_cooldown = {
+	global = ABS_DUEL_SHIELD_COOLDOWN
+}

@@ -1,0 +1,17 @@
+﻿##################################################
+
+### Ability system - Game Concepts | Default abilities
+
+# Abilities				-	Concepts for the default abilities
+
+##################################################
+
+##################################################
+# Abilities - Concepts for the default abilities
+##################################################
+fire_blast = {}
+water_blast = {}
+lightning_blast = {}
+fire_wall = {}
+ice_wall = {}
+dodge = {}

@@ -1,0 +1,30 @@
+﻿l_english:
+
+ # Can be used in GUI, when the item is scoped to an ability
+ ABS_SCOPED_ABILITY_NAME: "[SelectLocalization(GetDummyMale.IsValid, Concatenate(Concatenate('ability_', Scope.Var('ability_name').GetFlagName), '_info'), 'abs_empty_line')]"
+ ABS_SCOPED_ABILITY_COST: "[GuiScope.AddScope('ability_caster', GetPlayer.MakeScope).SetRoot( Scope.GetCharacter.MakeScope ).ScriptValue('ability_cost')|V1]"
+ ABS_SCOPED_ABILITY_POWER_RATING: "[GuiScope.AddScope('ability_caster', GetPlayer.MakeScope).SetRoot( Scope.GetCharacter.MakeScope ).ScriptValue('ability_power_rating')|V1]"
+ ABS_SCOPED_ABILITY_ELEMENT: "[Scope.GetCharacter.Custom('GetAbilityElement')]"
+ ABS_SCOPED_ABILITY_SCHOOL: "[Scope.GetCharacter.Custom('GetAbilitySchool')]"
+ ABS_SCOPED_ABILITY_ACCURACY: "[GuiScope.AddScope('ability_caster', GetPlayer.MakeScope).SetRoot( Scope.GetCharacter.MakeScope ).ScriptValue('ability_accuracy')|V0]#V %#!"
+ ABS_SCOPED_ABILITY_EFFECT_TYPE: "[Scope.GetCharacter.Custom('GetAbilityEffectType')]"
+ ABS_SCOPED_ABILITY_AP_NAME: "[Scope.GetCharacter.Custom('GetAbilityAPName')]"
+ ABS_SCOPED_ABILITY_COOLDOWN: "[GuiScope.AddScope('ability_caster', GetPlayer.MakeScope).SetRoot( Scope.GetCharacter.MakeScope ).ScriptValue('ability_cooldown')|V0]"
+ ABS_SCOPED_ABILITY_RARITY: "[Scope.GetCharacter.Custom('GetAbilityRarity')]" 
+ 
+ # Can be used in GUI, when the player has an ability selected
+ ABS_SELECTED_ABILITY: "Localize(Concatenate(Concatenate('ability_', GetPlayer.MakeScope.Var('selected_ability').GetCharacter.MakeScope.Var('ability_name').GetFlagName), '_using'))" 
+ 
+ # GUI menu text
+ ABILITY_SYSTEM_PLAYER_SPELL_LIST: "Players' spells"
+ 
+ # GUI text
+ ABS_GUI_TEXT_COOLDOWN: "[ability_cooldown|E]: "
+ ABS_GUI_TEXT_ACCURACY: "[ability_accuracy|E]: "
+ ABS_GUI_TEXT_EVASION: "[ability_evasion|E]: "
+ ABS_GUI_TEXT_POWER_RATING: "[ability_power_rating|E]: "
+ 
+ # Inserts
+ ABS_CURRENT_MAGICKA_PREFIX: "\nCurrent [magicka|E]: "
+ ABS_CURRENT_MAGICKA: "$ABS_CURRENT_MAGICKA_PREFIX$ [ROOT.Var('current_magicka').GetValue|V]"
+ ABS_CURRENT_PLAYER_MAGICKA: "[GetPlayer.MakeScope.Var('current_magicka').GetValue|V]"

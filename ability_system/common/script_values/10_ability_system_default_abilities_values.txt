@@ -1,0 +1,76 @@
+﻿##################################################
+
+### Ability system - Script Values | Default Abilities
+
+# Default abilities
+
+##################################################
+
+##################################################
+# Default abilities
+##################################################
+ability_dodge_cost = ability_cost_none
+ability_dodge_type = ability_category_generic
+ability_dodge_element = ability_element_neutral
+ability_dodge_context = ability_context_combat
+ability_dodge_power_rating = ability_power_rating_none
+ability_dodge_school = ability_school_none
+ability_dodge_effect = ability_effect_movement
+ability_dodge_accuracy = ability_accuracy_very_low
+ability_dodge_cooldown = 0
+ability_dodge_rarity = ability_rarity_normal
+
+ability_fire_blast_cost = ability_cost_low
+ability_fire_blast_type = ability_category_spell
+ability_fire_blast_element = ability_element_fire
+ability_fire_blast_context = ability_context_combat
+ability_fire_blast_power_rating = ability_power_rating_high
+ability_fire_blast_school = ability_magic_school_destruction
+ability_fire_blast_effect = ability_effect_damage
+ability_fire_blast_accuracy = ability_accuracy_low
+ability_fire_blast_cooldown = 2
+ability_fire_blast_rarity = ability_rarity_fine
+
+ability_water_blast_cost = ability_cost_very_low
+ability_water_blast_type = ability_category_spell
+ability_water_blast_element = ability_element_ice
+ability_water_blast_context = ability_context_combat
+ability_water_blast_power_rating = ability_power_rating_medium
+ability_water_blast_school = ability_magic_school_destruction
+ability_water_blast_effect = ability_effect_damage
+ability_water_blast_accuracy = ability_accuracy_medium
+ability_water_blast_cooldown = 1
+ability_water_blast_rarity = ability_rarity_fine
+
+ability_lightning_blast_cost = ability_cost_very_low
+ability_lightning_blast_type = ability_category_spell
+ability_lightning_blast_element = ability_element_lightning
+ability_lightning_blast_context = ability_context_combat
+ability_lightning_blast_power_rating = ability_power_rating_low
+ability_lightning_blast_school = ability_magic_school_destruction
+ability_lightning_blast_effect = ability_effect_damage
+ability_lightning_blast_accuracy = ability_accuracy_high
+ability_lightning_blast_cooldown = 1
+ability_lightning_blast_rarity = ability_rarity_fine
+
+ability_fire_wall_cost = ability_cost_medium
+ability_fire_wall_type = ability_category_spell
+ability_fire_wall_element = ability_element_fire
+ability_fire_wall_context = ability_context_combat
+ability_fire_wall_power_rating = ability_power_rating_low
+ability_fire_wall_school = ability_magic_school_alteration
+ability_fire_wall_effect = ability_effect_create_shield
+ability_fire_wall_accuracy = ability_accuracy_none
+ability_fire_wall_cooldown = 7
+ability_fire_wall_rarity = ability_rarity_superior
+
+ability_ice_wall_cost = ability_cost_low
+ability_ice_wall_type = ability_category_spell
+ability_ice_wall_element = ability_element_ice
+ability_ice_wall_context = ability_context_combat
+ability_ice_wall_power_rating = ability_power_rating_low
+ability_ice_wall_school = ability_magic_school_alteration
+ability_ice_wall_effect = ability_effect_create_shield
+ability_ice_wall_accuracy = ability_accuracy_none
+ability_ice_wall_cooldown = 6
+ability_ice_wall_rarity = ability_rarity_fine

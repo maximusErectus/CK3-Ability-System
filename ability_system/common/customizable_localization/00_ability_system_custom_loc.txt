@@ -1,0 +1,152 @@
+﻿##################################################
+
+### Ability system - Customizable Localization
+
+# GetAbilityElement		-	Gets localization key for the element
+# GetAbilitySchool		-	Gets localization key for the School
+# GetAbilityEffectType	-	Gets localization key for the Effect Type
+# GetAbilityAPName		-	Gets localization key for the type of Action Point
+# GetAbilityRarity		-	Gets localization key for the Rarity level
+
+##################################################
+
+##################################################
+# GetAbilityElement - Gets localization key for the Element
+##################################################
+GetAbilityElement = {
+	type = character
+	random_valid = yes
+	
+	text = {
+		trigger = { var:ability_element = ability_element_neutral }
+		localization_key = ABILITY_ELEMENT_NEUTRAL
+	}
+	text = {
+		trigger = { var:ability_element = ability_element_fire }
+		localization_key = ABILITY_ELEMENT_FIRE
+	}
+	text = {
+		trigger = { var:ability_element = ability_element_ice }
+		localization_key = ABILITY_ELEMENT_ICE
+	}
+	text = {
+		trigger = { var:ability_element = ability_element_lightning }
+		localization_key = ABILITY_ELEMENT_LIGHTNING
+	}
+}
+
+##################################################
+# GetAbilitySchool - Gets localization key for the School
+##################################################
+GetAbilitySchool = {
+	type = character
+	random_valid = yes
+	
+	text = {
+		trigger = { var:ability_school = ability_school_none }
+		localization_key = ABILITY_SCHOOL_NONE
+	}
+	text = {
+		trigger = { var:ability_school = ability_magic_school_destruction }
+		localization_key = ABILITY_MAGIC_SCHOOL_DESTRUCTION
+	}
+	text = {
+		trigger = { var:ability_school = ability_magic_school_alteration }
+		localization_key = ABILITY_MAGIC_SCHOOL_ALTERATION
+	}
+	text = {
+		trigger = { var:ability_school = ability_magic_school_restoration }
+		localization_key = ABILITY_MAGIC_SCHOOL_RESTORATION
+	}
+	text = {
+		trigger = { var:ability_school = ability_magic_school_conjuration }
+		localization_key = ABILITY_MAGIC_SCHOOL_CONJURATION
+	}
+	text = {
+		trigger = { var:ability_school = ability_magic_school_illusion }
+		localization_key = ABILITY_MAGIC_SCHOOL_ILLUSION
+	}
+	text = {
+		trigger = { var:ability_school = ability_magic_school_mysticism }
+		localization_key = ABILITY_MAGIC_SCHOOL_MYSTICISM
+	}
+	text = {
+		trigger = { var:ability_school = ability_magic_school_necromancy }
+		localization_key = ABILITY_MAGIC_SCHOOL_NECROMANCY
+	}
+}
+
+##################################################
+# GetAbilityEffectType - Gets localization key for the Effect Type
+##################################################
+GetAbilityEffectType = {
+	type = character
+	random_valid = yes
+	
+	text = {
+		trigger = { var:ability_effect = ability_effect_movement }
+		localization_key = ABILITY_EFFECT_TYPE_MOVEMENT
+	}
+	text = {
+		trigger = { var:ability_effect = ability_effect_damage }
+		localization_key = ABILITY_EFFECT_TYPE_DAMAGE
+	}
+	text = {
+		trigger = { var:ability_effect = ability_effect_block_damage }
+		localization_key = ABILITY_EFFECT_TYPE_BLOCK_DAMAGE
+	}
+	text = {
+		trigger = { var:ability_effect = ability_effect_create_shield }
+		localization_key = ABILITY_EFFECT_TYPE_CREATE_SHIELD
+	}
+}
+
+##################################################
+# GetAbilityAPName - Gets localization key for the type of Action Point
+##################################################
+GetAbilityAPName = {
+	type = character
+	random_valid = yes
+	
+	text = {
+		trigger = { var:ability_type = ability_category_spell }
+		localization_key = ABS_ABILITY_AP_NAME_SPELL
+	}
+	text = {
+		trigger = { var:ability_type = ability_category_generic }
+		localization_key = ABS_ABILITY_AP_NAME_GENERIC
+	}
+	text = {
+		trigger = { var:ability_type = ability_category_melee }
+		localization_key = ABS_ABILITY_AP_NAME_MELEE
+	}
+}
+
+##################################################
+# GetAbilityRarity - Gets localization key for the Rarity level
+##################################################
+GetAbilityRarity = {	
+	type = character
+	random_valid = yes
+	
+	text = {
+		trigger = { var:ability_rarity = ability_rarity_normal }
+		localization_key = ABS_ABILITY_RARITY_NORMAL
+	}
+	text = {
+		trigger = { var:ability_rarity = ability_rarity_fine }
+		localization_key = ABS_ABILITY_RARITY_FINE
+	}
+	text = {
+		trigger = { var:ability_rarity = ability_rarity_superior }
+		localization_key = ABS_ABILITY_RARITY_SUPERIOR
+	}
+	text = {
+		trigger = { var:ability_rarity = ability_rarity_epic }
+		localization_key = ABS_ABILITY_RARITY_EPIC
+	}
+	text = {
+		trigger = { var:ability_rarity = ability_rarity_legendary }
+		localization_key = ABS_ABILITY_RARITY_LEGENDARY
+	}
+}

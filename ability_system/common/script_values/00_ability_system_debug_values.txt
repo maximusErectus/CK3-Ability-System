@@ -1,0 +1,42 @@
+﻿##################################################
+
+### Ability system - Script Values | Debug Values
+
+# abs_debug_setting_infinite_ap_enabled				-	Returns 1 if Infinite AP is enabled
+# abs_debug_setting_no_ability_requirements_enabled	-	Returns 1 if No Ability Requirements in enabled
+# abs_debug_setting_no_ability_cooldown_enabled		-	Returns 1 if No Ability Cooldown is enabled
+
+##################################################
+
+##################################################
+# abs_debug_setting_infinite_ap_enabled - Returns 1 if Infinite AP is enabled
+##################################################
+abs_debug_setting_infinite_ap_enabled = {
+	value = 0 # Disabled by default
+	if = {
+		limit = { has_setting = { CFG = abs_debug_enable_infinite_ap } }
+		add = 1
+	}
+}
+
+##################################################
+# abs_debug_setting_no_ability_requirements_enabled - Returns 1 if No Ability Requirements in enabled
+##################################################
+abs_debug_setting_no_ability_requirements_enabled = {
+	value = 0 # Disabled by default
+	if = {
+		limit = { has_setting = { CFG = abs_debug_enable_no_ability_requirements } }
+		add = 1
+	}
+}
+
+##################################################
+# abs_debug_setting_no_ability_cooldown_enabled - Returns 1 if No Ability Cooldown is enabled
+##################################################
+abs_debug_setting_no_ability_cooldown_enabled = {
+	value = 0 # Disabled by default
+	if = {
+		limit = { has_setting = { CFG = abs_debug_enable_no_ability_cooldown } }
+		add = 1
+	}
+}

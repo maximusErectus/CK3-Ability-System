@@ -1,0 +1,35 @@
+﻿l_english:
+ # Generic non-standard stuff
+ abs_empty_line: ""
+
+ # Decision
+ abs_open_debug: "abs - Debug menu"
+ abs_open_debug.desc: "Opens the ability systems' debug menu"
+ abs_open_debug.tt: "Opens the ability systems' debug menu"
+ abs_open_debug.effect.tt: "Opens the ability systems' debug menu"
+ abs_open_debug_confirm: "Open Debug"
+ 
+ # Actual menu
+ ABS_DEBUG_HEADER_TEXT: "Ability system - Debug menu"
+ 
+ # Settings
+ ABS_DEBUG_SETTING_INFINITE_AP: "Enable Infinite AP"
+ ABS_DEBUG_SETTING_INFINITE_AP_TT: "Spells and rituals won't use any Magicka/equivalant"
+ 
+ ABS_DEBUG_SETTING_NO_ABILITY_REQUIREMENTS: "Enable no ability requirements"
+ ABS_DEBUG_SETTING_NO_ABILITY_REQUIREMENTS_TT: "Abilities can be used even if you do not match the minimum requirements"
+ 
+ ABS_DEBUG_SETTING_NO_ABILITY_COOLDOWN: "Enable no ability cooldown"
+ ABS_DEBUG_SETTING_NO_ABILITY_COOLDOWN_TT: "Abilities won't enter cooldown after usage"
+ 
+ ABS_DEBUG_DUEL: "Debug duel"
+ ABS_DEBUG_DUEL_TT: "Find a random character, give them abilities, then duel them"
+ ABS_DEBUG_START_DUEL: "Duel!"
+ 
+ ABS_DEBUG_UNLOCK_ALL_ABILITIES: "Unlock all abilities"
+ ABS_DEBUG_UNLOCK_ALL_ABILITIES_TT: "Unlocks all abilities currently in the game"
+ ABS_DEBUG_UNLOCK_ALL_ABILITIES_BTN: "Unlock all"
+ 
+ ABS_DEBUG_UNLOCK_RANDOM_ABILITY: "Unlock a random ability"
+ ABS_DEBUG_UNLOCK_RANDOM_ABILITY_TT: "Unlocks a random previously locked ability"
+ ABS_DEBUG_UNLOCK_RANDOM_ABILITY_BTN: "Unlock" 

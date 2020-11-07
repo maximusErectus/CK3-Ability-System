@@ -1,0 +1,131 @@
+vbox = {
+	name = "ability_system_c_duel_status_widget"
+	position = { -20 -200 } # This throws errors.. But it works fine
+	
+	hbox = {		
+		size = { -1 110 }
+		# Attacker
+		vbox = {
+			datacontext = "[EventWindowWidget.GetScope.sCharacter('initial_attacker')]"
+			
+			duel_char_status = { }
+
+		}
+		portrait_head = {
+			datacontext = "[EventWindowWidget.GetScope.sCharacter('initial_attacker')]"
+		}
+		
+		text_single = {
+			minimumsize = { 5 -1 }
+		}
+		
+		# Defender
+		portrait_head = {
+			datacontext = "[EventWindowWidget.GetScope.sCharacter('initial_defender')]"
+		}
+		vbox = {
+			datacontext = "[EventWindowWidget.GetScope.sCharacter('initial_defender')]"
+			
+			duel_char_status = { }
+		}
+	}
+}
+
+Types ability_system {	
+	type duel_char_status = vbox {
+		minimumsize = { 150 110 }
+		
+		background = {
+			using = Background_Area_With_Header
+		}
+		
+		# Name
+		text_single = {
+			size = { 150 25 }
+			parentanchor = top|left
+			position = { 0 -2 }
+			text = "#T [Character.GetFirstNameNoTooltip]#!"	
+
+			background = {
+				using = Background_Area
+			}				
+		}
+		spaced_divider = {}
+		# Bars!
+		flowcontainer = {
+			direction = vertical
+			ignoreinvisible = no
+			
+			# HP
+			progressbar_standard = {
+				parentanchor = top|hcenter
+				size = { 150 25 }
+				visible = yes
+
+				min = 0
+				max = "[FixedPointToFloat(Character.MakeScope.Var('maximum_hitpoints').GetValue)]"
+				value = "[FixedPointToFloat(Character.MakeScope.Var('hitpoints').GetValue)]"
+
+				text_single = {
+					parentanchor = top|hcenter
+					position = { 0 -2 }
+					text = "[Character.MakeScope.Var('hitpoints').GetValue|V1] / [Character.MakeScope.Var('maximum_hitpoints').GetValue|V0]"
+				}
+
+				progresstexture = "gfx/interface/progressbars/progress_red.dds"
+				noprogresstexture = "gfx/interface/progressbars/progress_red_bg.dds"
+
+				tooltip = "Hitpoints"
+				using = tooltip_below
+			}
+			
+			# Mana
+			progressbar_standard = {
+				parentanchor = top|hcenter
+				size = { 150 25 }
+				visible = yes
+
+				min = 0
+				max = 1000
+				value = "[FixedPointToFloat(Character.MakeScope.Var('current_magicka').GetValue)]"
+
+				text_single = {
+					parentanchor = top|hcenter
+					position = { 0 -2 }
+					text = "[Character.MakeScope.Var('current_magicka').GetValue|V0] / #V 1000#!"
+				}
+
+				progresstexture = "gfx/interface/progressbars/progress_blue.dds"
+				noprogresstexture = "gfx/interface/progressbars/progress_blue_bg.dds"
+
+				tooltip = "Magicka"
+				using = tooltip_below
+			}
+			
+			# Shield
+			progressbar_standard = {
+				parentanchor = top|hcenter
+				size = { 150 25 }
+				visible = "[GreaterThan_CFixedPoint(Character.MakeScope.Var('shield_max_strength').GetValue, '(CFixedPoint)0')]"
+
+				min = 0
+				max = "[FixedPointToFloat(Character.MakeScope.Var('shield_max_strength').GetValue)]"
+				value = "[FixedPointToFloat(Character.MakeScope.Var('shield_strength').GetValue)]"
+
+				text_single = {
+					parentanchor = top|hcenter
+					position = { 0 -2 }
+					text = "[Character.MakeScope.Var('shield_strength').GetValue|V1] / [Character.MakeScope.Var('shield_max_strength').GetValue|V0]"
+				}
+
+				progresstexture = "gfx/interface/progressbars/progress_blue.dds"
+				noprogresstexture = "gfx/interface/progressbars/progress_blue_bg.dds"
+
+				tooltip = "Shield"
+				using = tooltip_below
+			}
+		}
+		
+		expand = {}
+	}
+}

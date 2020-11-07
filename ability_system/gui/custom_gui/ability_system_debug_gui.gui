@@ -1,0 +1,210 @@
+window = {
+	#* This name is used during creation
+	name = "ability_system_debug_gui_window"
+	parentanchor = center
+	position = { -50 100 }
+	size = { 700 400 }
+	layer = top
+	filter_mouse = all
+	alwaystransparent = no
+
+	using = Window_Background
+	using = Window_Decoration
+	movable = yes
+	
+	datacontext = "[GetPlayer]"
+	
+	state = {
+		name = _show
+		using = Animation_FadeIn_Standard
+		using = Sound_WindowShow_Standard
+	
+		on_start = "[GetVariableSystem.Set( 'ability_system_debug_gui_window_open', 'true' )]"
+	}
+	
+	state = {
+		name = _hide
+		using = Animation_FadeOut_Standard
+		using = Sound_WindowHide_Standard
+	
+		on_start = "[GetVariableSystem.Clear( 'ability_system_debug_gui_window_open' )]"
+	}
+
+	header_standard = {
+		layoutpolicy_horizontal = expanding
+		size = { 625 43 }
+		position = { 40 15 }
+
+		blockoverride "header_text"
+		{
+			text = "ABS_DEBUG_HEADER_TEXT"
+		}
+
+		blockoverride "button_close"
+		{
+			# Make sure this uses the name as seen at the top*
+			onclick = "[ExecuteConsoleCommand('GUI.ClearWidgets ability_system_debug_gui_window')]"
+		}
+
+		blockoverride "button_back"
+		{
+			visible = no
+		}
+	}
+	
+	scrollbox = {
+		size = { 650 330 }
+		position = { 30 55 }
+		
+		layoutpolicy_horizontal = expanding
+		layoutpolicy_vertical = expanding
+
+		blockoverride "scrollbox_content"
+		{
+			vbox = { margin_bottom = 20 }
+			
+			# Settings
+			abs_debug_setting_infinite_ap = {}
+			abs_debug_setting_no_ability_requirements = {}
+			abs_debug_setting_no_ability_cooldown = {}
+			abs_debug_duel = {}
+			abs_debug_unlock_all_abilities = {}
+			abs_debug_unlock_random_ability = {}
+		}
+	}
+}
+
+Types abs_debug_settings {
+	
+	type abs_debug_setting_infinite_ap = hbox {
+		size = { 600 24 }
+		parentanchor = left|top
+		
+		text_single = {
+			layoutpolicy_horizontal = expanding
+			margin_right = 10
+			autoresize = no
+			size = { 355 24 }
+			text = "ABS_DEBUG_SETTING_INFINITE_AP"
+		}
+		expand = {}
+		button_checkbox = {
+			size = { 24 24 }
+			name = "abs_debug_setting_infinite_ap"
+			tooltip = "ABS_DEBUG_SETTING_INFINITE_AP_TT"
+			
+			onclick =  "[GetScriptedGui('abs_debug_setting_toggle_infinite_ap').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) ]"	
+			checked = "[GreaterThan_int32(FixedPointToInt(EmptyScope.ScriptValue('abs_debug_setting_infinite_ap_enabled')), '(int32)0')]"
+		}
+	}
+	
+	type abs_debug_setting_no_ability_requirements = hbox {
+		size = { 600 24 }
+		parentanchor = left|top
+		
+		text_single = {
+			layoutpolicy_horizontal = expanding
+			margin_right = 10
+			autoresize = no
+			size = { 355 24 }
+			text = "ABS_DEBUG_SETTING_NO_ABILITY_REQUIREMENTS"
+		}
+		expand = {}
+		button_checkbox = {
+			size = { 24 24 }
+			name = "abs_debug_setting_no_ability_requirements"
+			tooltip = "ABS_DEBUG_SETTING_NO_ABILITY_REQUIREMENTS_TT"
+			
+			onclick =  "[GetScriptedGui('abs_debug_setting_toggle_no_ability_requirements').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) ]"	
+			checked = "[GreaterThan_int32(FixedPointToInt(EmptyScope.ScriptValue('abs_debug_setting_no_ability_requirements_enabled')), '(int32)0')]"
+		}
+	}
+	
+	type abs_debug_setting_no_ability_cooldown = hbox {
+		size = { 600 24 }
+		parentanchor = left|top
+		
+		text_single = {
+			layoutpolicy_horizontal = expanding
+			margin_right = 10
+			autoresize = no
+			size = { 355 24 }
+			text = "ABS_DEBUG_SETTING_NO_ABILITY_COOLDOWN"
+		}
+		expand = {}
+		button_checkbox = {
+			size = { 24 24 }
+			name = "abs_debug_setting_no_ability_cooldown"
+			tooltip = "ABS_DEBUG_SETTING_NO_ABILITY_COOLDOWN_TT"
+			
+			onclick =  "[GetScriptedGui('abs_debug_setting_toggle_no_ability_cooldown').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) ]"	
+			checked = "[GreaterThan_int32(FixedPointToInt(EmptyScope.ScriptValue('abs_debug_setting_no_ability_cooldown_enabled')), '(int32)0')]"
+		}
+	}
+	
+	type abs_debug_duel = hbox {
+		size = { 600 24 }
+		parentanchor = left|top
+		
+		text_single = {
+			layoutpolicy_horizontal = expanding
+			margin_right = 10
+			autoresize = no
+			size = { 305 24 }
+			text = "ABS_DEBUG_DUEL"
+		}
+		expand = {}
+		button_standard = {
+			size = { 75 24 }
+			name = "abs_debug_duel"
+			tooltip = "ABS_DEBUG_DUEL_TT"
+			text = "ABS_DEBUG_START_DUEL"
+			
+			onclick =  "[GetScriptedGui('abs_debug_start_duel').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) ]"
+		}
+	}
+	
+	type abs_debug_unlock_all_abilities = hbox {
+		size = { 600 24 }
+		parentanchor = left|top
+		
+		text_single = {
+			layoutpolicy_horizontal = expanding
+			margin_right = 10
+			autoresize = no
+			size = { 305 24 }
+			text = "ABS_DEBUG_UNLOCK_ALL_ABILITIES"
+		}
+		expand = {}
+		button_standard = {
+			size = { 75 24 }
+			name = "abs_debug_unlock_all_abilities"
+			tooltip = "ABS_DEBUG_UNLOCK_ALL_ABILITIES_TT"
+			text = "ABS_DEBUG_UNLOCK_ALL_ABILITIES_BTN"
+			
+			onclick =  "[GetScriptedGui('abs_debug_unlock_all_abilities').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) ]"
+		}
+	}
+	
+	type abs_debug_unlock_random_ability = hbox {
+		size = { 600 24 }
+		parentanchor = left|top
+		
+		text_single = {
+			layoutpolicy_horizontal = expanding
+			margin_right = 10
+			autoresize = no
+			size = { 305 24 }
+			text = "ABS_DEBUG_UNLOCK_RANDOM_ABILITY"
+		}
+		expand = {}
+		button_standard = {
+			size = { 75 24 }
+			name = "abs_debug_unlock_random_ability"
+			tooltip = "ABS_DEBUG_UNLOCK_RANDOM_ABILITY_TT"
+			text = "ABS_DEBUG_UNLOCK_RANDOM_ABILITY_BTN"
+			
+			onclick =  "[GetScriptedGui('abs_debug_unlock_random_ability').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) ]"
+		}
+	}}
+}

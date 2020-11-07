@@ -1,0 +1,38 @@
+﻿vbox = {
+	name = "ability_system_open_debug"
+	layoutpolicy_horizontal = expanding
+	margin = { 5 0 }
+	spacing = 10
+
+	fixedgridbox = {
+		name = "option_grid"
+		addcolumn = 490
+		addrow = 42
+		datamodel = "[EventWindow.GetOptions]"
+
+		item = {
+			button_event_standard = {
+				name = "event_option_button"
+				
+				# Open the GUI
+				state = {
+					name = widget_show
+					trigger_on_create = yes
+
+					# Looks silly, but it gets the job done.
+					on_start = "[PdxGuiWidget.AccessParent.AccessParent.AccessParent.AccessParent.AccessParent.AccessParent.AccessParent.AccessParent.AccessParent.InterruptAnimation('show')]"		
+					on_start = "[PdxGuiWidget.AccessParent.AccessParent.AccessParent.AccessParent.AccessParent.AccessParent.AccessParent.AccessParent.AccessParent.InterruptAnimation('appear')]"							
+					on_start = "[PdxGuiWidget.AccessParent.AccessParent.AccessParent.AccessParent.AccessParent.AccessParent.AccessParent.AccessParent.AccessParent.Hide]"					
+					on_start = "[EventOption.Select]"			
+					
+					# This actually does the magic
+					# gui.createwidget <gui/path_to_gui.gui> <name_of_widget>
+					# <name_of_widget> is the name of the main window in your gui file
+					on_start = "[ExecuteConsoleCommand('gui.createwidget gui/custom_gui/ability_system_debug_gui.gui ability_system_debug_gui_window')]"
+				}
+			}
+		}
+	}
+	
+	expand = {}
+}

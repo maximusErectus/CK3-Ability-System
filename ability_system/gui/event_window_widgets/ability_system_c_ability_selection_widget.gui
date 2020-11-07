@@ -1,0 +1,127 @@
+﻿vbox = {
+	name = "ability_system_c_ability_selection_widget"
+	layoutpolicy_horizontal = expanding
+	margin = { 5 0 }
+	spacing = 10
+	
+	state = {
+		name = show_widget
+		trigger_on_create = yes
+		on_start = "[GetVariableSystem.Set('needs_to_select_an_ability', 'false')]"
+		# Hide options & description
+		on_start = "[PdxGuiWidget.AccessParent.FindChild('option_grid').Hide]"
+		on_start = "[PdxGuiWidget.AccessParent.FindChild('description_scrollarea').Hide]"
+		on_start = "[PdxGuiWidget.AccessParent.FindChild('description').Hide]"		
+	}
+	
+	# Description
+	scrollarea = {
+		name = "c_description_scrollarea"
+		
+
+		maximumsize = { -1 200 }
+		minimumsize = { 460 200 }
+		layoutpolicy_horizontal = expanding
+		layoutpolicy_vertical = expanding
+		autoresizescrollarea = yes
+		scrollbarpolicy_horizontal = always_off
+
+		scrollbar_vertical = {
+			using = Scrollbar_Vertical
+		}
+
+		scrollwidget = {
+			text_multi = {
+				name = "c_description"
+				maximumsize = { 460 -1 }
+				autoresize = yes
+				margin_bottom = 10
+				margin_right = 5
+				alwaystransparent = yes
+				text = "[EventWindow.GetDescription]"
+			}
+		}
+	}
+	
+	# Magic spell selection
+	scrollbox = {
+		size = { 460 200 }
+		
+		layoutpolicy_horizontal = expanding
+		layoutpolicy_vertical = expanding
+
+		blockoverride "scrollbox_content"
+		{
+			vbox = {
+				layoutpolicy_vertical = expanding
+
+				dynamicgridbox = {
+					datamodel = "[GetPlayer.MakeScope.GetList('ability_list')]"
+					layoutpolicy_horizontal = expanding
+					layoutpolicy_vertical = expanding
+					datamodel_wrap = 2
+					flipdirection = yes
+
+					##################################################
+					
+					### Available localization keys within item blocks
+					
+					# ABS_SCOPED_ABILITY_NAME
+					# ABS_SCOPED_ABILITY_COST
+					# ABS_SCOPED_ABILITY_POWER_RATING
+					# ABS_SCOPED_ABILITY_ELEMENT => (Ice/Fire/Lightning/None)
+					# ABS_SCOPED_ABILITY_SCHOOL
+					# ABS_SCOPED_ABILITY_ACCURACY # Evasion for Movement spells
+					# ABS_SCOPED_ABILITY_EFFECT_TYPE
+					# ABS_SCOPED_ABILITY_COOLDOWN
+					# ABS_SCOPED_ABILITY_AP_NAME
+					# ABS_SCOPED_ABILITY_RARITY
+					
+					### Available localization for player
+					
+					# ABS_CURRENT_PLAYER_MAGICKA
+
+					##################################################
+
+					item = {
+						selector_ability_box = {
+							blockoverride "btn_extra" {
+								visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('selected_ability', Scope.GetCharacter.MakeScope ).End )]"
+								enabled = "[ScriptedGui.IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('selected_ability', Scope.GetCharacter.MakeScope ).End )]"										
+								
+								tooltip = "[ScriptedGui.BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('selected_ability', Scope.GetCharacter.MakeScope ).End )]"
+						
+								onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('selected_ability', Scope.GetCharacter.MakeScope ).End )]"
+								onclick = "[GetVariableSystem.Clear('needs_to_select_an_ability')]"
+								
+								down = "[EqualTo_string(Scope.Var('ability_name').GetFlagName, GetPlayer.MakeScope.Var('selected_ability').GetCharacter.MakeScope.Var('ability_name').GetFlagName)]"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	expand = {}
+	
+	# Options
+	fixedgridbox = {
+		name = "c_option_grid"
+		addcolumn = 490
+		addrow = 42
+		datamodel = "[EventWindow.GetOptions]"
+	
+		item = {
+			# This will override certain event options
+			custom_button_eventoption = {
+				enabled = "[Not(GetVariableSystem.Exists('needs_to_select_an_ability'))]"
+			}
+		}
+	}
+	
+	# Hide the default buttons
+	text_single = {
+		minimumsize = { -1 1400 }
+	}
+}

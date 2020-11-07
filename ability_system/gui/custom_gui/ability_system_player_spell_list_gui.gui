@@ -1,0 +1,257 @@
+﻿window = {
+	#* This name is used during creation
+	name = "ability_system_player_spell_list_gui_window"
+	parentanchor = center
+	position = { -50 100 }
+	size = { 1100 920 }
+	layer = top
+	filter_mouse = all
+	alwaystransparent = no
+
+	using = Window_Background
+	using = Window_Decoration
+	movable = yes
+	
+	datacontext = "[GetPlayer]"
+	
+	state = {
+		name = _show
+		using = Animation_FadeIn_Standard
+		using = Sound_WindowShow_Standard
+	
+		on_start = "[GetVariableSystem.Set( 'ability_system_player_spell_list_gui_window_open', 'true' )]"
+	}
+	
+	state = {
+		name = _hide
+		using = Animation_FadeOut_Standard
+		using = Sound_WindowHide_Standard
+	
+		on_start = "[GetVariableSystem.Clear( 'ability_system_player_spell_list_gui_window_open' )]"
+	}
+	
+	state = {
+		name = gather_lists
+		trigger_on_create = yes	
+		
+		duration = 2
+		
+		# Make sure we've got our lists
+		on_start = "[GetScriptedGui('abs_player_spell_list_open').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+		
+		next = gather_lists
+	}
+
+	header_standard = {
+		layoutpolicy_horizontal = expanding
+		size = { 1025 43 }
+		position = { 40 15 }
+
+		blockoverride "header_text"
+		{
+			text = "ABILITY_SYSTEM_PLAYER_SPELL_LIST"
+		}
+
+		blockoverride "button_close"
+		{
+			# Make sure this uses the name as seen at the top*
+			onclick = "[ExecuteConsoleCommand('GUI.ClearWidgets ability_system_player_spell_list_gui_window')]"
+			
+			# These are used to clean-up created variables
+			onclick = "[GetScriptedGui('abs_cleanup').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			onclick = "[GetScriptedGui('abs_player_ability_list_cleanup').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"			
+		}
+
+		blockoverride "button_back"
+		{
+			visible = no
+		}
+	}
+	
+	##################################################
+
+	### Available lists (datamodel)
+
+	# "[GetPlayer.MakeScope.GetList('spell_list_all')]" # => List of all spells currently in the game
+
+	# "[GetPlayer.MakeScope.GetList('spell_list_destruction')]"
+	# "[GetPlayer.MakeScope.GetList('spell_list_alteration')]" 
+	# "[GetPlayer.MakeScope.GetList('spell_list_restoration')]"
+	# "[GetPlayer.MakeScope.GetList('spell_list_conjuration')]"
+	# "[GetPlayer.MakeScope.GetList('spell_list_illusion')]"
+	# "[GetPlayer.MakeScope.GetList('spell_list_mysticism')]"
+	# "[GetPlayer.MakeScope.GetList('spell_list_necromancy')]"
+	# "[GetPlayer.MakeScope.GetList('spell_list_none')]"
+	
+	### Available localization keys within item blocks
+	
+	# ABS_SCOPED_ABILITY_NAME
+	# ABS_SCOPED_ABILITY_COST
+	# ABS_SCOPED_ABILITY_POWER_RATING
+	# ABS_SCOPED_ABILITY_ELEMENT => (Ice/Fire/Lightning/None)
+	# ABS_SCOPED_ABILITY_SCHOOL
+	# ABS_SCOPED_ABILITY_ACCURACY # Evasion for Movement spells
+	# ABS_SCOPED_ABILITY_EFFECT_TYPE
+	# ABS_SCOPED_ABILITY_COOLDOWN
+	# ABS_SCOPED_ABILITY_AP_NAME
+	# ABS_SCOPED_ABILITY_RARITY
+	
+	### Available localization for player
+	
+	# ABS_CURRENT_PLAYER_MAGICKA
+
+	##################################################
+	
+	
+	##################################################
+	# Example - Listing all spells currently in the game
+	##################################################
+	scrollbox = {
+		size = { 1050 850 }
+		position = { 30 55 }
+		
+		layoutpolicy_horizontal = expanding
+		layoutpolicy_vertical = expanding
+
+		blockoverride "scrollbox_content"
+		{
+			vbox = { margin_bottom = 20 }
+			
+			vbox = {
+				layoutpolicy_vertical = expanding
+
+				dynamicgridbox = {
+					datamodel = "[GetPlayer.MakeScope.GetList('spell_list_all')]"
+					layoutpolicy_horizontal = expanding
+					layoutpolicy_vertical = expanding
+					datamodel_wrap = 3
+					flipdirection = yes
+
+					item = {
+						selector_ability_box = {
+							blockoverride "btn_extra" {
+								visible = yes
+							}
+						}
+						#widget = {
+						#	size = { 305 168 }
+						#	vbox = {
+						#		# Name
+						#		text_single = {
+						#			layoutpolicy_horizontal = expanding
+						#			margin_right = 10
+						#			autoresize = no
+						#			size = { 305 24 }
+						#			text = "ABS_SCOPED_ABILITY_NAME"
+						#		}
+						#		# Cost
+						#		hbox = {
+						#			size = { 305 24 }
+						#			text_single = {
+						#				layoutpolicy_horizontal = expanding
+						#				margin_right = 10
+						#				autoresize = yes
+						#				text = "Cost: "
+						#			}
+						#			text_single = {
+						#				layoutpolicy_horizontal = expanding
+						#				autoresize = yes
+						#				text = "ABS_SCOPED_ABILITY_COST"
+						#			}
+						#			text_single = {
+						#				layoutpolicy_horizontal = expanding
+						#				autoresize = yes
+						#				margin_left = 10
+						#				text = "ABS_SCOPED_ABILITY_AP_NAME"
+						#			}
+						#		}
+						#		
+						#		# Element
+						#		hbox = {
+						#			size = { 305 24 }
+						#			text_single = {
+						#				layoutpolicy_horizontal = expanding
+						#				margin_right = 10
+						#				autoresize = yes
+						#				text = "Element: "
+						#			}
+						#			text_single = {
+						#				layoutpolicy_horizontal = expanding
+						#				autoresize = yes
+						#				text = "ABS_SCOPED_ABILITY_ELEMENT"
+						#			}									
+						#		}
+						#		
+						#		# School of magic
+						#		hbox = {
+						#			size = { 305 24 }
+						#			text_single = {
+						#				layoutpolicy_horizontal = expanding
+						#				margin_right = 10
+						#				autoresize = yes
+						#				text = "School: "
+						#			}
+						#			text_single = {
+						#				layoutpolicy_horizontal = expanding
+						#				autoresize = yes
+						#				text = "ABS_SCOPED_ABILITY_SCHOOL"
+						#			}									
+						#		}	
+						#		
+						#		# Power rating
+						#		hbox = {
+						#			size = { 305 24 }
+						#			text_single = {
+						#				layoutpolicy_horizontal = expanding
+						#				margin_right = 10
+						#				autoresize = yes
+						#				text = "Power: "
+						#			}
+						#			text_single = {
+						#				layoutpolicy_horizontal = expanding
+						#				autoresize = yes
+						#				text = "ABS_SCOPED_ABILITY_POWER_RATING"
+						#			}									
+						#		}
+						#		
+						#		# Accuracy
+						#		hbox = {
+						#			size = { 305 24 }
+						#			text_single = {
+						#				layoutpolicy_horizontal = expanding
+						#				margin_right = 10
+						#				autoresize = yes
+						#				text = "Accuracy: "
+						#			}
+						#			text_single = {
+						#				layoutpolicy_horizontal = expanding
+						#				autoresize = yes
+						#				text = "ABS_SCOPED_ABILITY_ACCURACY"
+						#			}									
+						#		}
+						#		
+						#		# Cooldown
+						#		hbox = {
+						#			size = { 305 24 }
+						#			text_single = {
+						#				layoutpolicy_horizontal = expanding
+						#				margin_right = 10
+						#				autoresize = yes
+						#				text = "Cooldown: "
+						#			}
+						#			text_single = {
+						#				layoutpolicy_horizontal = expanding
+						#				autoresize = yes
+						#				text = "ABS_SCOPED_ABILITY_COOLDOWN"
+						#			}									
+						#		}
+						#	}
+						#}
+					}
+				}
+			}
+		}
+	}	
+}
+
+

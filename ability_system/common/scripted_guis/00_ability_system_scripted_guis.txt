@@ -1,0 +1,69 @@
+﻿##################################################
+
+### Ability system - Scripted GUIs | Scripted GUIs
+
+# abs_cleanup						-	Doesn't do anything
+# abs_player_ability_list_cleanup	-	Removes variables used by the GUI
+# abs_player_spell_list_open		-	Sets data needed by the GUI
+# ability_system_ability_selector	-	Allows the selecting of an ability
+
+##################################################
+
+##################################################
+# abs_cleanup - Doesn't do anything
+##################################################
+abs_cleanup = { 
+	scope = character 
+	
+	effect = {  }
+}
+
+##################################################
+# abs_player_ability_list_cleanup - Removes variables used by the GUI
+##################################################
+abs_player_ability_list_cleanup = {
+	scope = character 
+	
+	effect = { abs_cleanup_all_ability_schools_effect = yes }
+}
+
+##################################################
+# abs_player_spell_list_open - Sets data needed by the GUI
+##################################################
+abs_player_spell_list_open = { 
+	scope = character 
+	effect = { abs_get_spells_per_school = yes }
+}
+
+##################################################
+# ability_system_ability_selector - Allows the selecting of an ability
+##################################################
+ability_system_ability_selector = {
+	scope = character
+	
+	saved_scopes = {
+		selected_ability
+	}
+	
+	is_shown = {
+		abs_has_access_to_ability_by_name = { ABILITY_NAME = scope:selected_ability.var:ability_name ABILITY_CASTER = ROOT }
+	}
+	
+	is_valid = {		
+		abs_has_ap_for_ability_by_name = { ABILITY = scope:selected_ability ABILITY_CASTER = ROOT }
+		NOT = { abs_ability_on_cooldown = { ABILITY = scope:selected_ability ABILITY_CASTER = ROOT  } }
+
+		trigger_if = {
+			limit = {
+				exists = scope:selected_ability
+				scope:selected_ability.ability_effect_type = ability_effect_create_shield
+				has_character_flag = dueling
+			}
+			NOT = { abs_duel_shield_on_cooldown = yes }
+		}
+	}
+	
+	effect = {
+		abs_select_ability = { ABILITY_NAME = scope:selected_ability.var:ability_name }
+	}
+}

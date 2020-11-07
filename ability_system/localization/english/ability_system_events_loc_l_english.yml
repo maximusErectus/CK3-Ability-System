@@ -1,0 +1,57 @@
+﻿l_english: 
+ # Even option inserts 
+ ABS_USE_SELECTED_ABILITY: "[Select_CString(GetVariableSystem.Exists('needs_to_select_an_ability'), '$ABS_SELECT_AN_ABILITY$', $ABS_SELECTED_ABILITY$)]"
+ ABS_SELECT_AN_ABILITY: "Select an ability"
+ 
+ # Events
+ # The 'use_ability_name_override' in an eventoption within a magic screen will automatically be overridden by the ABS_USE_SELECTED_SPELL localization key
+ 
+ ability_system.event.112.title: "Magicians' Duel - Attacker"
+ ability_system.event.112.desc: "[initial_attacker.GetFirstName] vs. [initial_defender.GetFirstName]" 
+ ability_system.event.112.opt.a: "use_ability_name_override"
+                       
+ ability_system.event.113.title: "Magicians' Duel - Defender"
+ ability_system.event.113.desc: "[initial_attacker.GetFirstName] vs. [initial_defender.GetFirstName]" 
+ ability_system.event.113.opt.a: "use_ability_name_override"
+                       
+ ability_system.event.114.title: "Magicians' Duel - Attacker"
+ ability_system.event.114.desc: "[initial_attacker.GetFirstName] vs. [initial_defender.GetFirstName]" 
+ ability_system.event.114.opt.a: "use_ability_name_override"
+                       
+ ability_system.event.115.title: "Magicians' Duel - Defender"
+ ability_system.event.115.desc: "[initial_attacker.GetFirstName] vs. [initial_defender.GetFirstName]" 
+ ability_system.event.115.opt.a: "use_ability_name_override" 
+
+ # Inserts
+ DUEL_ATTACKER_SPELL: "[SelectLocalization(initial_attacker.IsValid, Concatenate(Concatenate('ability_', initial_attacker.MakeScope.Var('selected_ability').GetCharacter.MakeScope.Var('ability_name').GetFlagName), '_info'), 'abs_empty_line')]"
+ DUEL_DEFENDER_SPELL: "[SelectLocalization(initial_defender.IsValid, Concatenate(Concatenate('ability_', initial_defender.MakeScope.Var('selected_ability').GetCharacter.MakeScope.Var('ability_name').GetFlagName), '_info'), 'abs_empty_line')]"
+ 
+ DUEL_ATTACKER_ABILITY_AS_DEFENDER: "[SelectLocalization(attacker.IsValid, Concatenate(Concatenate('ability_', attacker.MakeScope.Var('selected_ability').GetCharacter.MakeScope.Var('ability_name').GetFlagName), '_info'), 'abs_empty_line')]"
+ DUEL_ATTACKER_ABILITY_ELEMENT: "[attacker.MakeScope.Var('selected_ability').GetCharacter.Custom('GetAbilityElement')]"
+ DUEL_ATTACKER_ABILITY_EFFECT_TYPE: "[attacker.MakeScope.Var('selected_ability').GetCharacter.Custom('GetAbilityEffectType')]"
+ 
+ ability_system.duel.show_attacker_ability: "\nYour opponent is using the $DUEL_ATTACKER_ABILITY_AS_DEFENDER$ [ability|E]"
+ #TODO: Add ability info
+ ability_system.duel.show_attacker_ability_element: "\nYour opponent is using an [ability|E] of the $DUEL_ATTACKER_ABILITY_ELEMENT$ element"
+ ability_system.duel.show_attacker_ability_effect: "\nYour opponent is using a $DUEL_ATTACKER_ABILITY_EFFECT_TYPE$-type ability"
+ 
+ ability_system.event.120.title: "Magicians' Duel - Round over"
+ ability_system.event.120.desc: "[initial_attacker.GetFirstName], hp: [initial_attacker.MakeScope.Var('hitpoints').GetValue], magicka: [initial_attacker.MakeScope.Var('current_magicka').GetValue]\n[initial_defender.GetFirstName], hp: [initial_defender.MakeScope.Var('hitpoints').GetValue], magicka: [initial_defender.MakeScope.Var('current_magicka').GetValue]" 
+ ability_system.event.120.desc_abilities: "\n$DUEL_ATTACKER_SPELL$ vs. $DUEL_DEFENDER_SPELL$"
+ ability_system.event.120.desc_shield: "\n[initial_attacker.MakeScope.Var('shield_strength').GetValue] vs. [initial_defender.MakeScope.Var('shield_strength').GetValue]"
+ ability_system.event.120.opt.a: "Continue"
+ ability_system.event.120.opt.b: "Winner screen"
+ ability_system.event.120.opt.c: "Loser screen"
+ ability_system.event.120.opt.d: "Draw screen"
+                       
+ ability_system.event.121.title: "Magicians' Duel - Winner"
+ ability_system.event.121.desc: "You Win!" 
+ ability_system.event.121.opt.a: "Ok c:" 
+                       
+ ability_system.event.122.title: "Magicians' Duel - Loser"
+ ability_system.event.122.desc: "You Lose!" 
+ ability_system.event.122.opt.a: "Ok :c" 
+                       
+ ability_system.event.123.title: "Magicians' Duel - Draw"
+ ability_system.event.123.desc: "It's a draw!" 
+ ability_system.event.123.opt.a: "Ok"  

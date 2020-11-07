@@ -1,0 +1,43 @@
+﻿##################################################
+
+### Ability system - Script Values | Default Values
+
+# Version Number		-	If version_number > current_version, update abilities
+# Ability Values		-	Defaults for some modifiers
+# Duel Value			-	Defaults for duel stuff
+# AI Duel Values		-	Change AI behaviour in duels (basic)
+
+##################################################
+
+##################################################
+# Version Number - If version_number > current_version, update abilities
+##################################################
+ABILITY_SYSTEM_VERSION = 001 # 0.0.1
+
+##################################################
+# Ability Values - Defaults for some modifiers
+##################################################
+ABILITY_AFFINITY_STRONG_MULTIPLIER = 1.15
+ABILITY_AFFINITY_WEAK_MULTIPLIER = 0.85
+ABILITY_ACCURACY_VS_SHIELD_OFFSET = 35
+ABILITY_COOLDOWN_MAX = 9
+
+##################################################
+# Duel Values - Defaults for duel stuff
+##################################################
+DUEL_COOLDOWN_TIME = 60 # days
+DUEL_SHIELD_COOLDOWN_ON_CREATED = 0#5 # Turns
+DUEL_SHIELD_COOLDOWN_ON_DESTROYED = 4 # Turns
+DUEL_BASE_ACCURACY = 25
+
+##################################################
+# AI Duel Values - Change AI behaviour in duels (basic)
+##################################################
+AI_DUEL_ORDER_CHANGE_MINOR = 1.50
+AI_DUEL_ORDER_CHANGE_MEDIUM = 2.5
+AI_DUEL_ORDER_CHANGE_MAJOR = 4.5
+AI_DUEL_ORDER_CHANGE_EXTREME = 8
+AI_DUEL_ORDER_CHANGE_MAX = 50
+AI_DUEL_ORDER_LOW_MANA = 10
+AI_DUEL_ORDER_MEDIUM_MANA = 25
+AI_DUEL_ORDER_HIGH_MANA = 50

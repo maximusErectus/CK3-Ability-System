@@ -1,0 +1,82 @@
+﻿l_english:
+ # TODO: Add actual descriptions
+ # Used for GUI
+ ability_fire_blast: "Fire blast"
+ ability_fire_blast_using: "Cast Fire blast"
+ ability_fire_blast_info:"[fire_blast|E]"
+ 
+ ability_water_blast: "Water blast"
+ ability_water_blast_using: "Cast Water blast"
+ ability_water_blast_info:"[water_blast|E]"
+ 
+ ability_lightning_blast: "Lightning blast"
+ ability_lightning_blast_using: "Cast Lightning blast"
+ ability_lightning_blast_info:"[lightning_blast|E]"
+ 
+ ability_dodge: "Dodge"
+ ability_dodge_using: "Dodge"
+ ability_dodge_info:"[dodge|E]"
+ 
+ ability_fire_wall: "Fire wall"
+ ability_fire_wall_using: "Cast Fire wall"
+ ability_fire_wall_info:"[fire_wall|E]"
+ 
+ ability_ice_wall: "Ice wall"
+ ability_ice_wall_using: "Cast Ice wall"
+ ability_ice_wall_info:"[ice_wall|E]"
+
+
+ # Ability concepts
+ game_concept_fire_blast: "Fire blast"
+ game_concept_fire_blast_desc: "The [spell|E] Fire blast"
+ 
+ game_concept_water_blast: "Water blast"
+ game_concept_water_blast_desc: "The [spell|E] Water blast"
+ 
+ game_concept_lightning_blast: "Lightning blast"
+ game_concept_lightning_blast_desc: "The [spell|E] Lightning blast"
+ 
+ game_concept_fire_wall: "Fire wall"
+ game_concept_fire_wall_desc: "The [spell|E] Fire wall"
+ 
+ game_concept_ice_wall: "Ice wall"
+ game_concept_ice_wall_desc: "The [spell|E] Ice wall"
+ 
+ game_concept_dodge: "Dodge"
+ game_concept_dodge_desc: "You attempt to dodge an attack. Attempt.\nRequires no [magicka|E] and is not technically a [spell|E]"
+ 
+ 
+ 
+ ### Spells added for GUI testing
+ ability_test_ability_1: "Spell A"
+ ability_test_ability_2: "Spell B"
+ ability_test_ability_3: "Spell C"
+ ability_test_ability_4: "Spell D"
+ ability_test_ability_5: "Spell E"
+ ability_test_ability_6: "Spell F"
+ ability_test_ability_7: "Spell G"
+ ability_test_ability_8: "Spell H"
+ ability_test_ability_9: "Spell I"
+ ability_test_ability_10: "Spell J"
+ ability_test_ability_11: "Spell K"
+ ability_test_ability_12: "Spell L"
+ ability_test_ability_13: "Spell M"
+ ability_test_ability_14: "Spell N"
+ ability_test_ability_15: "Spell O"
+ ability_test_ability_16: "Spell P"
+ ability_test_ability_17: "Spell Q"
+ ability_test_ability_18: "Spell R"
+ ability_test_ability_19: "Spell S"
+ ability_test_ability_20: "Spell T"
+ ability_test_ability_21: "Spell U"
+ ability_test_ability_22: "Spell V"
+ ability_test_ability_23: "Spell W"
+ ability_test_ability_24: "Spell X"
+ ability_test_ability_25: "Spell Y"
+ ability_test_ability_26: "Spell Z"
+ ability_test_ability_27: "Spell AA"
+ ability_test_ability_28: "Spell AB"
+ ability_test_ability_29: "Spell AC"
+ ability_test_ability_30: "Spell AD"
+ ability_test_ability_31: "Spell AE"
+ ability_test_ability_32: "Spell AF"

@@ -1,0 +1,109 @@
+﻿##################################################
+
+### Ability system - Scripted Effects | Basic Effects
+
+# set_setting				-	Sets a global setting 
+# 									* Parameter => $CFG$ - Flag, Name of the setting
+# clr_setting				-	Clears a global setting
+# 									* Parameter => $CFG$ - Flag, Name of the setting
+# abs_select_ability		-	Selects an ability based on its name
+# 									* Parameter => $ABILITY_NAME$ - Flag, Name of the ability to select
+# abs_subtract_ability_ap	-	Subtracts AP from the Character based the selected ability
+# 									* Parameter => $ABILITY_CASTER$ - Character, Character that is casting the ability
+# abs_unlock_ability		-	Unlocks an ability based on its name
+# 									* Parameter => $ABILITY_NAME$ - Flag, Name of the ability to select
+
+##################################################
+
+##################################################
+# set_setting - Sets a global setting
+# 					* Parameter => $CFG$ - Flag, Name of the setting
+##################################################
+set_setting = {
+	add_to_global_variable_list = {
+		name = abs_global_settings
+		target = flag:$CFG$
+	}
+}
+
+##################################################
+# clr_setting - Clears a global setting
+# 					* Parameter => $CFG$ - Flag, Name of the setting
+##################################################
+clr_setting = {
+	if = { 
+		limit = { has_setting = { CFG = $CFG$ } }
+		remove_list_global_variable = {
+			name = abs_global_settings
+			target = flag:$CFG$
+		}
+	}
+}
+
+##################################################
+# abs_select_ability - Selects an ability based on its name
+# 						* Parameter => $ABILITY_NAME$ - Flag, Name of the ability to select
+##################################################
+abs_select_ability = {	
+	random_in_global_list = {
+		variable = ability_trackers
+		
+		limit = {
+			this.var:ability_name = $ABILITY_NAME$
+		}
+		
+		PREV = {
+			set_variable = {
+				name = selected_ability
+				value = PREV
+			}
+		}
+	}
+}
+
+##################################################
+# abs_subtract_ability_ap - Subtracts AP from the Character based the selected ability
+# 						* Parameter => $ABILITY_CASTER$ - Character, Character that is casting the ability
+##################################################
+abs_subtract_ability_ap = {	
+	$ABILITY_CASTER$ = {
+		if = {
+			limit = {
+				has_variable = selected_ability
+			}
+			#TODO: Change ap based on type
+			change_variable = {
+				name = current_magicka
+				subtract = $ABILITY_CASTER$.selected_ability_cost
+			}
+		}	
+	}
+
+}
+
+
+##################################################
+# abs_unlock_ability - Unlocks an ability based on its name
+# 						* Parameter => $ABILITY_NAME$ - Flag, Name of the ability to select
+##################################################
+abs_unlock_ability = {
+	if = {
+		limit = { is_target_in_global_variable_list = { name = ability_list target = $ABILITY_NAME$ } }
+		random_in_global_list = {
+			variable = ability_trackers
+			
+			limit = { this.var:ability_name = $ABILITY_NAME$ }
+			save_temporary_scope_as = unlocked_ability # We want to be able to access it later.
+		}
+		add_to_variable_list = {
+			name = unlocked_abilities
+			target = scope:unlocked_ability.var:ability_name
+		}
+	}
+}
+
+
+
+
+
+

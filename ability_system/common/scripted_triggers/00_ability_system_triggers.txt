@@ -1,0 +1,211 @@
+﻿##################################################
+
+### Ability system - Scripted Triggers | Triggers
+
+# has_setting								-	Checks if a global setting is set
+# 													* Parameter => $CFG$ - Flag, Name of the setting
+# abs_is_ability_tracker					-	Checks if a character is used for ability tracking
+# abs_has_access_to_ability_by_name			-	Checks if a character has access to a specific ability
+# 													* Parameter => $ABILITY_NAME$ - Flag, Name of the ability to check
+# 													* Parameter => $ABILITY_CASTER$ - Character, Character that is casting the ability
+# abs_duel_shield_on_cooldown				-	Checks if a character can create a new shield
+# abs_has_ap_for_ability_by_name			-	Checks if a character has enough AP to use an ability
+# 													* Parameter => $ABILITY$ - Character, Ability to cooldown
+# 													* Parameter => $ABILITY_CASTER$ - Character, Character that is casting the ability
+# abs_is_ability_element_strong_against		-	Checks if an ability's element is strong against anothers
+# 													* Parameter => $ABILITY_ELEMENT_A$ - Script_value, Element of the ability to check
+# 													* Parameter => $ABILITY_ELEMENT_B$ - Script_value, Element of the ability to check against
+# abs_is_ability_element_weak_against		-	Checks if an ability's element is weak against anothers
+# 													* Parameter => $ABILITY_ELEMENT_A$ - Script_value, Element of the ability to check
+# 													* Parameter => $ABILITY_ELEMENT_B$ - Script_value, Element of the ability to check against
+
+##################################################
+
+##################################################
+# has_setting - Checks if a global setting is set
+# 					* Parameter => $CFG$ - Flag, Name of the setting
+##################################################
+has_setting = {
+	is_target_in_global_variable_list = {
+		name = abs_global_settings
+		target = flag:$CFG$
+	}
+}
+
+##################################################
+# abs_is_ability_tracker - Checks if a character is used for ability tracking
+##################################################
+abs_is_ability_tracker = {
+	has_variable = ability_name
+	has_variable = ability_cost
+	has_variable = ability_type
+	has_variable = ability_element
+	has_variable = ability_context
+	has_variable = ability_power_rating
+	has_variable = ability_accuracy
+}
+
+##################################################
+# TODO: Add mage rank requirement
+# TODO: Use global list for special cases
+# abs_has_access_to_ability_by_name - Checks if a character has access to a specific ability
+# 										* Parameter => $ABILITY_NAME$ - Flag, Name of the ability to check
+# 										* Parameter => $ABILITY_CASTER$ - Character, Character that is casting the ability
+##################################################
+abs_has_access_to_ability_by_name = {	
+	$ABILITY_CASTER$ = { save_temporary_scope_as = ability_caster }
+
+	any_in_global_list = {
+		variable = ability_trackers
+		
+		var:ability_name = $ABILITY_NAME$
+		save_temporary_scope_as = sel_ability
+	}
+	OR = {
+		has_setting = { CFG = abs_debug_enable_no_ability_requirements }
+		trigger_if = {
+			limit = { scope:ability_caster = { has_variable_list = unlocked_abilities } }
+			AND = {
+				scope:ability_caster = { is_target_in_variable_list = { name = unlocked_abilities target = scope:sel_ability.var:ability_name } }
+				# Additional checks
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+		
+		# Special cases
+		$ABILITY_NAME$ = flag:dodge # Dodging is always an option
+	}
+}
+
+##################################################
+# abs_duel_shield_on_cooldown - Checks if a character can create a new shield
+##################################################
+abs_duel_shield_on_cooldown = {
+	has_variable = abs_duel_shield_cooldown
+}
+
+##################################################
+# abs_ability_on_cooldown - Checks if an ability is still on cooldown for a character
+# 								* Parameter => $ABILITY$ - Character, Ability to cooldown
+# 								* Parameter => $ABILITY_CASTER$ - Character, Character that is casting the ability
+##################################################
+abs_ability_on_cooldown = {
+	custom_description = {
+		text = abs_ability_on_cooldown_visual_trigger
+		value = ability_cooldown_left
+		
+		$ABILITY_CASTER$ = {
+			OR = {
+				is_target_in_variable_list = { name = abilities_cooldown_turns_1 target = $ABILITY$.var:ability_name }
+				is_target_in_variable_list = { name = abilities_cooldown_turns_2 target = $ABILITY$.var:ability_name }
+				is_target_in_variable_list = { name = abilities_cooldown_turns_3 target = $ABILITY$.var:ability_name }
+				is_target_in_variable_list = { name = abilities_cooldown_turns_4 target = $ABILITY$.var:ability_name }
+				is_target_in_variable_list = { name = abilities_cooldown_turns_5 target = $ABILITY$.var:ability_name }
+				is_target_in_variable_list = { name = abilities_cooldown_turns_6 target = $ABILITY$.var:ability_name }
+				is_target_in_variable_list = { name = abilities_cooldown_turns_7 target = $ABILITY$.var:ability_name }
+				is_target_in_variable_list = { name = abilities_cooldown_turns_8 target = $ABILITY$.var:ability_name }
+				is_target_in_variable_list = { name = abilities_cooldown_turns_9 target = $ABILITY$.var:ability_name }
+			}
+		}
+		NOT = { has_setting = { CFG = abs_debug_enable_no_ability_cooldown } }
+	
+	}
+}
+
+##################################################
+# TODO: Switch AP based on type
+# abs_has_ap_for_ability_by_name - Checks if a character has enough AP to use an ability
+# 									* Parameter => $ABILITY$ - Character, Ability to cooldown
+# 									* Parameter => $ABILITY_CASTER$ - Character, Character that is casting the ability
+##################################################
+abs_has_ap_for_ability_by_name = {	
+	custom_description = {
+		text = abs_has_ap_for_ability_by_name_visual_trigger
+		subject = $ABILITY_CASTER$
+		object = $ABILITY$
+		
+		$ABILITY_CASTER$ = { save_temporary_scope_as = ability_caster }
+
+		any_in_global_list = {
+			variable = ability_trackers
+			
+			var:ability_name = $ABILITY$.var:ability_name
+			save_temporary_scope_as = sel_ability
+		}
+		OR = {
+			has_setting = { CFG = abs_debug_enable_infinite_ap }
+			scope:ability_caster.current_magicka >= scope:sel_ability.ability_cost		
+		}
+	}
+}
+
+##################################################
+# abs_is_ability_element_strong_against - Checks if an ability's element is strong against anothers
+# 											* Parameter => $ABILITY_ELEMENT_A$ - Script_value, Element of the ability to check
+# 											* Parameter => $ABILITY_ELEMENT_B$ - Script_value, Element of the ability to check against
+##################################################
+abs_is_ability_element_strong_against = {
+	# $ABILITY_ELEMENT_A$ -> Character, ability to test
+	# $ABILITY_ELEMENT_B$ -> Character, ability to test against
+
+	trigger_if = {
+		limit = { $ABILITY_ELEMENT_A$ = ability_element_fire }
+		
+		OR = {
+			$ABILITY_ELEMENT_B$ = ability_element_ice
+		}
+	}
+	trigger_else_if = {
+		limit = { $ABILITY_ELEMENT_A$ = ability_element_ice }
+		
+		# Currently none?
+		always = no
+	}
+	trigger_else_if = {
+		limit = { $ABILITY_ELEMENT_A$ = ability_element_lightning }
+		
+		OR = {
+			$ABILITY_ELEMENT_B$ = ability_element_ice
+		}		
+	}
+	trigger_else = {
+		always = no
+	}
+}
+
+##################################################
+# abs_is_ability_element_weak_against - Checks if an ability's element is weak against anothers
+# 											* Parameter => $ABILITY_ELEMENT_A$ - Script_value, Element of the ability to check
+# 											* Parameter => $ABILITY_ELEMENT_B$ - Script_value, Element of the ability to check against
+##################################################
+abs_is_ability_element_weak_against = {
+	# $ABILITY_ELEMENT_A$ -> Character, ability to test
+	# $ABILITY_ELEMENT_B$ -> Character, ability to test against
+
+	trigger_if = {
+		limit = { $ABILITY_ELEMENT_A$ = ability_element_fire }
+		
+		# Currently none?
+		always = no
+	}
+	trigger_else_if = {
+		limit = { $ABILITY_ELEMENT_A$ = ability_element_ice }
+		
+		# Currently none?
+		OR = {
+			$ABILITY_ELEMENT_B$ = ability_element_fire
+			$ABILITY_ELEMENT_B$ = ability_element_lightning
+		}
+	}
+	trigger_else_if = {
+		limit = { $ABILITY_ELEMENT_A$ = ability_element_lightning }
+		
+		# Currently none?
+		always = no		
+	}
+	trigger_else = {
+		always = no
+	}
+}

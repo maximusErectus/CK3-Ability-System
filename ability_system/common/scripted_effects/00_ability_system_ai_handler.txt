@@ -1,0 +1,447 @@
+﻿##################################################
+
+### Ability system - Scripted Effects | AI Handling
+
+# abs_duel_ai_select_ability	-	Selects an ability for the AI in a duel
+
+##################################################
+
+##################################################
+# TODO: Rewrite this to be better
+# abs_duel_ai_select_ability - Selects an ability for the AI in a duel
+# 								Available Scope => scope:attacker - Character, Character that is the attacking side
+# 								Available Scope => scope:defender - Character, Character that is the defending side
+##################################################
+abs_duel_ai_select_ability = {	
+	save_scope_as = active_character
+	if = {
+		limit = { this = scope:attacker }
+		scope:defender = { save_temporary_scope_as = opponent }
+	}
+	else = {
+		scope:attacker = { save_temporary_scope_as = opponent }		
+	}
+	
+	# Make a list of all abilities that we can actually use
+	every_in_list = {
+		variable = ability_list
+		
+		limit = {
+			save_temporary_scope_as = sel_ability
+		
+			abs_has_access_to_ability_by_name = { ABILITY_NAME = scope:sel_ability.var:ability_name ABILITY_CASTER = scope:active_character }
+			abs_has_ap_for_ability_by_name = { ABILITY = scope:sel_ability ABILITY_CASTER = scope:active_character }
+			NOT = { abs_ability_on_cooldown = { ABILITY = scope:sel_ability ABILITY_CASTER = scope:active_character  } }
+			
+			trigger_if = {
+				limit = {
+					exists = scope:sel_ability
+					scope:sel_ability.ability_effect_type = ability_effect_create_shield
+					has_character_flag = dueling
+				}
+				NOT = { abs_duel_shield_on_cooldown = yes }
+			}
+		}
+		
+		scope:active_character = {
+			add_to_variable_list = {
+				name = available_abilities
+				target = PREV
+			}
+		}
+	}
+	
+	# Used for checking stuff
+	save_temporary_scope_as = ability_caster
+	
+	# Order them by usefulness
+	# Then select the best one
+	ordered_in_list = {
+		variable = available_abilities
+
+		order_by = {
+			value = 0
+			
+			# ability_cost
+			# ability_type
+			# ability_element
+			# ability_context
+			# ability_power_rating
+			# ability_school
+			# ability_accuracy
+			# ability_effect_type
+			
+			if = { # Movement-type abilities
+				limit = { ability_effect_type = ability_effect_movement }
+				
+				# Are we attacking or defending?
+				if = {
+					limit = { scope:active_character = scope:attacker }
+					subtract = AI_DUEL_ORDER_CHANGE_MINOR
+				}
+				else = {
+					add = AI_DUEL_ORDER_CHANGE_MEDIUM
+				}
+				
+				# Do we have a lot of mana, and a shield-creation spell available?
+				if = {
+					limit = {
+						scope:active_character.var:current_magicka >= AI_DUEL_ORDER_MEDIUM_MANA
+						any_in_list = {
+							variable = available_abilities
+							var:ability_effect = ability_effect_create_shield
+						}
+						NAND = {
+							exists = scope:active_character.var:shield_strength
+							scope:active_character.var:shield_strength >= ability_power_rating_medium
+						}
+					}
+					subtract = AI_DUEL_ORDER_CHANGE_MAJOR
+				}
+				
+				# We have plenty of shield strength left
+				if = {
+					limit = {
+						scope:active_character = scope:defender
+						exists = scope:active_character.var:shield_strength
+						scope:active_character.var:shield_strength >= ability_power_rating_low
+					}
+					subtract = AI_DUEL_ORDER_CHANGE_MAJOR
+				}
+				
+				# Are we defending, and do we know the opponent's move?
+				if = {
+					limit = {
+						scope:active_character = scope:defender
+						OR = {
+							scope:active_character.var:ability_revealed_info = flag:all
+							scope:active_character.var:ability_revealed_info = flag:ability_effect
+						}
+					}
+					
+					if = {
+						limit = {
+							OR = {
+								scope:attacker.var:selected_ability.ability_effect_type = ability_effect_movement
+								scope:attacker.var:selected_ability.ability_effect_type = ability_effect_block_damage
+								scope:attacker.var:selected_ability.ability_effect_type = ability_effect_create_shield
+							}
+						}
+						subtract = AI_DUEL_ORDER_CHANGE_MEDIUM
+					}
+					else_if = {
+						limit = {
+							OR = {
+								scope:attacker.var:selected_ability.ability_effect_type = ability_effect_damage
+							}
+							scope:active_character.var:shield_strength <= ability_power_rating_medium
+						}
+						add = AI_DUEL_ORDER_CHANGE_MINOR
+					}
+				}
+				
+			}
+			else_if = { # Damage-type abilities
+				limit = { ability_effect_type = ability_effect_damage }
+				
+				# Are we attacking or defending?
+				if = {
+					limit = { scope:active_character = scope:attacker }
+					add = AI_DUEL_ORDER_CHANGE_MEDIUM
+				}
+				else = {
+					subtract = AI_DUEL_ORDER_CHANGE_MINOR
+				}
+				
+				# Can we easily afford it?
+				if = {
+					limit = { scope:active_character.var:current_magicka >= AI_DUEL_ORDER_HIGH_MANA }
+					add = AI_DUEL_ORDER_CHANGE_MEDIUM
+				}
+				else_if = {
+					limit = { scope:active_character.var:current_magicka >= AI_DUEL_ORDER_MEDIUM_MANA }
+					add = AI_DUEL_ORDER_CHANGE_MINOR					
+				}
+				
+				# We have plenty of shield strength left
+				if = {
+					limit = {
+						scope:active_character = scope:defender
+						exists = scope:active_character.var:shield_strength
+						scope:active_character.var:shield_strength >= ability_power_rating_low
+					}
+					add = AI_DUEL_ORDER_CHANGE_MAJOR
+				}
+				
+				# Does our opponent have a shield, and is our ability effective against it?
+				if = {
+					limit = { scope:opponent = { has_variable = shield_strength } }
+					
+					if = {
+						limit = {
+							abs_is_ability_element_strong_against = { 
+								ABILITY_ELEMENT_A = scope:active_character.selected_ability_element 
+								ABILITY_ELEMENT_B = scope:opponent.var:shield_element
+							}
+						}
+						add = AI_DUEL_ORDER_CHANGE_MINOR
+					}
+					else_if = {
+						limit = {
+							abs_is_ability_element_weak_against = { 
+								ABILITY_ELEMENT_A = scope:active_character.selected_ability_element 
+								ABILITY_ELEMENT_B = scope:opponent.var:shield_element
+							}
+						}
+						subtract = AI_DUEL_ORDER_CHANGE_MINOR
+					}
+				}
+				
+				# What do we know about the opponent's ability?
+				if = {
+					limit = {
+						scope:active_character = scope:defender
+						OR = {
+							scope:active_character.var:ability_revealed_info = flag:all
+							scope:active_character.var:ability_revealed_info = flag:ability_effect
+							scope:active_character.var:ability_revealed_info = flag:ability_element
+						}
+					}
+					
+					if = {
+						limit = {
+							OR = {
+								scope:active_character.var:ability_revealed_info = flag:all
+								scope:active_character.var:ability_revealed_info = flag:ability_effect
+							}
+							OR = {
+								scope:attacker.var:selected_ability.ability_effect_type = ability_effect_movement
+								scope:attacker.var:selected_ability.ability_effect_type = ability_effect_block_damage
+								scope:attacker.var:selected_ability.ability_effect_type = ability_effect_create_shield
+							}
+						}
+						add = AI_DUEL_ORDER_CHANGE_MAJOR
+					}
+					else_if = {
+						limit = {
+							OR = {
+								scope:active_character.var:ability_revealed_info = flag:all
+								scope:active_character.var:ability_revealed_info = flag:ability_effect
+							}
+							OR = {
+								scope:attacker.var:selected_ability.ability_effect_type = ability_effect_damage
+							}
+						}
+						subtract = AI_DUEL_ORDER_CHANGE_MEDIUM
+					}
+					
+					if = {
+						limit = {
+							OR = {
+								scope:active_character.var:ability_revealed_info = flag:all
+								scope:active_character.var:ability_revealed_info = flag:ability_element
+							}
+							NOT = { scope:opponent = { has_variable = shield_strength } }
+							scope:opponent.var:selected_ability.ability_effect_type = ability_effect_block_damage
+						}
+						if = {
+							limit = {
+								abs_is_ability_element_strong_against = { 
+									ABILITY_ELEMENT_A = var:ability_element
+									ABILITY_ELEMENT_B = scope:opponent.var:selected_ability.var:ability_element
+								}
+							}
+							add = AI_DUEL_ORDER_CHANGE_MINOR
+						}
+						else_if = {
+							limit = {
+								abs_is_ability_element_weak_against = { 
+									ABILITY_ELEMENT_A = var:ability_element
+									ABILITY_ELEMENT_B = scope:opponent.var:selected_ability.var:ability_element
+								}
+							}
+							subtract = AI_DUEL_ORDER_CHANGE_MINOR
+						}
+					}
+				}
+				
+				# Add a bit depending on base-damage
+				add = {
+					value = var:ability_power_rating
+					divide = 20
+				}
+				subtract = {
+					value = var:ability_cost
+					divide = 20
+				}
+			}
+			else_if = { # Blocking-type abilities
+				limit = { ability_effect_type = ability_effect_block_damage }
+				
+				# Are we attacking or defending?
+				if = {
+					limit = { scope:active_character = scope:attacker }
+					subtract = AI_DUEL_ORDER_CHANGE_MINOR
+				}
+				else = {
+					add = AI_DUEL_ORDER_CHANGE_MEDIUM
+				}
+				
+				# Do we have a lot of mana, and a shield-creation spell available?
+				if = {
+					limit = {
+						scope:active_character.var:current_magicka >= AI_DUEL_ORDER_MEDIUM_MANA
+						any_in_list = {
+							variable = available_abilities
+							var:ability_effect = ability_effect_create_shield
+						}
+						NAND = {
+							exists = scope:active_character.var:shield_strength
+							scope:active_character.var:shield_strength >= ability_power_rating_medium
+						}
+					}
+					subtract = AI_DUEL_ORDER_CHANGE_MAJOR
+				}
+				
+				# Are we defending, and do we know the opponent's move?
+				if = {
+					limit = {
+						scope:active_character = scope:defender
+						OR = {
+							scope:active_character.var:ability_revealed_info = flag:all
+							scope:active_character.var:ability_revealed_info = flag:ability_effect
+						}
+					}
+					
+					if = {
+						limit = {
+							OR = {
+								scope:attacker.var:selected_ability.ability_effect_type = ability_effect_movement
+								scope:attacker.var:selected_ability.ability_effect_type = ability_effect_block_damage
+								scope:attacker.var:selected_ability.ability_effect_type = ability_effect_create_shield
+							}
+						}
+						subtract = AI_DUEL_ORDER_CHANGE_MAJOR
+					}
+					else_if = {
+						limit = {
+							OR = {
+								scope:attacker.var:selected_ability.ability_effect_type = ability_effect_damage
+							}
+						}
+						add = AI_DUEL_ORDER_CHANGE_MEDIUM
+					}
+				}
+				
+				# Do we know about the opponent's element, are we weak against it, and do we have a block that is not?
+				if = {
+					limit = {
+						scope:active_character = scope:defender
+						OR = {
+							scope:active_character.var:ability_revealed_info = flag:all
+							scope:active_character.var:ability_revealed_info = flag:ability_element
+						}
+					}
+					
+					if = {
+						limit = {
+							abs_is_ability_element_weak_against = { 
+								ABILITY_ELEMENT_A = var:ability_element
+								ABILITY_ELEMENT_B = scope:opponent.var:selected_ability.var:ability_element
+							}
+							any_in_list = {
+								variable = available_abilities
+								
+								var:ability_effect = ability_effect_block_damage
+								NOT = {
+									abs_is_ability_element_weak_against = { 
+										ABILITY_ELEMENT_A = var:ability_element
+										ABILITY_ELEMENT_B = scope:opponent.var:selected_ability.var:ability_element
+									}	
+								}
+							}
+						}
+						subtract = AI_DUEL_ORDER_CHANGE_MINOR
+					}
+				}
+			}
+			else_if = { # Shield-creation-type abilities
+				limit = { ability_effect_type = ability_effect_create_shield }
+				
+				# Are we attacking or defending?
+				if = {
+					limit = { scope:active_character = scope:attacker }
+					subtract = AI_DUEL_ORDER_CHANGE_MINOR
+				}
+				else = {
+					add = AI_DUEL_ORDER_CHANGE_MEDIUM
+				}
+				
+				# Can we afford it?
+				if = {
+					limit = { scope:active_character.var:current_magicka >= AI_DUEL_ORDER_MEDIUM_MANA }
+					add = AI_DUEL_ORDER_CHANGE_MEDIUM
+				}
+				else_if = {
+					limit = { scope:active_character.var:current_magicka >= AI_DUEL_ORDER_LOW_MANA }
+					add = AI_DUEL_ORDER_CHANGE_MINOR					
+				}
+				else = {
+					subtract = AI_DUEL_ORDER_CHANGE_MINOR
+				}
+				
+				# Do we need it?
+				if = {
+					limit = {
+						AND = {
+							exists = scope:active_character.var:shield_strength
+							scope:active_character.var:shield_strength >= ability_power_rating_low
+						}
+					}
+					subtract = AI_DUEL_ORDER_CHANGE_MAX
+				}
+				
+				# Are we defending, do we know about the opponent's element, and do we have a better shield?				
+				if = {
+					limit = {
+						scope:active_character = scope:defender
+						OR = {
+							scope:active_character.var:ability_revealed_info = flag:all
+							scope:active_character.var:ability_revealed_info = flag:ability_element
+						}
+					}
+					
+					if = {
+						limit = {
+							abs_is_ability_element_weak_against = { 
+								ABILITY_ELEMENT_A = var:ability_element
+								ABILITY_ELEMENT_B = scope:opponent.var:selected_ability.var:ability_element
+							}
+							any_in_list = {
+								variable = available_abilities
+								
+								var:ability_effect = ability_effect_create_shield
+								NOT = {
+									abs_is_ability_element_weak_against = { 
+										ABILITY_ELEMENT_A = var:ability_element
+										ABILITY_ELEMENT_B = scope:opponent.var:selected_ability.var:ability_element
+									}	
+								}
+							}
+						}
+						subtract = AI_DUEL_ORDER_CHANGE_MINOR
+					}
+				}
+			}
+		}
+		position = 0
+		
+		save_temporary_scope_as = sel_ability
+	}
+	
+	# Select it
+	scope:active_character = { abs_select_ability = { ABILITY_NAME = scope:sel_ability.var:ability_name } }
+	
+	# Clean up the list we made
+	scope:active_character = { clear_variable_list = available_abilities }
+}

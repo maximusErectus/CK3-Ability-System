@@ -1,0 +1,48 @@
+﻿##################################################
+
+### Ability system - Game Concepts | Basic concepts
+
+# Core concepts			-	Concepts for the fundamentals
+# Ability Stats			-	Concepts for all abilitity stats
+# Elements				-	Concepts for all elements
+
+##################################################
+
+##################################################
+# Core concepts - Concepts for the fundamentals
+##################################################
+spells = {
+	alias = { spell }
+}
+magicians = {
+	alias = { magician}
+}
+abilities = {
+	alias = { ability }
+}
+magicka = { }
+
+##################################################
+# Ability Stats - Concepts for all abilitity stats
+##################################################
+ability_cooldown = { }
+ability_accuracy = { }
+ability_evasion = { }
+ability_power_rating = { }
+ability_effect_movement = { }
+ability_effect_damage = { }
+ability_effect_block_damage = { }
+ability_effect_create_shield = { }
+ability_rarity_normal = { }
+ability_rarity_fine = { }
+ability_rarity_superior = { }
+ability_rarity_epic = { }
+ability_rarity_legendary = { }
+
+##################################################
+# Elements - Concepts for all elements
+##################################################
+element_neutral = { }
+element_fire = { }
+element_ice = { }
+element_lightning = { }

@@ -1,0 +1,34 @@
+﻿##################################################
+
+### Ability system - Debug Decisions
+
+# abs_open_debug		-	Opens the debug window 
+
+##################################################
+
+##################################################
+# abs_open_debug - Opens the debug window
+##################################################
+abs_open_debug = {
+	picture = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds"
+
+	desc = abs_open_debug.desc
+	selection_tooltip = abs_open_debug.tt
+	major = no
+	
+	ai_check_interval = 0
+	
+	is_shown = {
+		is_ai = no
+		debug_only = yes
+	}
+	
+	is_valid = {
+		
+	}
+	
+	effect = {
+		custom_tooltip = abs_open_debug.effect.tt
+		trigger_event = { id = ability_system.9001 }
+	}
+}

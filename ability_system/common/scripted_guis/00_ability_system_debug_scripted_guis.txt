@@ -1,0 +1,106 @@
+﻿##################################################
+
+### Ability system - Scripted GUIs | Debug Scripted GUIs
+
+# abs_debug_setting_toggle_infinite_ap				-	Toggles the Infinite AP Debug option
+# abs_debug_setting_toggle_no_ability_requirements	-	Toggles the No Ability Requirements Debug option
+# abs_debug_setting_toggle_no_ability_cooldown		-	Toggles the No Ability Cooldown Debug option
+# abs_debug_start_duel								-	Starts a new duel
+# abs_debug_unlock_all_abilities					-	Unlocks all abilities
+# abs_debug_unlock_random_ability					-	Unlocks a random locked ability
+
+##################################################
+
+##################################################
+# abs_debug_setting_toggle_infinite_ap - Toggles the Infinite AP Debug option
+##################################################
+abs_debug_setting_toggle_infinite_ap = {
+	scope = character
+	
+	effect = {
+		if = {
+			limit = { has_setting = { CFG = abs_debug_enable_infinite_ap } }
+			clr_setting = { CFG = abs_debug_enable_infinite_ap }
+		}
+		else = {
+			set_setting = { CFG = abs_debug_enable_infinite_ap }
+		}
+	}
+}
+
+##################################################
+# abs_debug_setting_toggle_no_ability_requirements - Toggles the No Ability Requirements Debug option
+##################################################
+abs_debug_setting_toggle_no_ability_requirements = {
+	scope = character
+	
+	effect = {
+		if = {
+			limit = { has_setting = { CFG = abs_debug_enable_no_ability_requirements } }
+			clr_setting = { CFG = abs_debug_enable_no_ability_requirements }
+		}
+		else = {
+			set_setting = { CFG = abs_debug_enable_no_ability_requirements }
+		}
+	}
+}
+
+##################################################
+# abs_debug_setting_toggle_no_ability_cooldown - Toggles the No Ability Cooldown Debug option
+##################################################
+abs_debug_setting_toggle_no_ability_cooldown = {
+	scope = character
+	
+	effect = {
+		if = {
+			limit = { has_setting = { CFG = abs_debug_enable_no_ability_cooldown } }
+			clr_setting = { CFG = abs_debug_enable_no_ability_cooldown }
+		}
+		else = {
+			set_setting = { CFG = abs_debug_enable_no_ability_cooldown }
+		}
+	}
+}
+
+##################################################
+# abs_debug_start_duel - Starts a new duel
+##################################################
+abs_debug_start_duel = {
+	scope = character
+	
+	effect = {
+		save_scope_as = attacking_char
+
+		random_living_character = {
+			limit = { age >= 18 age <= 40 is_ai = yes }
+			save_scope_as = defending_char
+		}
+
+		abs_prepare_duel_debug = {
+			ATTACKER = scope:attacking_char
+			DEFENDER = scope:defending_char
+		}
+	}
+}
+
+##################################################
+# abs_debug_unlock_all_abilities - Unlocks all abilities
+##################################################
+abs_debug_unlock_all_abilities = {
+	scope = character
+	
+	effect = {
+		abs_debug_unlock_all_abilities = yes
+	}
+}
+
+##################################################
+# abs_debug_unlock_random_ability - Unlocks a random locked ability
+##################################################
+abs_debug_unlock_random_ability = {
+	scope = character
+	
+	effect = {
+		abs_debug_unlock_random_ability = yes
+	}
+}

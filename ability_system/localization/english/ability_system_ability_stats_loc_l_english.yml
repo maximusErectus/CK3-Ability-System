@@ -1,0 +1,35 @@
+﻿l_english:
+ # Spell generic localization
+ # Schools of Magic
+ ABILITY_SCHOOL_NONE: "None"
+ ABILITY_MAGIC_SCHOOL_DESTRUCTION: "Destruction"
+ ABILITY_MAGIC_SCHOOL_ALTERATION: "Alteration"
+ ABILITY_MAGIC_SCHOOL_RESTORATION: "Restoration"
+ ABILITY_MAGIC_SCHOOL_CONJURATION: "Conjuration"
+ ABILITY_MAGIC_SCHOOL_ILLUSION: "Illusion"
+ ABILITY_MAGIC_SCHOOL_MYSTICISM: "Mysticism"
+ ABILITY_MAGIC_SCHOOL_NECROMANCY: "Necromancy"
+ 
+ # Ability elemental alignment
+ ABILITY_ELEMENT_NEUTRAL: "[element_neutral|E]"
+ ABILITY_ELEMENT_FIRE: "[element_fire|E]"
+ ABILITY_ELEMENT_ICE: "[element_ice|E]"
+ ABILITY_ELEMENT_LIGHTNING: "[element_lightning|E]"
+ 
+ # Ability effect types
+ ABILITY_EFFECT_TYPE_MOVEMENT: "[ability_effect_movement|E]"
+ ABILITY_EFFECT_TYPE_DAMAGE: "[ability_effect_damage|E]"
+ ABILITY_EFFECT_TYPE_BLOCK_DAMAGE: "[ability_effect_block_damage|E]"
+ ABILITY_EFFECT_TYPE_CREATE_SHIELD: "[ability_effect_create_shield|E]"
+ 
+ # Ability AP names
+ ABS_ABILITY_AP_NAME_SPELL: "[magicka|E]"
+ ABS_ABILITY_AP_NAME_GENERIC: "Stamina"
+ ABS_ABILITY_AP_NAME_MELEE: "Stamina"
+ 
+ # Ability rarity
+ ABS_ABILITY_RARITY_NORMAL: "[ability_rarity_normal|E]"
+ ABS_ABILITY_RARITY_FINE: "[ability_rarity_fine|E]"
+ ABS_ABILITY_RARITY_SUPERIOR: "[ability_rarity_superior|E]"
+ ABS_ABILITY_RARITY_EPIC: "[ability_rarity_epic|E]"
+ ABS_ABILITY_RARITY_LEGENDARY: "[ability_rarity_legendary|E]"

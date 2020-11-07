@@ -1,0 +1,11 @@
+﻿l_english:
+ # Trigger localization #selected_ability
+ ABS_ABILITY_GET_SHIELD_COOLDOWN_TURNS: "[GetPlayer.MakeScope.Var('abs_duel_shield_cooldown').GetValue|E0]" 
+ NOT_ABS_ABILITY_ACCESS_BY_NAME: "Has access to this ability"
+ ABS_ABILITY_ACCESS_BY_NAME: "Does not have access to this ability"
+ NOT_ABS_ABILITY_ON_COOLDOWN: "Ability is not on cooldown"
+ ABS_ABILITY_ON_COOLDOWN: "Ability is still on cooldown #F ($VALUE|E0$ turn(s) left)#!"
+ ABS_ABILITY_HAS_AP_BY_NAME: "Enough AP"
+ NOT_ABS_ABILITY_HAS_AP_BY_NAME: "Not enough [TARGET_CHARACTER.Custom('GetAbilityAPName')]"
+ NOT_ABS_DUEL_SHIELD_COOLDOWN: "Shield is not on cooldown"
+ ABS_DUEL_SHIELD_COOLDOWN: "Shield has recently been destroyed #F ($ABS_ABILITY_GET_SHIELD_COOLDOWN_TURNS$ turn(s) left)#!"
