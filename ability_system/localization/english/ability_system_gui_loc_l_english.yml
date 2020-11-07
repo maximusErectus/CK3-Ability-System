@@ -26,5 +26,5 @@
  
  # Inserts
  ABS_CURRENT_MAGICKA_PREFIX: "\nCurrent [magicka|E]: "
- ABS_CURRENT_MAGICKA: "$ABS_CURRENT_MAGICKA_PREFIX$ [ROOT.Var('current_magicka').GetValue|V]"
- ABS_CURRENT_PLAYER_MAGICKA: "[GetPlayer.MakeScope.Var('current_magicka').GetValue|V]"
+ ABS_CURRENT_MAGICKA: "$ABS_CURRENT_MAGICKA_PREFIX$ [ROOT.Var('current_magicka').GetValue|V1]"
+ ABS_CURRENT_PLAYER_MAGICKA: "[GetPlayer.MakeScope.Var('current_magicka').GetValue|V1]"
