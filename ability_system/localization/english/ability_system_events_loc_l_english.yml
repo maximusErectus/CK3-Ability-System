@@ -4,7 +4,7 @@
  ABS_SELECT_AN_ABILITY: "Select an ability"
  
  # Events
- # The 'use_ability_name_override' in an eventoption within a magic screen will automatically be overridden by the ABS_USE_SELECTED_SPELL localization key
+ # The 'use_ability_name_override' in an eventoption within a magic screen will automatically be overridden by the ABS_USE_SELECTED_ABILITY localization key
  
  ability_system.event.112.title: "Magicians' Duel - Attacker"
  ability_system.event.112.desc: "[initial_attacker.GetFirstName] vs. [initial_defender.GetFirstName]" 

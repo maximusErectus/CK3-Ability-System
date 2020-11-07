@@ -3,27 +3,27 @@
  # Used for GUI
  ability_fire_blast: "Fire blast"
  ability_fire_blast_using: "Cast Fire blast"
- ability_fire_blast_info:"[fire_blast|E]"
+ ability_fire_blast_info: "[fire_blast|E]"
  
  ability_water_blast: "Water blast"
  ability_water_blast_using: "Cast Water blast"
- ability_water_blast_info:"[water_blast|E]"
+ ability_water_blast_info: "[water_blast|E]"
  
  ability_lightning_blast: "Lightning blast"
  ability_lightning_blast_using: "Cast Lightning blast"
- ability_lightning_blast_info:"[lightning_blast|E]"
+ ability_lightning_blast_info: "[lightning_blast|E]"
  
  ability_dodge: "Dodge"
  ability_dodge_using: "Dodge"
- ability_dodge_info:"[dodge|E]"
+ ability_dodge_info: "[dodge|E]"
  
  ability_fire_wall: "Fire wall"
  ability_fire_wall_using: "Cast Fire wall"
- ability_fire_wall_info:"[fire_wall|E]"
+ ability_fire_wall_info: "[fire_wall|E]"
  
  ability_ice_wall: "Ice wall"
  ability_ice_wall_using: "Cast Ice wall"
- ability_ice_wall_info:"[ice_wall|E]"
+ ability_ice_wall_info: "[ice_wall|E]"
 
 
  # Ability concepts
