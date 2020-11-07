@@ -27,10 +27,10 @@ abs_lifestyle_check_if_has_magic = {
 # abs_lifestyle_magic_give_apprentice_effect - Gives character the default stuff for a magic apprentice
 ##################################################
 abs_lifestyle_magic_give_apprentice_effect = {
-	set_variable = { name = current_magicka value = 0 }
-	set_variable = { name = maximum_magicka value = 50 }
+	add_trait_force_tooltip = magic_level_1
 	
-	add_trait_force_tooltip = magic_level_4
+	set_variable = { name = current_magicka value = 5 }
+	set_variable = { name = maximum_magicka value = 50 }	
 	
 	# Unlock the default ability
 	abs_unlock_ability = { ABILITY_NAME = flag:dodge }

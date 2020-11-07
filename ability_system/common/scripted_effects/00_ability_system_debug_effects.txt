@@ -129,7 +129,7 @@ abs_prepare_duel_debug = {
 ##################################################
 abs_debug_add_testing_abilities = {
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_1 		
+		ABILITY_NAME = test_ability_1 		
 		ABILITY_SCHOOL = 1		
 		ABILITY_ELEMENT = 1		
 		ABILITY_TYPE = 1 
@@ -141,7 +141,7 @@ abs_debug_add_testing_abilities = {
 		ABILITY_RARITY = 1
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_2
+		ABILITY_NAME = test_ability_2
 		ABILITY_SCHOOL = 1		
 		ABILITY_ELEMENT = 2		
 		ABILITY_TYPE = 1 
@@ -153,7 +153,7 @@ abs_debug_add_testing_abilities = {
 		ABILITY_RARITY = 1
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_3 		
+		ABILITY_NAME = test_ability_3 		
 		ABILITY_SCHOOL = 1		
 		ABILITY_ELEMENT = 3	
 		ABILITY_TYPE = 1 
@@ -165,7 +165,7 @@ abs_debug_add_testing_abilities = {
 		ABILITY_RARITY = 1
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_4 		
+		ABILITY_NAME = test_ability_4 		
 		ABILITY_SCHOOL = 1		
 		ABILITY_ELEMENT = 4	
 		ABILITY_TYPE = 1 
@@ -178,7 +178,7 @@ abs_debug_add_testing_abilities = {
 	}
 	
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_5 		
+		ABILITY_NAME = test_ability_5 		
 		ABILITY_SCHOOL = 2	
 		ABILITY_ELEMENT = 1		
 		ABILITY_TYPE = 1 
@@ -190,7 +190,7 @@ abs_debug_add_testing_abilities = {
 		ABILITY_RARITY = 1
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_6	
+		ABILITY_NAME = test_ability_6	
 		ABILITY_SCHOOL = 2	
 		ABILITY_ELEMENT = 2		
 		ABILITY_TYPE = 1 
@@ -202,7 +202,7 @@ abs_debug_add_testing_abilities = {
 		ABILITY_RARITY = 1
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_7 		
+		ABILITY_NAME = test_ability_7 		
 		ABILITY_SCHOOL = 2	
 		ABILITY_ELEMENT = 3	
 		ABILITY_TYPE = 1 
@@ -214,7 +214,7 @@ abs_debug_add_testing_abilities = {
 		ABILITY_RARITY = 1
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_8 		
+		ABILITY_NAME = test_ability_8 		
 		ABILITY_SCHOOL = 2	
 		ABILITY_ELEMENT = 4	
 		ABILITY_TYPE = 1 
@@ -227,7 +227,7 @@ abs_debug_add_testing_abilities = {
 	}
 	
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_9 		
+		ABILITY_NAME = test_ability_9 		
 		ABILITY_SCHOOL = 3
 		ABILITY_ELEMENT = 1		
 		ABILITY_TYPE = 1 
@@ -239,7 +239,7 @@ abs_debug_add_testing_abilities = {
 		ABILITY_RARITY = 1
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_10	
+		ABILITY_NAME = test_ability_10	
 		ABILITY_SCHOOL = 3
 		ABILITY_ELEMENT = 2		
 		ABILITY_TYPE = 1 
@@ -251,7 +251,7 @@ abs_debug_add_testing_abilities = {
 		ABILITY_RARITY = 1
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_11 		
+		ABILITY_NAME = test_ability_11 		
 		ABILITY_SCHOOL = 3
 		ABILITY_ELEMENT = 3	
 		ABILITY_TYPE = 1 
@@ -263,7 +263,7 @@ abs_debug_add_testing_abilities = {
 		ABILITY_RARITY = 1
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_12 		
+		ABILITY_NAME = test_ability_12 		
 		ABILITY_SCHOOL = 3
 		ABILITY_ELEMENT = 4	
 		ABILITY_TYPE = 1 
@@ -276,7 +276,7 @@ abs_debug_add_testing_abilities = {
 	}
 	
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_13 		
+		ABILITY_NAME = test_ability_13 		
 		ABILITY_SCHOOL = 4
 		ABILITY_ELEMENT = 1		
 		ABILITY_TYPE = 1 
@@ -288,7 +288,7 @@ abs_debug_add_testing_abilities = {
 		ABILITY_RARITY = 1
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_14		
+		ABILITY_NAME = test_ability_14		
 		ABILITY_SCHOOL = 4
 		ABILITY_ELEMENT = 2		
 		ABILITY_TYPE = 1 
@@ -300,7 +300,7 @@ abs_debug_add_testing_abilities = {
 		ABILITY_RARITY = 1
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_15 		
+		ABILITY_NAME = test_ability_15 		
 		ABILITY_SCHOOL = 4
 		ABILITY_ELEMENT = 3	
 		ABILITY_TYPE = 1 
@@ -312,7 +312,7 @@ abs_debug_add_testing_abilities = {
 		ABILITY_RARITY = 1
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_16 		
+		ABILITY_NAME = test_ability_16 		
 		ABILITY_SCHOOL = 4
 		ABILITY_ELEMENT = 4	
 		ABILITY_TYPE = 1 
@@ -325,7 +325,7 @@ abs_debug_add_testing_abilities = {
 	}
 	
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_17 		
+		ABILITY_NAME = test_ability_17 		
 		ABILITY_SCHOOL = 5
 		ABILITY_ELEMENT = 1		
 		ABILITY_TYPE = 1 
@@ -337,7 +337,7 @@ abs_debug_add_testing_abilities = {
 		ABILITY_RARITY = 1
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_18 		
+		ABILITY_NAME = test_ability_18 		
 		ABILITY_SCHOOL = 5
 		ABILITY_ELEMENT = 2		
 		ABILITY_TYPE = 1 
@@ -349,7 +349,7 @@ abs_debug_add_testing_abilities = {
 		ABILITY_RARITY = 1
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_19 		
+		ABILITY_NAME = test_ability_19 		
 		ABILITY_SCHOOL = 5
 		ABILITY_ELEMENT = 3	
 		ABILITY_TYPE = 1 
@@ -361,7 +361,7 @@ abs_debug_add_testing_abilities = {
 		ABILITY_RARITY = 1
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_20 		
+		ABILITY_NAME = test_ability_20 		
 		ABILITY_SCHOOL = 5
 		ABILITY_ELEMENT = 4	
 		ABILITY_TYPE = 1 
@@ -374,7 +374,7 @@ abs_debug_add_testing_abilities = {
 	}
 	
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_21 		
+		ABILITY_NAME = test_ability_21 		
 		ABILITY_SCHOOL = 6
 		ABILITY_ELEMENT = 1		
 		ABILITY_TYPE = 1 
@@ -386,7 +386,7 @@ abs_debug_add_testing_abilities = {
 		ABILITY_RARITY = 1
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_22 		
+		ABILITY_NAME = test_ability_22 		
 		ABILITY_SCHOOL = 6
 		ABILITY_ELEMENT = 2		
 		ABILITY_TYPE = 1 
@@ -398,7 +398,7 @@ abs_debug_add_testing_abilities = {
 		ABILITY_RARITY = 1
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_23 		
+		ABILITY_NAME = test_ability_23 		
 		ABILITY_SCHOOL = 6
 		ABILITY_ELEMENT = 3	
 		ABILITY_TYPE = 1 
@@ -410,7 +410,7 @@ abs_debug_add_testing_abilities = {
 		ABILITY_RARITY = 1
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_24 		
+		ABILITY_NAME = test_ability_24 		
 		ABILITY_SCHOOL = 6
 		ABILITY_ELEMENT = 4	
 		ABILITY_TYPE = 1 
@@ -423,7 +423,7 @@ abs_debug_add_testing_abilities = {
 	}
 	
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_25 		
+		ABILITY_NAME = test_ability_25 		
 		ABILITY_SCHOOL = 7
 		ABILITY_ELEMENT = 1		
 		ABILITY_TYPE = 1 
@@ -435,7 +435,7 @@ abs_debug_add_testing_abilities = {
 		ABILITY_RARITY = 1
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_26 		
+		ABILITY_NAME = test_ability_26 		
 		ABILITY_SCHOOL = 7
 		ABILITY_ELEMENT = 2		
 		ABILITY_TYPE = 1 
@@ -447,7 +447,7 @@ abs_debug_add_testing_abilities = {
 		ABILITY_RARITY = 1
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_27 		
+		ABILITY_NAME = test_ability_27 		
 		ABILITY_SCHOOL = 7
 		ABILITY_ELEMENT = 3	
 		ABILITY_TYPE = 1 
@@ -459,7 +459,7 @@ abs_debug_add_testing_abilities = {
 		ABILITY_RARITY = 1
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_28 		
+		ABILITY_NAME = test_ability_28 		
 		ABILITY_SCHOOL = 7
 		ABILITY_ELEMENT = 4	
 		ABILITY_TYPE = 1 
@@ -472,7 +472,7 @@ abs_debug_add_testing_abilities = {
 	}
 	
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_29 		
+		ABILITY_NAME = test_ability_29 		
 		ABILITY_SCHOOL = 8
 		ABILITY_ELEMENT = 1		
 		ABILITY_TYPE = 1 
@@ -484,7 +484,7 @@ abs_debug_add_testing_abilities = {
 		ABILITY_RARITY = 1
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_30 		
+		ABILITY_NAME = test_ability_30 		
 		ABILITY_SCHOOL = 8
 		ABILITY_ELEMENT = 2		
 		ABILITY_TYPE = 1 
@@ -496,7 +496,7 @@ abs_debug_add_testing_abilities = {
 		ABILITY_RARITY = 1
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_31 		
+		ABILITY_NAME = test_ability_31 		
 		ABILITY_SCHOOL = 8
 		ABILITY_ELEMENT = 3	
 		ABILITY_TYPE = 1 
@@ -508,7 +508,7 @@ abs_debug_add_testing_abilities = {
 		ABILITY_RARITY = 1
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:test_ability_32 		
+		ABILITY_NAME = test_ability_32 		
 		ABILITY_SCHOOL = 8
 		ABILITY_ELEMENT = 4	
 		ABILITY_TYPE = 1 

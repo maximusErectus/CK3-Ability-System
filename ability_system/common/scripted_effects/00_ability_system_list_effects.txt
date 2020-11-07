@@ -3,7 +3,7 @@
 ### Ability system - Scripted Effects | List Effects
 
 # abs_add_ability_to_list					-	Adds an ability to the global list of abilities
-# 													* Parameter => $ABILITY_NAME$ - Flag, Name of the ability
+# 													* Parameter => $ABILITY_NAME$ - Text, Name of the ability
 # 													* Parameter => $ABILITY_TYPE$ - Script_value, Ability type
 # 													* Parameter => $ABILITY_COST$ - Script_value, Cost of the ability
 # 													* Parameter => $ABILITY_ELEMENT$ - Script_value, Element of the ability
@@ -23,7 +23,7 @@
 
 ##################################################
 # abs_add_ability_to_list - Adds an ability to the global list of abilities
-# 								* Parameter => $ABILITY_NAME$ - Flag, Name of the ability
+# 								* Parameter => $ABILITY_NAME$ - Text, Name of the ability
 # 								* Parameter => $ABILITY_TYPE$ - Script_value, Ability type
 # 								* Parameter => $ABILITY_COST$ - Script_value, Cost of the ability
 # 								* Parameter => $ABILITY_ELEMENT$ - Script_value, Element of the ability
@@ -38,12 +38,12 @@
 abs_add_ability_to_list = {	
 	if = {
 		limit = {
-			NOT = { is_target_in_global_variable_list = { name = ability_list target = $ABILITY_NAME$ } }
+			NOT = { is_target_in_global_variable_list = { name = ability_list target = flag:$ABILITY_NAME$ } }
 		}
 		
 		add_to_global_variable_list = {
 			name = ability_list
-			target = $ABILITY_NAME$
+			target = flag:$ABILITY_NAME$
 		}
 		
 		random_living_character = {
@@ -54,7 +54,7 @@ abs_add_ability_to_list = {
 			
 			set_variable = {
 				name = ability_name
-				value = $ABILITY_NAME$
+				value = flag:$ABILITY_NAME$
 			}
 			set_variable = {
 				name = ability_cost

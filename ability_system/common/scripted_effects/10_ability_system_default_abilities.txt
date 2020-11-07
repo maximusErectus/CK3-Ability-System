@@ -30,7 +30,7 @@ abs_create_ability_list = {
 	}
 	
 	abs_add_ability_to_list = { 
-		ABILITY_NAME = flag:fire_blast
+		ABILITY_NAME = fire_blast
 		ABILITY_TYPE = ability_fire_blast_type
 		ABILITY_COST = ability_fire_blast_cost
 		ABILITY_ELEMENT = ability_fire_blast_element
@@ -43,7 +43,7 @@ abs_create_ability_list = {
 		ABILITY_RARITY = ability_fire_blast_rarity
 	}
 	abs_add_ability_to_list = { 
-		ABILITY_NAME = flag:water_blast
+		ABILITY_NAME = water_blast
 		ABILITY_TYPE = ability_water_blast_type
 		ABILITY_COST = ability_water_blast_cost
 		ABILITY_ELEMENT = ability_water_blast_element
@@ -56,7 +56,7 @@ abs_create_ability_list = {
 		ABILITY_RARITY = ability_water_blast_rarity
 	}
 	abs_add_ability_to_list = { 
-		ABILITY_NAME = flag:lightning_blast 
+		ABILITY_NAME = lightning_blast 
 		ABILITY_TYPE = ability_lightning_blast_type 
 		ABILITY_COST = ability_lightning_blast_cost 
 		ABILITY_ELEMENT = ability_lightning_blast_element
@@ -69,7 +69,7 @@ abs_create_ability_list = {
 		ABILITY_RARITY = ability_lightning_blast_rarity
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:dodge 
+		ABILITY_NAME = dodge 
 		ABILITY_TYPE = ability_dodge_type 
 		ABILITY_COST = ability_dodge_cost 
 		ABILITY_ELEMENT = ability_dodge_element		
@@ -82,7 +82,7 @@ abs_create_ability_list = {
 		ABILITY_RARITY = ability_dodge_rarity
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:fire_wall 
+		ABILITY_NAME = fire_wall 
 		ABILITY_TYPE = ability_fire_wall_type 
 		ABILITY_COST = ability_fire_wall_cost 
 		ABILITY_ELEMENT = ability_fire_wall_element		
@@ -95,7 +95,7 @@ abs_create_ability_list = {
 		ABILITY_RARITY = ability_fire_wall_rarity
 	}
 	abs_add_ability_to_list = {
-		ABILITY_NAME = flag:ice_wall 
+		ABILITY_NAME = ice_wall 
 		ABILITY_TYPE = ability_ice_wall_type 
 		ABILITY_COST = ability_ice_wall_cost 
 		ABILITY_ELEMENT = ability_ice_wall_element		
