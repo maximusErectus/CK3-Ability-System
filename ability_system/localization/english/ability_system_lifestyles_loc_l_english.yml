@@ -1,0 +1,25 @@
+﻿l_english:
+ ##################################################
+ 
+ ### Ability system - Lifestyle Localization
+ 
+ # abs_magic_lifestyle		-	The lifestyle focussing around magic
+ 
+ ##################################################
+ 
+ ##################################################
+ # abs_magic_lifestyle - The lifestyle focussing around magic
+ ##################################################
+ # Lifestyle descriptions
+ abs_magic_lifestyle_name: "Magic"
+ abs_magic_lifestyle_desc: "TODO: Magic lifestyle"
+ abs_magic_lifestyle_highlight_desc: "" 
+ 
+ # Perk trees
+ abs_magic_core_tree_name: "TODO: Magic tree"
+ 
+ # Perks
+ abs_magic_perk_apprentice_name: "Magicians' Apprentice"
+ 
+ # 'Error' messages
+ ABS_MAGIC_LIFESTYLE_ERR_NO_MAGIC: "@warning_icon!#X You posses no magic#!"

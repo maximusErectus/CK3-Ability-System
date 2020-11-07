@@ -1,0 +1,17 @@
+﻿##################################################
+
+### Ability system - Scripted Triggers | Lifestyle Triggers
+
+# abs_lifestyle_char_has_magic		-	Checks if a character has any magic potential
+
+##################################################
+
+##################################################
+# abs_lifestyle_char_has_magic - Checks if a character has any magic potential
+##################################################
+abs_lifestyle_char_has_magic = {
+	custom_description = {
+		text = ABS_MAGIC_LIFESTYLE_ERR_NO_MAGIC_TRIGGER
+		has_character_flag = abs_has_magic
+	}
+}

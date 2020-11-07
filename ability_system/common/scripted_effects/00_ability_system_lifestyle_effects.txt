@@ -1,0 +1,37 @@
+##################################################
+
+### Ability system - Scripted Effects | Lifestyle effects
+
+# abs_lifestyle_check_if_has_magic					-	Checks if the character has magic
+# abs_lifestyle_magic_give_apprentice_effect		-	Gives character the default stuff for a magic apprentice
+
+##################################################
+
+##################################################
+# abs_lifestyle_check_if_has_magic - Checks if the character has magic
+##################################################
+abs_lifestyle_check_if_has_magic = {
+	if = {
+		limit = {
+			NOT = { abs_lifestyle_char_has_magic = yes }
+		}
+		custom_description_no_bullet = {
+			text = ABS_MAGIC_LIFESTYLE_ERR_NO_MAGIC_TT
+			subject = ROOT
+		}
+	}
+}
+
+##################################################
+# TODO: Add effects to unlock all default abilities
+# abs_lifestyle_magic_give_apprentice_effect - Gives character the default stuff for a magic apprentice
+##################################################
+abs_lifestyle_magic_give_apprentice_effect = {
+	set_variable = { name = current_magicka value = 0 }
+	set_variable = { name = maximum_magicka value = 50 }
+	
+	add_trait_force_tooltip = magic_level_4
+	
+	# Unlock the default ability
+	abs_unlock_ability = { ABILITY_NAME = flag:dodge }
+}

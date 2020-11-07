@@ -1,0 +1,31 @@
+﻿##################################################
+
+### Ability system - Lifestyle perks | Magic perks
+
+# abs_magic_perk_apprentice		-	Gives the character their first magic level
+
+##################################################
+
+##################################################
+# abs_magic_perk_apprentice - Gives the character their first magic level
+##################################################
+abs_magic_perk_apprentice = {
+	lifestyle = abs_magic_lifestyle
+	tree = abs_magic_core_tree
+	position = { 0 0 }
+	icon = node_blue_finisher
+	
+	
+	effect = {
+		# Needed to actually give a reason as to why you can't pick the pick
+		abs_lifestyle_check_if_has_magic = yes
+		
+		# Give the actual stuff
+		abs_lifestyle_magic_give_apprentice_effect = yes
+	}
+
+	character_modifier = { }
+	
+	can_be_picked = { abs_lifestyle_char_has_magic = yes }
+	can_be_auto_selected = { always = no } # Don't ever auto-select this
+}

@@ -1,0 +1,14 @@
+﻿##################################################
+
+### Ability system - Effect Localization | Effect Localizations for lifestyles
+
+# ABS_MAGIC_LIFESTYLE_ERR_NO_MAGIC_TT		-	Tooltip to check if a character has any magic potential
+
+##################################################
+
+##################################################
+# ABS_MAGIC_LIFESTYLE_ERR_NO_MAGIC_TT - Tooltip to check if a character has any magic potential
+##################################################
+ABS_MAGIC_LIFESTYLE_ERR_NO_MAGIC_TT = {
+	global = ABS_MAGIC_LIFESTYLE_ERR_NO_MAGIC
+}
