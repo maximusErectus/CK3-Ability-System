@@ -10,7 +10,7 @@
 # abs_duel_set_ability_cooldown			-	Sets the cooldown for an ability
 # 												* Parameter => $ABILITY$ - Character, Ability to cooldown
 # 												* Parameter => $ABILITY_CASTER$ - Character, Character that is casting the ability
-# abs_duel_set_ability_cooldown			-	Sets the cooldown for an ability
+# abs_duel_cooldown_tick				-	Sets the cooldown for an ability
 # 												* Parameter => $CHAR$ - Character, Character to tick all cooldowns for
 # abs_duel_round_cleanup				-	Cleans up any variables used during a round
 # abs_duel_cleanup						-	Cleans up any variables used during a duel
@@ -824,7 +824,7 @@ abs_duel_set_ability_cooldown = {
 }
 
 ##################################################
-# abs_duel_set_ability_cooldown - Sets the cooldown for an ability
+# abs_duel_cooldown_tick - Sets the cooldown for an ability
 # 									* Parameter => $CHAR$ - Character, Character to tick all cooldowns for
 ##################################################
 abs_duel_cooldown_tick = {
