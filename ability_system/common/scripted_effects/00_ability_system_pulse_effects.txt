@@ -18,21 +18,21 @@ abs_pulse_restore_magicka = {
 		}
 		
 		if = {
-			limit = { var:current_magicka < var:maximum_magicka }
+			limit = { var:current_magicka.compare_value < var:maximum_magicka.compare_value }
 			
 			change_variable = {
 				name = current_magicka
-				add = abs_weekly_pulse_magicka_regen
+				add = abs_weekly_pulse_magicka_regen.compare_value
 			}
 		}
 		
 		# If we've exceeded the maximum
 		if = {
-			limit = { var:current_magicka > var:maximum_magicka }
+			limit = { var:current_magicka.compare_value > var:maximum_magicka.compare_value }
 			
 			set_variable = {
 				name = current_magicka
-				value = var:maximum_magicka
+				value = var:maximum_magicka.compare_value
 			}
 		}
 	}
