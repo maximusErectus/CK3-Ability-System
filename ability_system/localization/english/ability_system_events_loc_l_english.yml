@@ -9,15 +9,15 @@
  ability_system.event.112.title: "Magicians' Duel - Attacker"
  ability_system.event.112.desc: "[initial_attacker.GetFirstName] vs. [initial_defender.GetFirstName]" 
  ability_system.event.112.opt.a: "use_ability_name_override"
-                       
+
  ability_system.event.113.title: "Magicians' Duel - Defender"
  ability_system.event.113.desc: "[initial_attacker.GetFirstName] vs. [initial_defender.GetFirstName]" 
  ability_system.event.113.opt.a: "use_ability_name_override"
-                       
+
  ability_system.event.114.title: "Magicians' Duel - Attacker"
  ability_system.event.114.desc: "[initial_attacker.GetFirstName] vs. [initial_defender.GetFirstName]" 
  ability_system.event.114.opt.a: "use_ability_name_override"
-                       
+
  ability_system.event.115.title: "Magicians' Duel - Defender"
  ability_system.event.115.desc: "[initial_attacker.GetFirstName] vs. [initial_defender.GetFirstName]" 
  ability_system.event.115.opt.a: "use_ability_name_override" 
@@ -43,15 +43,16 @@
  ability_system.event.120.opt.b: "Winner screen"
  ability_system.event.120.opt.c: "Loser screen"
  ability_system.event.120.opt.d: "Draw screen"
-                       
+
  ability_system.event.121.title: "Magicians' Duel - Winner"
  ability_system.event.121.desc: "You Win!" 
  ability_system.event.121.opt.a: "Ok c:" 
-                       
+
  ability_system.event.122.title: "Magicians' Duel - Loser"
  ability_system.event.122.desc: "You Lose!" 
  ability_system.event.122.opt.a: "Ok :c" 
-                       
+
  ability_system.event.123.title: "Magicians' Duel - Draw"
  ability_system.event.123.desc: "It's a draw!" 
- ability_system.event.123.opt.a: "Ok"  
+ ability_system.event.123.opt.a: "Ok"
+ 
