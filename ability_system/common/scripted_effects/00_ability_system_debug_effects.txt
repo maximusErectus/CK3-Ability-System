@@ -61,7 +61,7 @@ abs_prepare_duel_debug = {
 		clear_variable_list = unlocked_abilities
 		
 		# Make them a magician
-		add_character_flag = abs_has_maic
+		add_character_flag = abs_has_magic
 		abs_lifestyle_magic_give_apprentice_effect = yes
 		
 		# Restore AP
@@ -86,7 +86,7 @@ abs_prepare_duel_debug = {
 		clear_variable_list = unlocked_abilities
 		
 		# Make them a magician
-		add_character_flag = abs_has_maic
+		add_character_flag = abs_has_magic
 		abs_lifestyle_magic_give_apprentice_effect = yes
 		
 		# Restore AP
