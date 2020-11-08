@@ -6,6 +6,7 @@
  ABS_SCOPED_ABILITY_COST: "[GuiScope.AddScope('ability_caster', GetPlayer.MakeScope).SetRoot( Scope.GetCharacter.MakeScope ).ScriptValue('ability_cost')|V1]"
  ABS_SCOPED_ABILITY_POWER_RATING: "[GuiScope.AddScope('ability_caster', GetPlayer.MakeScope).SetRoot( Scope.GetCharacter.MakeScope ).ScriptValue('ability_power_rating')|V1]"
  ABS_SCOPED_ABILITY_ELEMENT: "[Scope.GetCharacter.Custom('GetAbilityElement')]"
+ ABS_SCOPED_ABILITY_ELEMENT_ICON: "[Scope.GetCharacter.Custom('GetAbilityElementIcon')]"
  ABS_SCOPED_ABILITY_SCHOOL: "[Scope.GetCharacter.Custom('GetAbilitySchool')]"
  ABS_SCOPED_ABILITY_ACCURACY: "[GuiScope.AddScope('ability_caster', GetPlayer.MakeScope).SetRoot( Scope.GetCharacter.MakeScope ).ScriptValue('ability_accuracy')|V0]#V %#!"
  ABS_SCOPED_ABILITY_EFFECT_TYPE: "[Scope.GetCharacter.Custom('GetAbilityEffectType')]"
@@ -26,6 +27,6 @@
  ABS_GUI_TEXT_POWER_RATING: "[ability_power_rating|E]: "
  
  # Inserts
- ABS_CURRENT_MAGICKA_PREFIX: "\nCurrent [magicka|E]: "
+ ABS_CURRENT_MAGICKA_PREFIX: "Current [magicka|E]: "
  ABS_CURRENT_MAGICKA: "$ABS_CURRENT_MAGICKA_PREFIX$ [ROOT.Var('current_magicka').GetValue|V1]"
  ABS_CURRENT_PLAYER_MAGICKA: "[GetPlayer.MakeScope.Var('current_magicka').GetValue|V1]"

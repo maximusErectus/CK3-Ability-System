@@ -1,5 +1,5 @@
 ﻿##################################################
-
+# TODO: Add custom icons
 ### Ability system - Default Icons - Used in Localization
 
 # Ability icons
@@ -9,6 +9,11 @@
 # 	-> ability_icon_dodge
 # 	-> ability_icon_fire_wall
 # 	-> ability_icon_ice_wall
+# Element icons
+# 	-> element_neutral_icon
+# 	-> element_fire_icon
+# 	-> element_ice_icon
+# 	-> element_lightning_icon
 
 ##################################################
 
@@ -79,3 +84,46 @@ texticon = { # ability_icon_ice_wall
 	}
 }
 
+##################################################
+# Element icons
+# 	-> element_neutral_icon
+# 	-> element_fire_icon
+# 	-> element_ice_icon
+# 	-> element_lightning_icon
+##################################################
+texticon = { # element_neutral_icon
+	icon = element_neutral_icon
+	iconsize = {
+		texture = "gfx/interface/icons/traits/wrathful.dds"
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+	}
+}
+texticon = { # element_fire_icon
+	icon = element_fire_icon
+	iconsize = {
+		texture = "gfx/interface/icons/traits/impatient.dds"
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+	}
+}
+texticon = { # element_ice_icon
+	icon = element_ice_icon
+	iconsize = {
+		texture = "gfx/interface/icons/traits/brave.dds"
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+	}
+}
+texticon = { # element_lightning_icon
+	icon = element_lightning_icon
+	iconsize = {
+		texture = "gfx/interface/icons/traits/lustful.dds"
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+	}
+}

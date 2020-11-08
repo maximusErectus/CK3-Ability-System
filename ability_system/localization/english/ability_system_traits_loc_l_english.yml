@@ -2,17 +2,17 @@
  # Traits
  trait_magic_level: "Yer a wizard!"
  trait_magic_level_1: "Lvl.1 [magician|E]"
- trait_magic_level_1_character_desc: "Low level [magician|E] $ABS_CURRENT_MAGICKA$"
+ trait_magic_level_1_character_desc: "Low level [magician|E]\n$ABS_CURRENT_MAGICKA$"
  trait_magic_level_1_desc: "Low level [magician|E]"
  
  trait_magic_level_2: "Lvl.2 [magician|E]"
- trait_magic_level_2_character_desc: "Mid level [magician|E] $ABS_CURRENT_MAGICKA$"
+ trait_magic_level_2_character_desc: "Mid level [magician|E]\n$ABS_CURRENT_MAGICKA$"
  trait_magic_level_2_desc: "Mid level [magician|E]"
  
  trait_magic_level_3: "Lvl.3 [magician|E]"
- trait_magic_level_3_character_desc: "High level [magician|E] $ABS_CURRENT_MAGICKA$"
+ trait_magic_level_3_character_desc: "High level [magician|E]\n$ABS_CURRENT_MAGICKA$"
  trait_magic_level_3_desc: "High level [magician|E]"
  
  trait_magic_level_4: "Lvl.4 [magician|E]"
- trait_magic_level_4_character_desc: "Peak level [magician|E] $ABS_CURRENT_MAGICKA$"
+ trait_magic_level_4_character_desc: "Peak level [magician|E]\n$ABS_CURRENT_MAGICKA$"
  trait_magic_level_4_desc: "Peak level [magician|E] "

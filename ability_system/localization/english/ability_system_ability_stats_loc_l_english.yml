@@ -11,10 +11,16 @@
  ABILITY_MAGIC_SCHOOL_NECROMANCY: "Necromancy"
  
  # Ability elemental alignment
- ABILITY_ELEMENT_NEUTRAL: "[element_neutral|E]"
- ABILITY_ELEMENT_FIRE: "[element_fire|E]"
- ABILITY_ELEMENT_ICE: "[element_ice|E]"
- ABILITY_ELEMENT_LIGHTNING: "[element_lightning|E]"
+ ABILITY_ELEMENT_NEUTRAL: "@element_neutral_icon! [element_neutral|E]" 
+ ABILITY_ELEMENT_FIRE: "@element_fire_icon! [element_fire|E]" 
+ ABILITY_ELEMENT_ICE: "@element_ice_icon! [element_ice|E]" 
+ ABILITY_ELEMENT_LIGHTNING: "@element_lightning_icon! [element_lightning|E]"
+ 
+ # Ability elemental icons
+ ABILITY_ELEMENT_NEUTRAL_ICON: "@element_neutral_icon!"
+ ABILITY_ELEMENT_FIRE_ICON: "@element_fire_icon!"
+ ABILITY_ELEMENT_ICE_ICON: "@element_ice_icon!"
+ ABILITY_ELEMENT_LIGHTNING_ICON: "@element_lightning_icon!"
  
  # Ability effect types
  ABILITY_EFFECT_TYPE_MOVEMENT: "[ability_effect_movement|E]"

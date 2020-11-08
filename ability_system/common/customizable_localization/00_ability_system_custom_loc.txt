@@ -3,6 +3,7 @@
 ### Ability system - Customizable Localization
 
 # GetAbilityElement		-	Gets localization key for the element
+# GetAbilityElementIcon - 	Gets localization key for the Element Icons
 # GetAbilitySchool		-	Gets localization key for the School
 # GetAbilityEffectType	-	Gets localization key for the Effect Type
 # GetAbilityAPName		-	Gets localization key for the type of Action Point
@@ -32,6 +33,31 @@ GetAbilityElement = {
 	text = {
 		trigger = { var:ability_element = ability_element_lightning }
 		localization_key = ABILITY_ELEMENT_LIGHTNING
+	}
+}
+
+##################################################
+# GetAbilityElementIcon - Gets localization key for the Element Icons
+##################################################
+GetAbilityElementIcon = {
+	type = character
+	random_valid = yes
+	
+	text = {
+		trigger = { var:ability_element = ability_element_neutral }
+		localization_key = ABILITY_ELEMENT_NEUTRAL_ICON
+	}
+	text = {
+		trigger = { var:ability_element = ability_element_fire }
+		localization_key = ABILITY_ELEMENT_FIRE_ICON
+	}
+	text = {
+		trigger = { var:ability_element = ability_element_ice }
+		localization_key = ABILITY_ELEMENT_ICE_ICON
+	}
+	text = {
+		trigger = { var:ability_element = ability_element_lightning }
+		localization_key = ABILITY_ELEMENT_LIGHTNING_ICON
 	}
 }
 
