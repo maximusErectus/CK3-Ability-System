@@ -30,7 +30,7 @@ abs_duel_ai_select_ability = {
 			save_temporary_scope_as = sel_ability
 		
 			abs_has_access_to_ability_by_name = { ABILITY_NAME = scope:sel_ability.var:ability_name ABILITY_CASTER = scope:active_character }
-			abs_has_ap_for_ability_by_name = { ABILITY = scope:sel_ability ABILITY_CASTER = scope:active_character }
+			abs_has_ap_for_ability_by_object = { ABILITY = scope:sel_ability ABILITY_CASTER = scope:active_character }
 			NOT = { abs_ability_on_cooldown = { ABILITY = scope:sel_ability ABILITY_CASTER = scope:active_character  } }
 			
 			trigger_if = {

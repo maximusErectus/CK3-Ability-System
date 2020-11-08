@@ -22,7 +22,7 @@ abs_pulse_restore_magicka = {
 			
 			change_variable = {
 				name = current_magicka
-				add = abs_weekly_pulse_magicka_regen.compare_value
+				add = abs_weekly_pulse_magicka_regen
 			}
 		}
 		
@@ -32,7 +32,7 @@ abs_pulse_restore_magicka = {
 			
 			set_variable = {
 				name = current_magicka
-				value = var:maximum_magicka.compare_value
+				value = var:maximum_magicka
 			}
 		}
 	}

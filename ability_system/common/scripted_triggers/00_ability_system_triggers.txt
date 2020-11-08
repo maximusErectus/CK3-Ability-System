@@ -9,7 +9,7 @@
 # 													* Parameter => $ABILITY_NAME$ - Flag, Name of the ability to check
 # 													* Parameter => $ABILITY_CASTER$ - Character, Character that is casting the ability
 # abs_duel_shield_on_cooldown				-	Checks if a character can create a new shield
-# abs_has_ap_for_ability_by_name			-	Checks if a character has enough AP to use an ability
+# abs_has_ap_for_ability_by_object			-	Checks if a character has enough AP to use an ability
 # 													* Parameter => $ABILITY$ - Character, Ability to cooldown
 # 													* Parameter => $ABILITY_CASTER$ - Character, Character that is casting the ability
 # abs_is_ability_element_strong_against		-	Checks if an ability's element is strong against anothers
@@ -116,13 +116,13 @@ abs_ability_on_cooldown = {
 
 ##################################################
 # TODO: Switch AP based on type
-# abs_has_ap_for_ability_by_name - Checks if a character has enough AP to use an ability
+# abs_has_ap_for_ability_by_object - Checks if a character has enough AP to use an ability
 # 									* Parameter => $ABILITY$ - Character, Ability to cooldown
 # 									* Parameter => $ABILITY_CASTER$ - Character, Character that is casting the ability
 ##################################################
-abs_has_ap_for_ability_by_name = {	
+abs_has_ap_for_ability_by_object = {	
 	custom_description = {
-		text = abs_has_ap_for_ability_by_name_visual_trigger
+		text = abs_has_ap_for_ability_by_object_visual_trigger
 		subject = $ABILITY_CASTER$
 		object = $ABILITY$
 		

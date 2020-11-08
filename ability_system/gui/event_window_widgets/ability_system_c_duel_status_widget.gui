@@ -92,7 +92,7 @@ Types ability_system {
 				text_single = {
 					parentanchor = top|hcenter
 					position = { 0 -2 }
-					text = "[Character.MakeScope.Var('current_magicka').GetValue|V0] / [Character.MakeScope.Var('maximum_magicka').GetValue|V0]"
+					text = "[Character.MakeScope.Var('current_magicka').GetValue|V1] / [Character.MakeScope.Var('maximum_magicka').GetValue|V0]"
 				}
 
 				progresstexture = "gfx/interface/progressbars/progress_blue.dds"

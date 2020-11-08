@@ -69,16 +69,20 @@ abs_debug_start_duel = {
 	scope = character
 	
 	effect = {
-		save_scope_as = attacking_char
+		if = {
+			limit = { NOT = { has_character_flag = dueling } }
+			
+			save_scope_as = attacking_char
 
-		random_living_character = {
-			limit = { age >= 18 age <= 40 is_ai = yes }
-			save_scope_as = defending_char
-		}
+			random_living_character = {
+				limit = { age >= 18 age <= 40 is_ai = yes }
+				save_scope_as = defending_char
+			}
 
-		abs_prepare_duel_debug = {
-			ATTACKER = scope:attacking_char
-			DEFENDER = scope:defending_char
+			abs_prepare_duel_debug = {
+				ATTACKER = scope:attacking_char
+				DEFENDER = scope:defending_char
+			}
 		}
 	}
 }

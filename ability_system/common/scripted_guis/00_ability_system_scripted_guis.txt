@@ -50,7 +50,7 @@ ability_system_ability_selector = {
 	}
 	
 	is_valid = {		
-		abs_has_ap_for_ability_by_name = { ABILITY = scope:selected_ability ABILITY_CASTER = ROOT }
+		abs_has_ap_for_ability_by_object = { ABILITY = scope:selected_ability ABILITY_CASTER = ROOT }
 		NOT = { abs_ability_on_cooldown = { ABILITY = scope:selected_ability ABILITY_CASTER = ROOT  } }
 
 		trigger_if = {
