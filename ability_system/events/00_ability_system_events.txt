@@ -21,11 +21,9 @@
 
 ## 400 ~ 499			Weekly/monthly pulse related events
 
-## 5000 ~ 5999 			GUI components
-# ability_system.5001		-	GUI - Open spell list
+## 9000 ~ 9099 			GUI components
 
-## 9000 ~ 9999			Debug components
-# ability_system.9001		- Debug - Open the debug menu
+## 9900 ~ 9999			Debug components
 
 ##################################################
 
@@ -724,46 +722,4 @@ ability_system.123 = {
 		}		
 		
 	}
-}
-
-##################################################
-# GUI - Open spell list
-##################################################
-ability_system.5001 = {
-	type = character_event
-	title = abs_empty_line
-	desc = abs_empty_line	
-	theme = family	
-	widgets = {
-		widget = {
-			gui = "ability_system_open_player_spell_list"			
-			container = "custom_widgets_container"
-			controller = default
-			setup_scope = { }
-		}
-	}
-		
-	# This won't actually ever be shown.
-	option = { name = abs_empty_line }
-}
-
-##################################################
-# Debug - Open the debug menu
-##################################################
-ability_system.9001 = {
-	type = character_event
-	title = abs_empty_line
-	desc = abs_empty_line	
-	theme = family	
-	widgets = {
-		widget = {
-			gui = "ability_system_open_debug"			
-			container = "custom_widgets_container"
-			controller = default
-			setup_scope = { }
-		}
-	}
-		
-	# This won't actually ever be shown.
-	option = { name = abs_empty_line }
 }

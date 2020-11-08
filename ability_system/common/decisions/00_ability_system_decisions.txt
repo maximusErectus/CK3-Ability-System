@@ -29,6 +29,6 @@ abs_open_learned_spells = {
 	
 	effect = {
 		custom_tooltip = abs_open_learned_spells.effect.tt
-		trigger_event = { id = ability_system.5001 }
+		trigger_event = { id = ability_system.9000 }
 	}
 }

@@ -29,6 +29,6 @@ abs_open_debug = {
 	
 	effect = {
 		custom_tooltip = abs_open_debug.effect.tt
-		trigger_event = { id = ability_system.9001 }
+		trigger_event = { id = ability_system.9900 }
 	}
 }

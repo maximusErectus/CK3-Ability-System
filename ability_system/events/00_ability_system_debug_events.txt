@@ -1,0 +1,39 @@
+namespace = ability_system
+
+##################################################
+
+### Ability system events
+
+## 1 ~ 99 				Core components
+
+## 100 ~ 199 			Dueling
+
+## 400 ~ 499			Weekly/monthly pulse related events
+
+## 9000 ~ 9099 			GUI components
+
+## 9900 ~ 9999			Debug components
+# ability_system.9900		- Debug - Open the debug menu
+
+##################################################
+
+##################################################
+# Debug - Open the debug menu
+##################################################
+ability_system.9900 = {
+	type = character_event
+	title = abs_empty_line
+	desc = abs_empty_line	
+	theme = family	
+	widgets = {
+		widget = {
+			gui = "ability_system_open_debug"			
+			container = "custom_widgets_container"
+			controller = default
+			setup_scope = { }
+		}
+	}
+		
+	# This won't actually ever be shown.
+	option = { name = abs_empty_line }
+}
