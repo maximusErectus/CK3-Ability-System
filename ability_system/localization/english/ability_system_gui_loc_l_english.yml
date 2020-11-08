@@ -2,7 +2,7 @@
 
  # Can be used in GUI, when the item is scoped to an ability
  ABS_SCOPED_ABILITY_NAME: "[SelectLocalization(GetDummyMale.IsValid, Concatenate(Concatenate('ability_', Scope.Var('ability_name').GetFlagName), '_info'), 'abs_empty_line')]"
- ABS_SCOPED_ABILITY_ICON: "[SelectLocalization(GetDummyMale.IsValid, Concatenate(Concatenate('ability_', Scope.Var('ability_name').GetFlagName), '_icon'), 'abs_empty_line')]"
+ ABS_SCOPED_ABILITY_ICON: "[Localize(Concatenate(Concatenate('@ability_icon_', Scope.Var('ability_name').GetFlagName), '!'))]" 
  ABS_SCOPED_ABILITY_COST: "[GuiScope.AddScope('ability_caster', GetPlayer.MakeScope).SetRoot( Scope.GetCharacter.MakeScope ).ScriptValue('ability_cost')|V1]"
  ABS_SCOPED_ABILITY_POWER_RATING: "[GuiScope.AddScope('ability_caster', GetPlayer.MakeScope).SetRoot( Scope.GetCharacter.MakeScope ).ScriptValue('ability_power_rating')|V1]"
  ABS_SCOPED_ABILITY_ELEMENT: "[Scope.GetCharacter.Custom('GetAbilityElement')]"

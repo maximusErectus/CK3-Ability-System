@@ -21,7 +21,7 @@
 # 	-> ability_icon_fire_wall
 # 	-> ability_icon_ice_wall
 ##################################################
-texticon = {
+texticon = { # ability_icon_fire_blast
 	icon = ability_icon_fire_blast
 	iconsize = {
 		texture = "gfx/interface/icons/icon_prowess.dds"
@@ -30,7 +30,7 @@ texticon = {
 		fontsize = 16
 	}
 }
-texticon = {
+texticon = { # ability_icon_water_blast
 	icon = ability_icon_water_blast
 	iconsize = {
 		texture = "gfx/interface/icons/icon_prowess.dds"
@@ -39,7 +39,7 @@ texticon = {
 		fontsize = 16
 	}
 }
-texticon = {
+texticon = { # ability_icon_lightning_blast
 	icon = ability_icon_lightning_blast
 	iconsize = {
 		texture = "gfx/interface/icons/icon_prowess.dds"
@@ -48,7 +48,7 @@ texticon = {
 		fontsize = 16
 	}
 }
-texticon = {
+texticon = { # ability_icon_dodge
 	icon = ability_icon_dodge
 	iconsize = {
 		texture = "gfx/interface/icons/icon_skills.dds"
@@ -58,7 +58,7 @@ texticon = {
 		uv ={ 0.5 0 0.667 1 }
 	}
 }
-texticon = {
+texticon = { # ability_icon_fire_wall
 	icon = ability_icon_fire_wall
 	iconsize = {
 		texture = "gfx/interface/icons/icon_skills.dds"
@@ -68,7 +68,7 @@ texticon = {
 		uv ={ 0.167 0 0.333 1 }
 	}
 }
-texticon = {
+texticon = { # ability_icon_ice_wall
 	icon = ability_icon_ice_wall
 	iconsize = {
 		texture = "gfx/interface/icons/icon_skills.dds"
@@ -78,3 +78,4 @@ texticon = {
 		uv ={ 0.167 0 0.333 1 }
 	}
 }
+
