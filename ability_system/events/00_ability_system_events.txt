@@ -5,13 +5,11 @@
 ### Ability system events
 
 ## 1 ~ 99 				Core components
-
 # ability_system.0001		- Initialize - Create the list of default abilities
 
 ## 100 ~ 199 			Dueling - Magician vs. magician only right now.
 #								  Magician vs. Melee will be added in a future version
 #								  Melee vs. Melee will be added later too
-
 # ability_system.112		- Dueling - First move for attacker
 # ability_system.113		- Dueling - First move for defender
 # ability_system.114		- Dueling - Nth move for attacker
@@ -21,12 +19,12 @@
 # ability_system.122		- Dueling - End of duel - Loser screen
 # ability_system.123		- Dueling - End of duel - Draw screen
 
-## 5000 ~ 5999 					GUI components
+## 400 ~ 499			Weekly/monthly pulse related events
 
+## 5000 ~ 5999 			GUI components
 # ability_system.5001		-	GUI - Open spell list
 
-## 9000 ~ 9999					Debug components
-
+## 9000 ~ 9999			Debug components
 # ability_system.9001		- Debug - Open the debug menu
 
 ##################################################

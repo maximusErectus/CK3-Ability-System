@@ -1,0 +1,44 @@
+##################################################
+
+### Ability system - Script Values | Weekly/monthly pulse values
+
+# Weekly AP/HP restore values	-	Usable in script
+#										-> abs_weekly_pulse_magicka_regen
+
+##################################################
+
+##################################################
+# Weekly AP/HP restore values
+#						-> abs_weekly_pulse_magicka_regen
+##################################################
+abs_weekly_pulse_magicka_regen = {
+	value = 0
+	
+	if = {
+		limit = { has_variable = maximum_magicka }
+		
+		add = {
+			value = maximum_magicka
+			multiply = {
+				value = 0
+				
+				if = {
+					limit = { has_trait = magic_level_4 }
+					add = 0.03 # 3%
+				}
+				else_if = {
+					limit = { has_trait = magic_level_3 }
+					add = 0.025 # 2.5%
+				}
+				else_if = {
+					limit = { has_trait = magic_level_2 }
+					add = 0.02 # 2%
+				}
+				else_if = {
+					limit = { has_trait = magic_level_1 }
+					add = 0.015 # 1.5%
+				}
+			}
+		}
+	}
+}

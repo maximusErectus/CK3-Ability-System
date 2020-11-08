@@ -57,26 +57,20 @@ abs_debug_unlock_all_abilities = {
 ##################################################
 abs_prepare_duel_debug = {	
 	$ATTACKER$ = {
-		set_variable = { 
-			name = current_magicka 
-			value = 1000 
-		}
-		
-		remove_trait = magic_level_4
-		remove_trait = magic_level_3
-		remove_trait = magic_level_2
-		remove_trait = magic_level_1
-		
-		random_list = {
-			1 = { add_trait = magic_level_4 }
-			3 = { add_trait = magic_level_3 }
-			6 = { add_trait = magic_level_2 }
-			10= { add_trait = magic_level_1 }
-		}
-		
-		# For future testing
+		# Clear all unlocked abilities
 		clear_variable_list = unlocked_abilities
-		abs_unlock_ability = { ABILITY_NAME = flag:dodge }
+		
+		# Make them a magician
+		add_character_flag = abs_has_maic
+		abs_lifestyle_magic_give_apprentice_effect = yes
+		
+		# Restore AP
+		set_variable = {
+			name = current_magicka
+			value = var:maximum_magicka
+		}
+		
+		# For future testing		
 		abs_debug_unlock_random_ability = yes
 		abs_debug_unlock_random_ability = yes
 		#abs_debug_unlock_random_ability = yes
@@ -88,26 +82,20 @@ abs_prepare_duel_debug = {
 	}
 	
 	$DEFENDER$ = {
+		# Clear all unlocked abilities
+		clear_variable_list = unlocked_abilities
+		
+		# Make them a magician
+		add_character_flag = abs_has_maic
+		abs_lifestyle_magic_give_apprentice_effect = yes
+		
+		# Restore AP
 		set_variable = {
 			name = current_magicka
-			value = 1000
+			value = var:maximum_magicka
 		}
 		
-		remove_trait = magic_level_4
-		remove_trait = magic_level_3
-		remove_trait = magic_level_2
-		remove_trait = magic_level_1
-		
-		random_list = {
-			1 = { add_trait = magic_level_4 }
-			3 = { add_trait = magic_level_3 }
-			6 = { add_trait = magic_level_2 }
-			10= { add_trait = magic_level_1 }
-		}
-		
-		# For future testing
-		clear_variable_list = unlocked_abilities
-		abs_unlock_ability = { ABILITY_NAME = flag:dodge }
+		# For future testing		
 		abs_debug_unlock_random_ability = yes
 		abs_debug_unlock_random_ability = yes
 		#abs_debug_unlock_random_ability = yes

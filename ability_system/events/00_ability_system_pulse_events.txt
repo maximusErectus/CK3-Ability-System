@@ -1,0 +1,40 @@
+namespace = ability_system
+
+##################################################
+
+### Ability system events
+
+## 1 ~ 99 				Core components
+
+## 100 ~ 199 			Dueling
+
+## 400 ~ 499			Weekly/monthly pulse related events
+# ability_system.400		-	Restore AP - Weekly pulse
+
+## 5000 ~ 5999 			GUI components
+
+## 9000 ~ 9999			Debug components
+
+
+##################################################
+
+##################################################
+# Restore AP - Weekly pulse
+##################################################
+ability_system.400 = {
+	type = character_event
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			has_character_flag = abs_has_magic
+		}
+		NOT = { # Disable it when we're in a duel, we have a seperate tick for handling that
+			has_character_flag = dueling
+		}
+	}
+	
+	immediate = {
+		abs_pulse_restore_magicka = yes
+	}
+}

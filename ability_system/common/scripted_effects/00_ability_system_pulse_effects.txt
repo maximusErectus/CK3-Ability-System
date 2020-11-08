@@ -1,0 +1,39 @@
+﻿##################################################
+
+### Ability system - Scripted Effects | Weekly/Monthly pulse effects
+
+# abs_pulse_restore_magicka			-	Restores a bit of Magicka every week
+
+##################################################
+
+##################################################
+# abs_pulse_restore_magicka - Restores a bit of Magicka every week
+##################################################
+abs_pulse_restore_magicka = {
+	if = { # Restore Magicka
+		limit = {
+			has_character_flag = abs_has_magic
+			has_variable = maximum_magicka
+			has_variable = current_magicka
+		}
+		
+		if = {
+			limit = { var:current_magicka < var:maximum_magicka }
+			
+			change_variable = {
+				name = current_magicka
+				add = abs_weekly_pulse_magicka_regen
+			}
+		}
+		
+		# If we've exceeded the maximum
+		if = {
+			limit = { var:current_magicka > var:maximum_magicka }
+			
+			set_variable = {
+				name = current_magicka
+				value = var:maximum_magicka
+			}
+		}
+	}
+}

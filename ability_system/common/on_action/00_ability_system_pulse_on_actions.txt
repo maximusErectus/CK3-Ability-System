@@ -2,8 +2,8 @@
 
 ### Ability system - On Actions | Pulse on_actions
 
-# abs_pulse_weekly - Playable pulse - Every week
-# abs_pulse_monthly - Playable pulse - Every month
+# abs_pulse_weekly			-	Playable pulse - Every week
+# abs_pulse_monthly			-	Playable pulse - Every month
 
 ##################################################
 
@@ -11,7 +11,9 @@
 # abs_pulse_weekly - Playable pulse - Every week
 ##################################################
 abs_pulse_weekly = {
-	
+	events = {
+		ability_system.400 # Restore AP
+	}
 }
 
 ##################################################
