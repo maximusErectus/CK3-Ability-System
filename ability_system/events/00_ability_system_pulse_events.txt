@@ -1,4 +1,4 @@
-namespace = ability_system
+﻿namespace = ability_system
 
 ##################################################
 
