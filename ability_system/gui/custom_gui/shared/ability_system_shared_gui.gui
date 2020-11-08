@@ -2,34 +2,6 @@
 	
 	type spaced_divider = vbox { margin_bottom = 10 }
 	
-	# SORRY :C
-	#type ability_icon_selector = hbox {
-	#	name = "ability_icon"
-	#	size = { 32 32 }
-	#	maximumsize = { 64 32 }
-	#
-	#	icon = {
-	#		visible = "[And( EqualTo_string('fire_blast', Scope.Var('ability_name').GetFlagName), ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('selected_ability', Scope.GetCharacter.MakeScope ).End ) )]"
-	#
-	#		size = { 32 32 }
-	#		texture = "gfx/interface/icons/abilities/fire_blast.dds"
-	#		
-	#	}
-	#	icon = {
-	#		visible = "[And( EqualTo_string('water_blast', Scope.Var('ability_name').GetFlagName), ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('selected_ability', Scope.GetCharacter.MakeScope ).End ) )]"
-	#
-	#		size = { 32 32 }
-	#		texture = "gfx/interface/icons/abilities/water_blast.dds"
-	#	}
-	#	icon = {
-	#		visible = "[And( EqualTo_string('lightning_blast', Scope.Var('ability_name').GetFlagName), ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('selected_ability', Scope.GetCharacter.MakeScope ).End ) )]"
-	#
-	#		size = { 32 32 }
-	#		texture = "gfx/interface/icons/abilities/lightning_blast.dds"
-	#	}
-	#	
-	#}
-	
 	type custom_button_eventoption = button_event_standard
 	{
 		name = "event_option_button"
