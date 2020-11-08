@@ -220,6 +220,7 @@
 	### Available localization keys within item blocks
 	
 	# ABS_SCOPED_ABILITY_NAME
+	# ABS_SCOPED_ABILITY_ICON
 	# ABS_SCOPED_ABILITY_COST
 	# ABS_SCOPED_ABILITY_POWER_RATING
 	# ABS_SCOPED_ABILITY_ELEMENT => (Ice/Fire/Lightning/None)
@@ -323,11 +324,22 @@
 				background = {
 					texture = "gfx/interface/progressbars/progress_black.dds"
 					alpha = 0.4
+				}	
+				
+				text_single = {
+					size = { 25 25 }
+					margin_left = 5
+					text = "ABS_SCOPED_ABILITY_ICON"
 				}
+				
+				expand = {}
 				
 				text_single = {
 					text = "ABS_SCOPED_ABILITY_NAME"
+					align = left|nobaseline
 				}
+				
+				expand = {}
 			}
 			
 			# Body

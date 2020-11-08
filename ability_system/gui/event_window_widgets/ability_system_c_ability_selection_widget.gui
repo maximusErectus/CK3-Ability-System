@@ -62,27 +62,6 @@
 					datamodel_wrap = 2
 					flipdirection = yes
 
-					##################################################
-					
-					### Available localization keys within item blocks
-					
-					# ABS_SCOPED_ABILITY_NAME
-					# ABS_SCOPED_ABILITY_COST
-					# ABS_SCOPED_ABILITY_POWER_RATING
-					# ABS_SCOPED_ABILITY_ELEMENT => (Ice/Fire/Lightning/None)
-					# ABS_SCOPED_ABILITY_SCHOOL
-					# ABS_SCOPED_ABILITY_ACCURACY # Evasion for Movement spells
-					# ABS_SCOPED_ABILITY_EFFECT_TYPE
-					# ABS_SCOPED_ABILITY_COOLDOWN
-					# ABS_SCOPED_ABILITY_AP_NAME
-					# ABS_SCOPED_ABILITY_RARITY
-					
-					### Available localization for player
-					
-					# ABS_CURRENT_PLAYER_MAGICKA
-
-					##################################################
-
 					item = {
 						selector_ability_box = {
 							blockoverride "btn_extra" {
