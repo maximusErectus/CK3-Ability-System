@@ -1,108 +1,10 @@
 ﻿##################################################
 
-### Ability system - Customizable Localization
+### Ability system - On Actions | Core on_actions
 
-# on_death					-	Appends a new on_action to vanilla on_death
-# on_death_ability_tracker	-	New on_action, Handles transferring ability data
-# on_game_start_after_lobby	-	Appends a new on_action
-# yearly_global_pulse		-	Appends a new on_action
 # ability_system_init		-	New on_action, add new abilities via this on_action
 
 ##################################################
-
-##################################################
-# on_death - Appends a new on_action to vanilla on_death
-##################################################
-on_death = {
-	on_actions = {
-		on_death_ability_tracker
-	}
-}
-
-##################################################
-# on_death_ability_tracker - New on_action, Handles transferring ability data
-##################################################
-on_death_ability_tracker = {
-	trigger = {
-		# Make sure we've got a complete set
-		abs_is_ability_tracker = yes
-	}
-	
-	effect = {
-		# Remove us from the global list
-		remove_list_global_variable = { name = ability_trackers target = THIS }
-		
-		random_living_character = {
-			limit = { age >= 16 age <= 18 is_ai = yes NOT = { abs_is_ability_tracker = yes } }
-			
-			# Add the new character
-			add_to_global_variable_list = { name = ability_trackers target = THIS }
-			
-			set_variable = {
-				name = ability_name
-				value = PREV.var:ability_name
-			}
-			set_variable = {
-				name = ability_cost
-				value = PREV.var:ability_cost
-			}
-			set_variable = {
-				name = ability_type
-				value = PREV.var:ability_type
-			}
-			set_variable = {
-				name = ability_element
-				value = PREV.var:ability_element
-			}
-			set_variable = {
-				name = ability_context
-				value = PREV.var:ability_context
-			}
-			set_variable = {
-				name = ability_power_rating
-				value = PREV.var:ability_power_rating
-			}
-			set_variable = {
-				name = ability_school
-				value = PREV.var:ability_school
-			}
-			set_variable = {
-				name = ability_effect
-				value = PREV.var:ability_effect
-			}
-			set_variable = {
-				name = ability_accuracy
-				value = PREV.var:ability_accuracy
-			}
-			set_variable = {
-				name = ability_cooldown
-				value = PREV.var:ability_cooldown
-			}
-			set_variable = {
-				name = ability_rarity
-				value = PREV.var:ability_rarity
-			}
-		}
-	}
-}
-
-##################################################
-# on_game_start_after_lobby - Appends a new on_action
-##################################################
-on_game_start_after_lobby = {
-	on_actions = {
-		ability_system_init
-	}
-}
-
-##################################################
-# yearly_global_pulse - Appends a new on_action
-##################################################
-yearly_global_pulse = {
-	on_actions = {
-		ability_system_init
-	}
-}
 
 ##################################################
 # ability_system_init - New on_action, add new abilities via this on_action

@@ -1,0 +1,178 @@
+﻿##################################################
+
+### Ability system - On Actions | on_action Hooks
+
+# on_death					-	Appends a new on_action
+# on_game_start_after_lobby	-	Appends a new on_action
+# yearly_global_pulse		-	Appends a new on_action
+# yearly_playable_pulse		-	Creates new on_actions
+# 									-> abs_pulse_weekly
+#									-> abs_pulse_monthly
+
+##################################################
+
+##################################################
+# on_death - Appends a new on_action to vanilla on_death
+##################################################
+on_death = {
+	on_actions = {
+		on_death_ability_tracker
+	}
+}
+
+##################################################
+# on_game_start_after_lobby - Appends a new on_action
+##################################################
+on_game_start_after_lobby = {
+	on_actions = {
+		ability_system_init
+	}
+}
+
+##################################################
+# yearly_global_pulse - Appends a new on_action
+##################################################
+yearly_global_pulse = {
+	on_actions = {
+		ability_system_init
+	}
+}
+
+##################################################
+# yearly_playable_pulse - Creates new on_actions
+# 							-> abs_pulse_weekly
+#							-> abs_pulse_monthly
+##################################################
+yearly_playable_pulse = {
+	on_actions = {
+		# Weekly pulses
+		abs_pulse_weekly
+		delay = { weeks = 1 }
+		abs_pulse_weekly
+		delay = { weeks = 2 }
+		abs_pulse_weekly
+		delay = { weeks = 3 }
+		abs_pulse_weekly
+		delay = { weeks = 4 }
+		abs_pulse_weekly
+		delay = { weeks = 5 }
+		abs_pulse_weekly
+		delay = { weeks = 6 }
+		abs_pulse_weekly
+		delay = { weeks = 7 }
+		abs_pulse_weekly
+		delay = { weeks = 8 }
+		abs_pulse_weekly
+		delay = { weeks = 9 }
+		abs_pulse_weekly
+		delay = { weeks = 10 }
+		abs_pulse_weekly
+		delay = { weeks = 11 }
+		abs_pulse_weekly
+		delay = { weeks = 12 }
+		abs_pulse_weekly
+		delay = { weeks = 13 }
+		abs_pulse_weekly
+		delay = { weeks = 14 }
+		abs_pulse_weekly
+		delay = { weeks = 15 }
+		abs_pulse_weekly
+		delay = { weeks = 16 }
+		abs_pulse_weekly
+		delay = { weeks = 17 }
+		abs_pulse_weekly
+		delay = { weeks = 18 }
+		abs_pulse_weekly
+		delay = { weeks = 19 }
+		abs_pulse_weekly
+		delay = { weeks = 20 }
+		abs_pulse_weekly
+		delay = { weeks = 21 }
+		abs_pulse_weekly
+		delay = { weeks = 22 }
+		abs_pulse_weekly
+		delay = { weeks = 23 }
+		abs_pulse_weekly
+		delay = { weeks = 24 }
+		abs_pulse_weekly
+		delay = { weeks = 25 }
+		abs_pulse_weekly
+		delay = { weeks = 26 }
+		abs_pulse_weekly
+		delay = { weeks = 27 }
+		abs_pulse_weekly
+		delay = { weeks = 28 }
+		abs_pulse_weekly
+		delay = { weeks = 29 }
+		abs_pulse_weekly
+		delay = { weeks = 30 }
+		abs_pulse_weekly
+		delay = { weeks = 31 }
+		abs_pulse_weekly
+		delay = { weeks = 32 }
+		abs_pulse_weekly
+		delay = { weeks = 33 }
+		abs_pulse_weekly
+		delay = { weeks = 34 }
+		abs_pulse_weekly
+		delay = { weeks = 35 }
+		abs_pulse_weekly
+		delay = { weeks = 36 }
+		abs_pulse_weekly
+		delay = { weeks = 37 }
+		abs_pulse_weekly
+		delay = { weeks = 38 }
+		abs_pulse_weekly
+		delay = { weeks = 39 }
+		abs_pulse_weekly
+		delay = { weeks = 40 }
+		abs_pulse_weekly
+		delay = { weeks = 41 }
+		abs_pulse_weekly
+		delay = { weeks = 42 }
+		abs_pulse_weekly
+		delay = { weeks = 43 }
+		abs_pulse_weekly
+		delay = { weeks = 44 }
+		abs_pulse_weekly
+		delay = { weeks = 45 }
+		abs_pulse_weekly
+		delay = { weeks = 46 }
+		abs_pulse_weekly
+		delay = { weeks = 47 }
+		abs_pulse_weekly
+		delay = { weeks = 48 }
+		abs_pulse_weekly
+		delay = { weeks = 49 }
+		abs_pulse_weekly
+		delay = { weeks = 50 }
+		abs_pulse_weekly
+		delay = { weeks = 51 }
+		abs_pulse_weekly
+		
+		# Monthly pulses
+		abs_pulse_monthly
+		delay = { months = 1 }
+		abs_pulse_monthly
+		delay = { months = 2 }
+		abs_pulse_monthly
+		delay = { months = 3 }
+		abs_pulse_monthly
+		delay = { months = 4 }
+		abs_pulse_monthly
+		delay = { months = 5 }
+		abs_pulse_monthly
+		delay = { months = 6 }
+		abs_pulse_monthly
+		delay = { months = 7 }
+		abs_pulse_monthly
+		delay = { months = 8 }
+		abs_pulse_monthly
+		delay = { months = 9 }
+		abs_pulse_monthly
+		delay = { months = 10 }
+		abs_pulse_monthly
+		delay = { months = 11 }
+		abs_pulse_monthly
+	}
+}
